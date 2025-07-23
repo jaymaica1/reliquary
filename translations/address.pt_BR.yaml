@@ -1,6 +1,6 @@
 # This is a stubbed translation file for Portuguese Brazil
 # It will be populated with actual translations in the future
 address:
-  search: 'Search for an address'
-  no_results: 'No results found'
-  error: 'Error fetching address suggestions'
+  search: 'Procure por um endereço'
+  no_results: 'Nenhum resultado foi encontrado'
+  error: 'Erro na busca do endereço sugerido'

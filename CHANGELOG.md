@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/CesarScur/reliquary/compare/v1.24.0...v1.25.0) (2025-07-23)
+
+
+### Features
+
+* **workflow:** implement relic approval workflow ([c9eaa9a](https://github.com/CesarScur/reliquary/commit/c9eaa9a2edb0bcb878a309c99213626f77f79f6c))
+
 # [1.24.0](https://github.com/CesarScur/reliquary/compare/v1.23.0...v1.24.0) (2025-07-23)
 
 

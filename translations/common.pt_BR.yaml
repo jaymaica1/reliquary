@@ -1,11 +1,11 @@
 # This is a stubbed translation file for Portuguese Brazil
 # It will be populated with actual translations in the future
 common:
-  welcome: 'Welcome!'
+  welcome: 'Bem-vindo(a)!'
   navigation:
-    relics: 'Relics'
-    saints: 'Saints'
-    about: 'About'
+    relics: 'Relíquias'
+    saints: 'Santos'
+    about: 'Sobre'
     search: 'Search...'
   user:
     profile: 'My Profile'
