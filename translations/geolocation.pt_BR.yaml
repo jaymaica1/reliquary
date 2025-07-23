@@ -1,8 +1,8 @@
 # This is a stubbed translation file for Portuguese Brazil
 # It will be populated with actual translations in the future
 geolocation:
-  title: 'Relic Map'
-  description: 'View relics on a world map'
-  allow_location: 'Allow location access to center the map on your position'
-  denied_location: 'Location access denied. Using default map center.'
-  loading: 'Loading map...'
+  title: 'Mapa de Relíquias'
+  description: 'Veja as relíquias no mapa'
+  allow_location: 'Permitir acesso à localização para centralizar o mapa na sua posição'
+  denied_location: 'Acesso à localização negado. Usando o mapa de centro padrão.'
+  loading: 'Carregando o mapa...'
