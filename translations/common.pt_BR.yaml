@@ -19,7 +19,7 @@ common:
     login: 'Entrar'
     signup: 'Cadastre-se'
   footer:
-    view_on_github: 'Veja no GitHub'
+    view_on_github: 'Ver no GitHub'
   languages:
     english: 'Inglês'
     portuguese_brazil: 'Português (Brasil)'
