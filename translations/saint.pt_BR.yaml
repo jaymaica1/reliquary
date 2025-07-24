@@ -49,5 +49,5 @@ saint:
     confirm_delete: 'Tem certeza de que deseja excluir este santo?'
   messages:
     created: 'Santo criado com sucesso'
-    updated: 'Santo enviado com sucesso'
+    updated: 'Santo atualizado com sucesso'
     deleted: 'Santo excluído com sucesso'
