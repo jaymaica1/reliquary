@@ -1,25 +1,24 @@
 # This is a stubbed translation file for Portuguese Brazil
-# It will be populated with actual translations in the future
 common:
-  welcome: 'Welcome!'
+  welcome: 'Bem-vindo(a)!'
   navigation:
-    relics: 'Relics'
-    saints: 'Saints'
-    about: 'About'
-    search: 'Search...'
+    relics: 'Relíquias'
+    saints: 'Santos'
+    about: 'Sobre'
+    search: 'Busca...'
   user:
-    profile: 'My Profile'
-    my_relics: 'My Relics'
-    logout: 'Logout'
+    profile: 'Meu Perfil'
+    my_relics: 'Minhas Relíquias'
+    logout: 'Sair'
   admin:
-    user_management: 'User Management'
-    system_logs: 'System Logs'
-    translation_status: 'Translation Status'
+    user_management: 'Gerenciamento de Usuário'
+    system_logs: 'Logs do Sistema'
+    translation_status: 'Status de Tradução'
   auth:
-    login: 'Login'
-    signup: 'Sign-up'
+    login: 'Entrar'
+    signup: 'Cadastre-se'
   footer:
-    view_on_github: 'View on GitHub'
+    view_on_github: 'Ver no GitHub'
   languages:
-    english: 'English'
+    english: 'Inglês'
     portuguese_brazil: 'Português (Brasil)'

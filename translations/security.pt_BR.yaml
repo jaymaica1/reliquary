@@ -1,13 +1,12 @@
 # This is a stubbed translation file for Portuguese Brazil
-# It will be populated with actual translations in the future
 security:
   login:
-    title: 'Login'
+    title: 'Entrar'
     username: 'Email'
-    password: 'Password'
-    submit: 'Sign in'
-    remember_me: 'Remember me'
-    forgot_password: 'Forgot your password?'
-  logout: 'Logout'
+    password: 'Senha'
+    submit: 'Entrar'
+    remember_me: 'Lembre de mim'
+    forgot_password: 'Esqueceu sua senha?'
+  logout: 'Sair'
   error:
-    invalid_credentials: 'Invalid credentials'
+    invalid_credentials: 'Credenciais inválidas'

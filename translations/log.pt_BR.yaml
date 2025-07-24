@@ -1,17 +1,16 @@
 # This is a stubbed translation file for Portuguese Brazil
-# It will be populated with actual translations in the future
 log:
   title: 'Logs'
-  description: 'System activity logs'
-  no_logs: 'No logs found.'
-  show_title: 'Log Details'
+  description: 'Logs de Atividade do Sistema'
+  no_logs: 'Nenhum log encontrado.'
+  show_title: 'Detalhes do Log'
   table:
-    action: 'Action'
-    entity: 'Entity'
-    entity_id: 'Entity ID'
-    user: 'User'
-    timestamp: 'Timestamp'
-    actions: 'Actions'
+    action: 'Ação'
+    entity: 'Entidade'
+    entity_id: 'ID da Entidade'
+    user: 'Usuário'
+    timestamp: 'Horário'
+    actions: 'Ações'
   actions:
-    view: 'View'
-    back: 'Back to list'
+    view: 'Ver'
+    back: 'Voltar à lista'

@@ -8,7 +8,7 @@ email: 'E-mail'
 verified: 'E-mail Verificado'
 image:
   label: 'Imagem de Perfil'
-  help: 'Envie uma imagem de perfil (JPEG, PNG ou WEBP, máx 2MB)'
+  help: 'Enviar uma imagem de perfil (JPEG, PNG ou WEBP, máx 2MB)'
 save: 'Salvar'
 cancel: 'Cancelar'
 success: 'Perfil atualizado com sucesso'
