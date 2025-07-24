@@ -1,18 +1,18 @@
 # This is a stubbed translation file for Portuguese Brazil
 # It will be populated with actual translations in the future
 registration:
-  title: 'Register'
+  title: 'Cadastrar-se'
   form:
     email: 'Email'
-    password: 'Password'
-    agree_terms: 'I agree to the terms'
-    submit: 'Register'
+    password: 'Senha'
+    agree_terms: 'Eu concordo com os termos'
+    submit: 'Cadastrar-se'
   email:
-    subject: 'Please Confirm your Email'
-    confirm: 'Confirm my Email'
-    hello: 'Hello'
-    message: 'Please confirm your email address by clicking the following link'
+    subject: 'Por favor confirme seu Email'
+    confirm: 'Confirmar meu Email'
+    hello: 'Olá'
+    message: 'Por favor confirme seu endereço de email acessando o seguinte link'
   messages:
-    check_email: 'A confirmation email has been sent to your email address. Please check your inbox and confirm your registration.'
-    email_confirmed: 'Your email address has been verified.'
-    already_verified: 'Your email address has already been verified.'
+    check_email: 'Um email de confirmação foi enviado para o seu endereço de email. Por favor verifique sua caixa de entrada e confirme seu cadastro.'
+    email_confirmed: 'Seu endereço de email foi verificado.'
+    already_verified: 'Seu endereço de email já foi verificado.'
