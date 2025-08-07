@@ -20,7 +20,7 @@ relic:
   table:
     saint: 'Saint'
     address: 'Address'
-    location: 'Specific Location'
+    location: 'Location'
     actions: 'Actions'
     degree: 'Degree'
     added_by: 'Added by'

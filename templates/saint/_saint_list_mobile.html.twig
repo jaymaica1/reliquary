@@ -6,10 +6,22 @@
                 <a href="{{ path('app_saint_show', {'id': saint.id}) }}" class="text-decoration-none" data-turbo-frame="_top">
                     <div class="position-relative">
                         {% if saint.images is defined and saint.images|length > 0 %}
-                            <img src="{{ asset('uploads/images/' ~ saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}"
-                                 alt="{{ saint|format_saint_name }}"
-                                 class="w-100"
-                                 style="height: 180px; object-fit: cover;">
+                            <div data-controller="image-loader">
+                                <!-- Skeleton loader that shows while image is loading -->
+                                <div data-image-loader-target="skeleton" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                                     style="height: 180px;">
+                                    <img src="{{ asset('/images/relic.png') }}" 
+                                         class="w-100 h-100 skeleton-animation" 
+                                         style="object-fit: contain; filter: grayscale(100%);">
+                                </div>
+                                
+                                <!-- Actual image -->
+                                <img data-image-loader-target="image"
+                                     data-action="load->image-loader#imageLoaded"
+                                     src="{{ asset('uploads/images/' ~ saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}"
+                                     class="w-100"
+                                     style="height: 180px; object-fit: cover;">
+                            </div>
                         {% else %}
                             <img src="{{ asset('/images/relic.png') }}"
                                  alt="{{ 'saint.no_image_available'|trans({}, 'saint') }}"

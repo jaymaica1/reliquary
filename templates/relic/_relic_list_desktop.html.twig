@@ -7,10 +7,10 @@
                         <thead class="table-light">
                         <tr>
                             <th style="width: 150px;"></th>
-                            <th>{{ 'relic.table.saint'|trans({}, 'relic') }}</th>
-                            <th>{{ 'relic.table.degree'|trans({}, 'relic') }}</th>
-                            <th>{{ 'relic.table.address'|trans({}, 'relic') }}</th>
-                            <th>{{ 'relic.table.location'|trans({}, 'relic') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'relic.table.saint'|trans({}, 'relic'), 'r.saint.name') }}</th>
+                            <th style="width: 100px">{{ knp_pagination_sortable(pagination, 'relic.table.degree'|trans({}, 'relic'), 'r.degree') }}</th>
+                            <th style="width: 400px">{{ knp_pagination_sortable(pagination, 'relic.table.address'|trans({}, 'relic'), 'r.address') }}</th>
+                            <th style="width: 150px" >{{ knp_pagination_sortable(pagination, 'relic.table.location'|trans({}, 'relic'), 'r.location') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -24,7 +24,6 @@
                                     <div class="me-3">
                                         {% if relic.images|length > 0 %}
                                             <img src="{{ asset('uploads/images/' ~ relic.images.first.thumbnailFilename ?? relic.images.first.filename) }}"
-                                                 alt="{{ 'relic.table.thumbnail'|trans({}, 'relic') }}"
                                                  class="img-thumbnail"
                                                  style="width: 100px; height: 100px; object-fit: cover;">
                                         {% else %}
@@ -35,10 +34,10 @@
                                         {% endif %}
                                     </div>
                                 </td>
-                                <td>{{ relic.saint|format_saint_name }}</td>
-                                <td>{{ relic.degree.titleTransKey|trans({}, 'relic') }}</td>
-                                <td>{{ relic.address }}</td>
-                                <td>{{ relic.location }}</td>
+                                <td class="text-center fw-bold">{{ relic.saint|format_saint_name }}</td>
+                                <td class="text-center">{{ relic.degree.titleTransKey|trans({}, 'relic') }}</td>
+                                <td class="text-nowrap text-truncate" style="max-width: 400px;">{{ relic.address }}</td>
+                                <td class="text-center">{{ relic.location }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

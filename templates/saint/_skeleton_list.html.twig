@@ -1,0 +1,61 @@
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th style="width: 150px;"></th>
+                    <th>
+                        <a class="btn btn-light w-100">
+                            <span class="float-end"><i class="fas fa-sort"></i></span>
+                            <div class="placeholder-glow d-inline-block" style="width: 100px">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                        </a>
+                    </th>
+                    <th style="width: 180px">
+                        <a class="btn btn-light w-100">
+                            <span class="float-end"><i class="fas fa-sort"></i></span>
+                            <div class="placeholder-glow d-inline-block" style="width: 100px">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                        </a>
+                    </th>
+                    <th style="width: 250px">
+                        <a class="btn btn-light w-100  sortable">
+                            <span class="float-end"><i class="fas fa-sort"></i></span>
+                            <div class="placeholder-glow d-inline-block" style="width: 150px">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in range(0, 8) %}
+                    <tr class="cursor-pointer" style="cursor: pointer;">
+                        <td>
+                            {{ include('saint/_skeleton_image.html.twig') }}
+                        </td>
+                        <td class="text-center fw-bold">
+                            <div class="placeholder-glow">
+                                <span class="placeholder col-6"></span>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="placeholder-glow">
+                                <span class="placeholder col-6"></span>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="placeholder-glow">
+                                <span class="placeholder col-6"></span>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

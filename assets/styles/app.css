@@ -133,6 +133,24 @@ body {
     transform: translateY(0);
 }
 
+/* Skeleton animation for image loading */
+.skeleton-animation {
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    opacity: 0.7;
+}
+
+@keyframes skeleton-pulse {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
 /* Mobile navigation styles */
 @media (max-width: 991.98px) {
     .navbar-collapse {

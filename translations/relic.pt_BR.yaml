@@ -22,7 +22,7 @@ relic:
   table:
     saint: 'Santo'
     address: 'Endereço'
-    location: 'Localização Específica'
+    location: 'Localização'
     actions: 'Ações'
     degree: 'Grau'
     added_by: 'Adicionado por'
