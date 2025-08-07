@@ -2,7 +2,7 @@ security:
   login:
     title: 'Login'
     heading: 'Please sign in'
-    username: 'Email'
+    username: 'Username'
     password: 'Password'
     submit: 'Sign in'
     remember_me: 'Remember me'

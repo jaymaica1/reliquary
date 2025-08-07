@@ -4,7 +4,7 @@ security:
   login:
     title: 'Entrar'
     heading: 'Por favor, faça login'
-    username: 'Email'
+    username: 'Nome de usuário'
     password: 'Senha'
     submit: 'Entrar'
     remember_me: 'Lembre de mim'
