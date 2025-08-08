@@ -12,6 +12,17 @@ export default class extends Controller {
     static targets = ['image', 'skeleton'];
 
     connect() {
+        // Guard against missing targets to avoid runtime errors when a template
+        // includes the controller without both targets (e.g., skeleton-only usage)
+        if (!this.hasImageTarget || !this.hasSkeletonTarget) {
+            console.warn('image-loader: missing targets', {
+                hasImage: this.hasImageTarget,
+                hasSkeleton: this.hasSkeletonTarget,
+                element: this.element,
+            });
+            return;
+        }
+
         // If the image has already loaded (from cache) and is valid, show it now
         if (this.imageTarget.complete && this.imageTarget.naturalWidth !== 0) {
             this.showImage();
@@ -26,6 +37,7 @@ export default class extends Controller {
 
     // Stimulus action triggered by the <img> load event: data-action="load->image-loader#imageLoaded"
     imageLoaded() {
+        if (!this.hasImageTarget || !this.hasSkeletonTarget) return;
         this.showImage();
         this.hideSkeleton();
     }
@@ -34,23 +46,27 @@ export default class extends Controller {
     imageError() {
         // Keep skeleton visible or swap to a fallback UI here if needed
         // For now, just keep the skeleton and ensure image stays hidden
-        this.hideImage();
-        this.showSkeleton();
+        if (this.hasImageTarget) this.hideImage();
+        if (this.hasSkeletonTarget) this.showSkeleton();
     }
 
     hideSkeleton() {
+        if (!this.hasSkeletonTarget) return;
         this.skeletonTarget.classList.add('d-none');
     }
 
     showSkeleton() {
+        if (!this.hasSkeletonTarget) return;
         this.skeletonTarget.classList.remove('d-none');
     }
 
     showImage() {
+        if (!this.hasImageTarget) return;
         this.imageTarget.classList.remove('d-none');
     }
 
     hideImage() {
+        if (!this.hasImageTarget) return;
         this.imageTarget.classList.add('d-none');
     }
 }
