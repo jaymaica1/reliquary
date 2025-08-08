@@ -1,3 +1,15 @@
+# [1.59.0](https://github.com/CesarScur/reliquary/compare/v1.58.0...v1.59.0) (2025-08-08)
+
+
+### Bug Fixes
+
+* **translations:** update login field label from 'Email' to 'Username' ([2d74f90](https://github.com/CesarScur/reliquary/commit/2d74f90771c8770646b2a8a4054d761b9a663b74))
+
+
+### Features
+
+* **templates:** add skeleton loaders and enhance image loading experience ([948b601](https://github.com/CesarScur/reliquary/commit/948b6014a56742d5c69a5decbcecfd38d04f2032))
+
 # [1.58.0](https://github.com/CesarScur/reliquary/compare/v1.57.0...v1.58.0) (2025-08-05)
 
 
