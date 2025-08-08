@@ -38,7 +38,12 @@
                         data-responsive-frame-desktop-src-value="{{ title is defined and title == 'relic.my_relics'|trans({}, 'relic') ? path('app_my_relics_desktop', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) : path('app_relic_desktop', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) }}"
                         data-responsive-frame-mobile-src-value="{{ title is defined and title == 'relic.my_relics'|trans({}, 'relic') ? path('app_my_relics_mobile', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) : path('app_relic_mobile', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) }}">
 
-                {{ include('relic/_skeleton_list.html.twig') }}
+                <div class="d-none d-md-block">
+                    {{ include('relic/_skeleton_list.html.twig') }}
+                </div>
+                <div class="d-block d-md-none">
+                    {{ include('relic/_skeleton_list_mobile.html.twig') }}
+                </div>
             </turbo-frame>
         </div>
     </div>

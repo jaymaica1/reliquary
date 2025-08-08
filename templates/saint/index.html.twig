@@ -51,7 +51,12 @@
                              data-controller="responsive-frame"
                              data-responsive-frame-desktop-src-value="{{ path('app_saint_desktop', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) }}"
                              data-responsive-frame-mobile-src-value="{{ path('app_saint_mobile', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) }}">
-{{ include('saint/_skeleton_list.html.twig') }}
+                    <div class="d-none d-md-block">
+                        {{ include('saint/_skeleton_list.html.twig') }}
+                    </div>
+                    <div class="d-block d-md-none">
+                        {{ include('saint/_skeleton_list_mobile.html.twig') }}
+                    </div>
                 </turbo-frame>
             </div>
         </div>
