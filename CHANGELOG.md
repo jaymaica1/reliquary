@@ -1,3 +1,15 @@
+# [1.60.0](https://github.com/CesarScur/reliquary/compare/v1.59.0...v1.60.0) (2025-08-08)
+
+
+### Bug Fixes
+
+* **controllers:** add guards for missing targets in `image_loader_controller` ([2ff21b6](https://github.com/CesarScur/reliquary/commit/2ff21b60d63ab49a837210a003a06e27b2cd6ce7))
+
+
+### Features
+
+* **controllers:** add `image_loader_controller` for skeleton-based image loading ([c065956](https://github.com/CesarScur/reliquary/commit/c065956504a316a7b1f27a2bce9cc61e01bb9e18))
+
 # [1.59.0](https://github.com/CesarScur/reliquary/compare/v1.58.0...v1.59.0) (2025-08-08)
 
 
