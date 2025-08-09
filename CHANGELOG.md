@@ -1,3 +1,10 @@
+## [1.61.1](https://github.com/CesarScur/reliquary/compare/v1.61.0...v1.61.1) (2025-08-09)
+
+
+### Bug Fixes
+
+* **services:** ensure timestamp filters include full date range ([1da8e1e](https://github.com/CesarScur/reliquary/commit/1da8e1e25a0f8a73a7794aa7b862af548ca4d535))
+
 # [1.61.0](https://github.com/CesarScur/reliquary/compare/v1.60.0...v1.61.0) (2025-08-09)
 
 
