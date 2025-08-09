@@ -154,11 +154,11 @@ class AccessLogService
                 }
 
                 if (isset($filters['dateFrom'])) {
-                    $queryBuilder->field('timestamp')->gte(new DateTime($filters['dateFrom']));
+                    $queryBuilder->field('timestamp')->gte(new DateTime($filters['dateFrom'] . ' 00:00:00'));
                 }
 
                 if (isset($filters['dateTo'])) {
-                    $queryBuilder->field('timestamp')->lte(new DateTime($filters['dateTo']));
+                    $queryBuilder->field('timestamp')->lte(new DateTime($filters['dateTo'] . ' 23:59:59'));
                 }
             }
 
@@ -194,11 +194,11 @@ class AccessLogService
                 $matchConditions = [];
 
                 if (isset($filters['dateFrom'])) {
-                    $matchConditions['timestamp']['$gte'] = new DateTime($filters['dateFrom']);
+                    $matchConditions['timestamp']['$gte'] = new \MongoDB\BSON\UTCDateTime(new DateTime($filters['dateFrom'] . ' 00:00:00'));
                 }
 
                 if (isset($filters['dateTo'])) {
-                    $matchConditions['timestamp']['$lte'] = new DateTime($filters['dateTo']);
+                    $matchConditions['timestamp']['$lte'] = new \MongoDB\BSON\UTCDateTime(new DateTime($filters['dateTo'] . ' 23:59:59'));
                 }
 
                 if (!empty($matchConditions)) {
