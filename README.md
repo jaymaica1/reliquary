@@ -91,58 +91,6 @@ For a complete list of releases and changes, please see the [CHANGELOG.md](CHANG
 
 
 ### To do
-* [ ] Add translation file
-* [x] Make the relic form look great
-* [x] Fix create relic error
-* [x] Make the relic view look great
-* [x] Display the Saints listing
-* [x] Add a home page and remove the home link
-* [x] Import Saints
-* [x] Create New Saint does not match Create New Relic standard
-* [x] Add pagination
-* [x] Make pagination look good
-* [x] Is there a way to make pagination more configurable and less declarative?
-* [x] Add geolocation to relics
-* [x] Add an auto-completing address translated into geolocation
-* [x] Add a map interface to see relics around the world
-* [x] Ask for location data and if granted center the map on the person 
-* [x] Configure CI/CD to ignore documentation changes
-* [x] Integrate Watchtower for automated production updates
-* [x] Add `.dockerignore` file for production image optimization
-* [x] Implement semantic release configuration for automated versioning
-* [x] Add asset map compilation step to production Dockerfile
-* [x] Integrate dynamic versioning system across application
-* [x] Add `app:create-user` command to create users via the CLI
-* [x] Simplify environment configuration and update Docker Compose commands
-* [ ] Add a map interface to add relic position
-* [ ] Use turbo frames to increase responsiveness
-* [x] Phone UI
-  * [x] Burger menu
-  * [x] Mobile-friendly relics display
-* [x] Figure out a logo
-* [ ] Add option to add a Saint image
-* [ ] Only admin can access saint creation
-* [x] Add user management panel for admins
-* [ ] Implement a user profile
-* [x] Create custom error pages (404, 403, 500)
-* [ ] Workflow for relic approval
-* [x] Add logs change
-* [x] Add link to CHANGELOG.md in README instead of listing all releases
-* [x] Implement translations
-  * [ ] General translation setup
-    * [x] Create translation directory structure
-    * [ ] Create base translation files
-    * [x] Add locale switcher component
-    * [x] Create locale controller
-    * [x] Update configuration
-  * [x] HomeController translations
-  * [ ] RelicController translations
-  * [ ] SaintController translations
-  * [ ] SecurityController translations
-  * [ ] RegistrationController translations
-  * [ ] UserController translations
-  * [ ] LogController translations
-  * [ ] GeolocationController translations
-  * [ ] AddressAutocompleteController translations
-  * [ ] Check for stray templates (email!)
-  * [x] Add a missing translations visualizer
+* [ ] Add GDPR
+* [ ] Review app source
+* [x] Created new private repo for prod secrets
