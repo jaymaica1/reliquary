@@ -1,3 +1,11 @@
+# [1.61.0](https://github.com/CesarScur/reliquary/compare/v1.60.0...v1.61.0) (2025-08-09)
+
+
+### Features
+
+* **admin:** add access logs statistics page with MongoDB support ([2f356bb](https://github.com/CesarScur/reliquary/commit/2f356bb2ef815e275a6c3ecf5f200af1d0751ba5))
+* **templates:** add mobile skeleton loaders and improve image loading ([fa0bdad](https://github.com/CesarScur/reliquary/commit/fa0bdad0a7d4c6de8e63ef3c75f79299ce72ff44))
+
 # [1.60.0](https://github.com/CesarScur/reliquary/compare/v1.59.0...v1.60.0) (2025-08-08)
 
 
