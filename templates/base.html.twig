@@ -65,6 +65,10 @@
                     <i class="fas fa-circle-exclamation me-2"></i>
                     {{ 'common.admin.system_logs'|trans({}, 'common') }}
                   </a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_admin_access_logs_index') }}">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    Access Logs
+                  </a></li>
                   <li><a class="dropdown-item" href="{{ path('app_admin_translations_missing') }}">
                     <i class="fas fa-code me-2"></i>
                     {{ 'common.admin.translation_status'|trans({}, 'common') }}

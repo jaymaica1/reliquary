@@ -4,6 +4,11 @@ services:
     build:
       context: .
       dockerfile: docker/app/Dockerfile.dev
+    environment:
+      - MONGODB_URL=mongodb://admin:!ChangeMe!@mongodb:27017
+      - MONGODB_DATABASE=reliquary
+      - MONGO_APP_USERNAME=reliquary_user
+      - MONGO_APP_PASSWORD=reliquary_password
     volumes:
       - .:/var/www
       - ./docker/app/php.ini:/usr/local/etc/php/conf.d/app.ini
@@ -12,6 +17,7 @@ services:
       - "8443:443"
     depends_on:
       - database
+      - mongodb
     restart: unless-stopped
 
 ###> doctrine/doctrine-bundle ###
@@ -42,7 +48,27 @@ services:
       - "8025:8025"  # Web UI port
     restart: unless-stopped
 
+  mongodb:
+    image: mongo:${MONGO_VERSION:-7.0}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-!ChangeMe!}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-reliquary}
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand('ping').ok", "--quiet"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - mongodb_data:/data/db:rw
+      - ./docker/mongodb/init:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+
+
 volumes:
 ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
+  mongodb_data:

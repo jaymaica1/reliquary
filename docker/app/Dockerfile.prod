@@ -22,9 +22,9 @@ RUN docker-php-ext-install \
     ctype \
     iconv
 
-# Install Imagick extension
-RUN pecl install imagick && \
-    docker-php-ext-enable imagick
+# Install Imagick and MongoDB extensions
+RUN pecl install imagick mongodb && \
+    docker-php-ext-enable imagick mongodb
 
 # Enable Apache modules
 RUN a2enmod rewrite ssl headers
@@ -65,9 +65,9 @@ RUN docker-php-ext-install \
     ctype \
     iconv
 
-# Install Imagick extension
-RUN pecl install imagick && \
-    docker-php-ext-enable imagick
+# Install Imagick and MongoDB extensions
+RUN pecl install imagick mongodb && \
+    docker-php-ext-enable imagick mongodb
 
 # Enable Apache modules
 RUN a2enmod rewrite ssl headers

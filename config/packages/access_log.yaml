@@ -1,0 +1,50 @@
+parameters:
+    # Access Log PII Protection Configuration
+    # Controls how sensitive data is handled in different environments
+    
+    # Protection level: 'none', 'partial', 'full'
+    # - none: Log all data (development only)
+    # - partial: Mask some sensitive data but keep useful info
+    # - full: Anonymize or remove all PII (production)
+    access_log.pii_protection_level: '%env(default:access_log_pii_protection_default:ACCESS_LOG_PII_PROTECTION)%'
+    access_log_pii_protection_default: 'partial'
+    
+    # Field-specific protection settings
+    access_log.field_protection:
+        # User identification
+        user_id:
+            enabled: true
+            strategy: 'hash' # 'mask', 'hash', 'remove', 'none'
+            mask_length: 8
+        
+        # IP address protection
+        ip_address:
+            enabled: true
+            strategy: 'hash' # Use salted hash for privacy protection
+            
+        # Session management
+        session_id:
+            enabled: true
+            strategy: 'hash'
+            mask_length: 12
+            
+        # Route parameters (may contain sensitive resource IDs)
+        route_params:
+            enabled: true
+            strategy: 'selective' # Only mask params that look like IDs
+            sensitive_patterns: ['id', 'uuid', 'user', 'email']
+            
+        # Request metadata
+        metadata:
+            enabled: true
+            strategy: 'sanitize' # Remove sensitive headers, keep safe ones
+            allowed_fields: ['route', 'method', 'response_code']
+            blocked_headers: ['authorization', 'cookie', 'x-auth-token', 'x-api-key']
+
+services:
+    # PII Protection Configuration Service
+    App\Service\AccessLogPIIProtection:
+        arguments:
+            $protectionLevel: '%access_log.pii_protection_level%'
+            $fieldProtection: '%access_log.field_protection%'
+            $environment: '%kernel.environment%'

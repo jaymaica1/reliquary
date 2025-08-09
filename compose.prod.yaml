@@ -47,8 +47,22 @@ services:
       - "8080:8080"
     command: --http-api-update
 
+  mongodb:
+    image: mongo:7.0
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-reliquary}
+    volumes:
+      - mongodb_data:/data/db:rw
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    # No exposed ports for security - only internal access
+
 volumes:
   database_data:
+  mongodb_data:
   app_logs:
   app_sessions:
   app_images:
