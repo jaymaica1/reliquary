@@ -1,3 +1,12 @@
+# [1.63.0](https://github.com/CesarScur/reliquary/compare/v1.62.0...v1.63.0) (2025-08-12)
+
+
+### Features
+
+* **composer:** add AWS S3 integration dependencies ([0b969ed](https://github.com/CesarScur/reliquary/commit/0b969edfa1994b0a945cc0d54136e426f44f7670))
+* **composer:** add Flysystem bundle integration ([f8cd1f8](https://github.com/CesarScur/reliquary/commit/f8cd1f885c8c08a4d544b3252de74092b701ff36))
+* **static:** add favicon.ico to public directory ([14a6538](https://github.com/CesarScur/reliquary/commit/14a65389bf33363bf9675590951277f174757f30))
+
 # [1.62.0](https://github.com/CesarScur/reliquary/compare/v1.61.1...v1.62.0) (2025-08-12)
 
 
