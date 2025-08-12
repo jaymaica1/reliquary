@@ -19,6 +19,8 @@
         "doctrine/orm": "^3.2",
         "intervention/image": "^3.11",
         "knplabs/knp-paginator-bundle": "^6.8",
+        "league/flysystem": "^3.30",
+        "league/flysystem-aws-s3-v3": "^3.29",
         "sensiolabs/ansi-to-html": "^2.0",
         "symfony/asset": "7.2.*",
         "symfony/asset-mapper": "7.2.*",
