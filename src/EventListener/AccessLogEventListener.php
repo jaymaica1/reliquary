@@ -41,7 +41,7 @@ class AccessLogEventListener implements EventSubscriberInterface
 
         // Skip logging for certain routes to avoid noise
         $route = $request->attributes->get('_route');
-        if ($this->shouldSkipLogging($route)) {
+        if ($this->shouldSkipLogging($request, $route)) {
             return;
         }
 
@@ -78,26 +78,70 @@ class AccessLogEventListener implements EventSubscriberInterface
         );
     }
 
-    private function shouldSkipLogging(?string $route): bool
+    private function shouldSkipLogging(\Symfony\Component\HttpFoundation\Request $request, ?string $route): bool
     {
-        if (!$route) {
-            return false;
+        // 1) Skip known internal/maintenance routes by name when present
+        if ($route) {
+            $skipRoutes = [
+                '_profiler',
+                '_wdt',
+                'app_admin_access_logs_index',
+                'app_admin_access_logs_statistics',
+                'app_admin_access_logs_export',
+                '_fragment',
+            ];
+
+            foreach ($skipRoutes as $skipRoute) {
+                if (str_starts_with($route, $skipRoute)) {
+                    return true;
+                }
+            }
         }
 
-        // Skip logging for these routes
-        $skipRoutes = [
-            '_profiler',
-            '_wdt',
-            'app_admin_access_logs_index',
-            'app_admin_access_logs_statistics',
-            'app_admin_access_logs_export',
-            '_fragment',
-        ];
+        // 2) Skip noise by request method (common preflight/no-content requests)
+        $method = $request->getMethod();
+        if ($method === 'OPTIONS') {
+            return true;
+        }
 
-        foreach ($skipRoutes as $skipRoute) {
-            if (str_starts_with($route, $skipRoute)) {
+        // 3) Skip common static/asset and browser auto-request paths (whether routed or not)
+        $path = $request->getPathInfo() ?? '';
+        $pathLower = strtolower($path);
+
+        // Exact filenames commonly requested by browsers/crawlers
+        $exactSkips = [
+            '/favicon.ico',
+            '/robots.txt',
+            '/site.webmanifest',
+            '/manifest.json',
+        ];
+        if (in_array($pathLower, $exactSkips, true)) {
+            return true;
+        }
+
+        // Prefix-based static content (even if missing -> would otherwise yield unknown_route)
+        $prefixSkips = [
+            '/assets',
+            '/build',
+            '/bundles',
+            '/images',
+            '/img',
+            '/css',
+            '/js',
+            '/fonts',
+        ];
+        foreach ($prefixSkips as $prefix) {
+            if (str_starts_with($pathLower, $prefix)) {
                 return true;
             }
+        }
+
+        // Health/readiness endpoints commonly probed by infra
+        $healthSkips = [
+            '/health', '/healthz', '/ready', '/readyz', '/live', '/livez', '/status', '/ping'
+        ];
+        if (in_array($pathLower, $healthSkips, true)) {
+            return true;
         }
 
         return false;

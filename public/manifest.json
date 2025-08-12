@@ -1,0 +1,9 @@
+{
+  "name": "Reliquary",
+  "short_name": "Reliquary",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Reliquary application manifest"
+}

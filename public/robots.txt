@@ -1,0 +1,3 @@
+# Robots are currently blocked. Update when ready to allow indexing.
+User-agent: *
+Disallow: /
