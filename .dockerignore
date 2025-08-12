@@ -29,3 +29,9 @@ node_modules/
 
 # DO NOT exclude the public/assets directory
 # public/assets/
+
+# Exclude backup files and large unnecessary files
+*.sql
+backup_*
+var/
+!var/.gitkeep
