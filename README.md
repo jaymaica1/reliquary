@@ -94,3 +94,5 @@ For a complete list of releases and changes, please see the [CHANGELOG.md](CHANG
 * [ ] Add GDPR
 * [ ] Review app source
 * [x] Created new private repo for prod secrets
+* [ ] Reduce application Docker image size (multi-stage build, runtime libs only). See docs/infra/image-size-notes.md
+* [ ] Evaluate MongoDB image size and disk usage strategy. See docs/infra/image-size-notes.md
