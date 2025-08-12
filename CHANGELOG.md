@@ -1,3 +1,11 @@
+# [1.62.0](https://github.com/CesarScur/reliquary/compare/v1.61.1...v1.62.0) (2025-08-12)
+
+
+### Features
+
+* **composer:** add MongoDB extension requirement to dependencies ([7bd343e](https://github.com/CesarScur/reliquary/commit/7bd343e8ba5d72c9a667991f447e52a27334e51b))
+* **event-listener:** enhance logging exclusions and add static file handling ([00a2768](https://github.com/CesarScur/reliquary/commit/00a2768216f22a21414473b22882aa38cc8a047c))
+
 ## [1.61.1](https://github.com/CesarScur/reliquary/compare/v1.61.0...v1.61.1) (2025-08-09)
 
 
