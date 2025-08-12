@@ -21,6 +21,7 @@
         "knplabs/knp-paginator-bundle": "^6.8",
         "league/flysystem": "^3.30",
         "league/flysystem-aws-s3-v3": "^3.29",
+        "league/flysystem-bundle": "*",
         "sensiolabs/ansi-to-html": "^2.0",
         "symfony/asset": "7.2.*",
         "symfony/asset-mapper": "7.2.*",
