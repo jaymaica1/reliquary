@@ -63,13 +63,9 @@ COPY translations ./translations
 COPY importmap.php ./
 COPY php.ini ./php.ini
 COPY VERSION ./VERSION
-COPY .env* ./
 
 # Prepare app cache directories (avoid Symfony complaining during build)
 RUN mkdir -p var && chmod -R 777 var
-
-# Regenerate autoloader now that all application files are present
-RUN composer dump-autoload --classmap-authoritative --optimize
 
 # Build Symfony cache and frontend assets in builder
 RUN APP_ENV=prod php bin/console cache:clear --no-warmup
@@ -134,21 +130,13 @@ WORKDIR /var/www
 # Set version environment variable
 ENV APP_VERSION=${APP_VERSION}
 
-# Copy only essential runtime files
-COPY bin ./bin
-COPY config ./config  
-COPY src ./src
-COPY templates ./templates
-COPY translations ./translations
-COPY importmap.php ./importmap.php
-COPY php.ini ./php.ini
-COPY VERSION ./VERSION
-COPY .env* ./
-COPY public ./public
+# Copy application files
+COPY . .
 
 # Copy built vendor and assets from build stage
 COPY --from=build /var/www/vendor ./vendor
 COPY --from=build /var/www/public/assets ./public/assets
+COPY --from=build /var/www/var/asset-map.json ./var/asset-map.json
 
 # Ensure cache is present (already warmed in builder); no need to rebuild
 
