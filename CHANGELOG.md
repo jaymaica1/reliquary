@@ -1,3 +1,11 @@
+## [1.63.1](https://github.com/CesarScur/reliquary/compare/v1.63.0...v1.63.1) (2025-08-12)
+
+
+### Reverts
+
+* Revert "build(Docker): optimize multi-stage build and improve image size" ([c473586](https://github.com/CesarScur/reliquary/commit/c4735868f41d1d67b28058ec95b24138c4ba2d63))
+* Revert "build(Docker): update runtime file copying and optimize autoloader" ([ae94e05](https://github.com/CesarScur/reliquary/commit/ae94e0506033a9b48c173c5a33f7c05c4fd1a3a4))
+
 # [1.63.0](https://github.com/CesarScur/reliquary/compare/v1.62.0...v1.63.0) (2025-08-12)
 
 
