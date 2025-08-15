@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/CesarScur/reliquary/compare/v1.63.1...v2.0.0) (2025-08-15)
+
+
+### Features
+
+* **storage:** integrate AWS S3 and CloudFront for image management ([b611d92](https://github.com/CesarScur/reliquary/commit/b611d92239df878c3f74be1d16fd4ec07bab3c63))
+
+
+### BREAKING CHANGES
+
+* **storage:** Removed reliance on direct local file paths. Applications must configure AWS credentials and CloudFront to ensure compatibility.
+
 ## [1.63.1](https://github.com/CesarScur/reliquary/compare/v1.63.0...v1.63.1) (2025-08-12)
 
 
