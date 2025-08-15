@@ -79,7 +79,7 @@
                                         <i class="fas fa-circle-xmark"></i>
                                     </button>
                                 </div>
-                                <img src="{{ asset('uploads/images/' ~ (image.thumbnailFilename ?? image.filename)) }}" 
+                                <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
                                      alt="Image of saint" 
                                      class="img-thumbnail" 
                                      style="width: 150px; height: 150px; object-fit: cover;">

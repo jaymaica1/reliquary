@@ -13,7 +13,7 @@
                     <div class="card-body text-center">
                         {% set user = form.vars.data %}
                         {% if user.profileImage %}
-                            <img src="{{ asset('uploads/images/' ~ user.profileImage.filename) }}" 
+                            <img src="{{ image_url(user.profileImage.filename) }}"
                                  alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
                                  class="img-fluid rounded-circle mb-3" 
                                  style="width: 150px; height: 150px; object-fit: cover;">

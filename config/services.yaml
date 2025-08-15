@@ -54,20 +54,41 @@ services:
         arguments:
             $appVersion: '%app.version%'
 
+    # Local storage adapter for checking file existence
+    local.storage:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - '@local.adapter'
+
+    local.adapter:
+        class: League\Flysystem\Local\LocalFilesystemAdapter
+        arguments:
+            - '%kernel.project_dir%/public/uploads/images'
+
+    App\Twig\ImageUrlExtension:
+        arguments:
+            $cloudfrontDomain: '%env(default::AWS_CLOUDFRONT_DOMAIN)%'
+            $s3Prefix: '%env(default:empty_string:AWS_S3_PREFIX)%'
+            $localStorage: '@local.storage'
+
     Intervention\Image\ImageManager:
         factory: ['Intervention\Image\ImageManager', 'imagick']
             
     App\Service\ImageService:
         arguments:
-            $uploadDir: '%image_upload_directory%'
+            $defaultStorage: '@default.storage'
             
     App\Service\TranslationAnalyzerService:
         arguments:
             $projectDir: '%kernel.project_dir%'
             
+    # Disable GenerateThumbnailsCommand as it's incompatible with S3-based ImageService
+    # The command relies on local filesystem operations and needs complete refactoring
+    # to work with cloud storage. For now, thumbnails are generated automatically
+    # during upload via ImageService.
     App\Command\GenerateThumbnailsCommand:
-        arguments:
-            $uploadDir: '%image_upload_directory%'
+        autowire: false
+        autoconfigure: false
             
     # Access Log PII Protection Service Configuration
     App\Service\AccessLogPIIProtection:

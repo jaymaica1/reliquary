@@ -10,18 +10,19 @@ use App\Entity\Relic;
 use App\Entity\Saint;
 use App\Entity\User;
 use Intervention\Image\ImageManager;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ImageService
 {
-    private string $uploadDir;
+    private FilesystemOperator $filesystem;
     private SluggerInterface $slugger;
     private ImageManager $imageManager;
 
-    public function __construct(string $uploadDir, SluggerInterface $slugger, ImageManager $imageManager)
+    public function __construct(FilesystemOperator $defaultStorage, SluggerInterface $slugger, ImageManager $imageManager)
     {
-        $this->uploadDir = $uploadDir;
+        $this->filesystem = $defaultStorage;
         $this->slugger = $slugger;
         $this->imageManager = $imageManager;
     }
@@ -96,38 +97,41 @@ class ImageService
     public function deleteImage(AbstractImage $image): void
     {
         // Delete original file
-        $fullPath = $this->uploadDir . '/' . $image->getFilename();
-        if (file_exists($fullPath)) {
-            unlink($fullPath);
+        if ($this->filesystem->fileExists($image->getFilename())) {
+            $this->filesystem->delete($image->getFilename());
         }
         
         // Delete thumbnail file if it exists
-        if ($image->getThumbnailFilename()) {
-            $fullThumbnailPath = $this->uploadDir . '/' . $image->getThumbnailFilename();
-            if (file_exists($fullThumbnailPath)) {
-                unlink($fullThumbnailPath);
-            }
+        if ($image->getThumbnailFilename() && $this->filesystem->fileExists($image->getThumbnailFilename())) {
+            $this->filesystem->delete($image->getThumbnailFilename());
         }
 
-        // Clean up empty directories
-        $dir = dirname($fullPath);
-        if (is_dir($dir) && count(scandir($dir)) <= 2) { // Only . and .. entries
-            rmdir($dir);
-        }
+        // Note: S3 doesn't have directories, so no cleanup needed
     }
 
     /**
-     * Generate a thumbnail for an image
+     * Generate a thumbnail for an image and upload it to S3
      * 
-     * @param string $sourcePath Full path to the source image
-     * @param string $destinationPath Full path where the thumbnail should be saved
+     * @param string $sourcePath Local path to the source image
+     * @param string $thumbnailPath S3 path where the thumbnail should be saved
      */
-    public function generateThumbnail(string $sourcePath, string $destinationPath): void
+    private function generateAndUploadThumbnail(string $sourcePath, string $thumbnailPath): void
     {
+        // Create a temporary file for the thumbnail
+        $tempThumbnailPath = tempnam(sys_get_temp_dir(), 'thumb_');
+        
         $this->imageManager->read($sourcePath)
             ->orient()
             ->coverDown(200, 200)
-            ->save($destinationPath);
+            ->save($tempThumbnailPath);
+            
+        // Upload thumbnail to S3
+        $thumbnailStream = fopen($tempThumbnailPath, 'r');
+        $this->filesystem->writeStream($thumbnailPath, $thumbnailStream);
+        fclose($thumbnailStream);
+        
+        // Clean up temporary file
+        unlink($tempThumbnailPath);
     }
 
     private function processUploadedFile(UploadedFile $file): array
@@ -138,23 +142,20 @@ class ImageService
         $thumbnailFilename = 'thumb_' . $newFilename;
 
         $subDir = $this->getUploadPath($file);
-        $fullDir = $this->uploadDir . '/' . $subDir;
+        $filePath = $subDir . '/' . $newFilename;
+        $thumbnailPath = $subDir . '/' . $thumbnailFilename;
 
-        if (!is_dir($fullDir)) {
-            mkdir($fullDir, 0777, true);
-        }
-
-        $file->move($fullDir, $newFilename);
+        // Upload original file to S3
+        $fileStream = fopen($file->getPathname(), 'r');
+        $this->filesystem->writeStream($filePath, $fileStream);
+        fclose($fileStream);
         
-        // Generate thumbnail
-        $fullPath = $fullDir . '/' . $newFilename;
-        $fullThumbnailPath = $fullDir . '/' . $thumbnailFilename;
-        $this->generateThumbnail($fullPath, $fullThumbnailPath);
-
+        // Generate and upload thumbnail
+        $this->generateAndUploadThumbnail($file->getPathname(), $thumbnailPath);
 
         return [
-            'filename' => $subDir . '/' . $newFilename,
-            'thumbnailFilename' => $subDir . '/' . $thumbnailFilename
+            'filename' => $filePath,
+            'thumbnailFilename' => $thumbnailPath
         ];
     }
 

@@ -33,7 +33,7 @@
                                 <td>
                                     <div class="me-3">
                                         {% if user.profileImage is defined and user.profileImage %}
-                                            <img src="{{ asset('uploads/images/' ~ user.profileImage.filename) }}"
+                                            <img src="{{ image_url(user.profileImage.filename) }}"
                                                  alt="User profile"
                                                  class="img-thumbnail"
                                                  style="width: 100px; height: 100px; object-fit: cover;">

@@ -34,7 +34,7 @@
                                                 <!-- Actual image -->
                                                 <img data-image-loader-target="image"
                                                      data-action="load->image-loader#imageLoaded"
-                                                     src="{{ asset('uploads/images/' ~ saint.images.first.thumbnailFilename ?? saint.images.first.filename ) }}"
+                                                     src="{{ image_url(saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}"
                                                      class="img-thumbnail"
                                                      style="width: 100px; height: 100px; object-fit: cover;">
                                             </div>

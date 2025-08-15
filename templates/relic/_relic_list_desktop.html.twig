@@ -35,7 +35,7 @@
                                                 <!-- Actual image -->
                                                 <img data-image-loader-target="image"
                                                      data-action="load->image-loader#imageLoaded"
-                                                     src="{{ asset('uploads/images/' ~ relic.images.first.thumbnailFilename ?? relic.images.first.filename) }}"
+                                                     src="{{ image_url(relic.images.first.thumbnailFilename ?? relic.images.first.filename) }}"
                                                      class="img-thumbnail"
                                                      style="width: 100px; height: 100px; object-fit: cover;">
                                             </div>

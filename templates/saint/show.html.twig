@@ -11,7 +11,7 @@
                 <div class="position-relative">
                     {% if saint.images is defined and saint.images|length > 0 %}
                         <div class="position-relative">
-                            <img src="{{ asset('uploads/images/' ~ saint.images.first.filename) }}" 
+                            <img src="{{ image_url(saint.images.first.filename) }}" 
                                  alt="{{ saint|format_saint_name }}" 
                                  class="w-100"
                                  style="height: 480px; object-fit: cover; object-position: 0 40%;">
@@ -87,7 +87,7 @@
                             <div class="row">
                                 {% for image in saint.images %}
                                     <div class="col-md-4 mb-3">
-                                        <img src="{{ asset('uploads/images/' ~ (image.thumbnailFilename ?? image.filename)) }}"
+                                        <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
                                              alt="Image of {{ saint|format_saint_name }}" 
                                              class="img-fluid rounded">
                                     </div>

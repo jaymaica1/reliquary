@@ -11,7 +11,7 @@
                 <div class="position-relative">
                     {% if relic.images|length > 0 %}
                         <div class="position-relative">
-                            <img src="{{ asset('uploads/images/' ~ relic.images[0].filename) }}" 
+                            <img src="{{ image_url(relic.images[0].filename) }}"
                                  alt="Image of {{ relic.saint ? relic.saint ~ '\'s' : '' }} relic" 
                                  class="w-100"
                                  style="height: 480px; object-fit: cover; object-position: 0 40%">
@@ -22,7 +22,7 @@
                                     <div class="d-flex align-items-center">
                                         <small class="me-2">{{ 'relic.image_uploaded_by'|trans({}, 'relic') }}:</small>
                                         {% if relic.images[0].uploader.profileImage %}
-                                            <img src="{{ asset('uploads/images/' ~ (relic.images[0].uploader.profileImage.thumbnailFilename ?? relic.images[0].uploader.profileImage.filename)) }}" 
+                                            <img src="{{ image_url(relic.images[0].uploader.profileImage.thumbnailFilename ?? relic.images[0].uploader.profileImage.filename) }}"
                                                  alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
                                                  class="rounded-circle me-2" 
                                                  style="width: 24px; height: 24px; object-fit: cover;">
@@ -60,7 +60,7 @@
                                     {% for image in relic.images|slice(1) %}
                                         <div class="col-md-4 col-sm-6 mb-3">
                                             <div class="card h-100 border-0 shadow-sm">
-                                                <img src="{{ asset('uploads/images/' ~ (image.thumbnailFilename ?? image.filename)) }}" 
+                                                <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
                                                      alt="{{ 'relic.additional_image'|trans({}, 'relic') }}" 
                                                      class="card-img-top"
                                                      style="height: 160px; object-fit: cover;">
@@ -71,7 +71,7 @@
                                                         <small class="text-muted">{{ 'relic.image_uploaded_by'|trans({}, 'relic') }}:</small>
                                                         <div class="d-flex align-items-center mt-1">
                                                             {% if image.uploader.profileImage %}
-                                                                <img src="{{ asset('uploads/images/' ~ (image.uploader.profileImage.thumbnailFilename ?? image.uploader.profileImage.filename)) }}" 
+                                                                <img src="{{ image_url(image.uploader.profileImage.thumbnailFilename ?? image.uploader.profileImage.filename) }}"
                                                                      alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
                                                                      class="rounded-circle me-2" 
                                                                      style="width: 24px; height: 24px; object-fit: cover;">
@@ -172,7 +172,7 @@
                                 <strong>{{ 'relic.table.added_by'|trans({}, 'relic') }}:</strong><br>
                                 <div class="d-flex align-items-center mt-1">
                                     {% if relic.creator.profileImage %}
-                                        <img src="{{ asset('uploads/images/' ~ (relic.creator.profileImage.thumbnailFilename ?? relic.creator.profileImage.filename)) }}" 
+                                        <img src="{{ image_url(relic.creator.profileImage.thumbnailFilename ?? relic.creator.profileImage.filename) }}"
                                              alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
                                              class="rounded-circle me-2" 
                                              style="width: 32px; height: 32px; object-fit: cover;">

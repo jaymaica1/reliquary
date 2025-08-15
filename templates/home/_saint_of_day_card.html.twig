@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-4">
                 {% if saintOfDay.images is defined and saintOfDay.images|length > 0 %}
-                    <img src="{{ asset('uploads/images/' ~ saintOfDay.images.first.filename) }}" 
+                    <img src="{{ image_url(saintOfDay.images.first.filename) }}"
                          alt="{{ saintOfDay|format_saint_name }}" 
                          class="img-fluid rounded"
                          style="max-height: 200px; object-fit: cover;">
