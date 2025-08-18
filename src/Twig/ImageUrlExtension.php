@@ -11,10 +11,9 @@ class ImageUrlExtension extends AbstractExtension
 {
 
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator,
-        private ?string               $cloudfrontDomain = null,
-        private ?string               $s3Prefix = null,
-        private ?FilesystemOperator   $localStorage = null
+        private ?string             $cloudfrontDomain = null,
+        private ?string             $s3Prefix = null,
+        private ?FilesystemOperator $localStorage = null
     )
     {
     }
@@ -32,7 +31,7 @@ class ImageUrlExtension extends AbstractExtension
         if ($this->localStorage !== null) {
             try {
                 if ($this->localStorage->fileExists($imagePath)) {
-                    return "uploads/images/$imagePath";
+                    return "/uploads/images/$imagePath";
                 }
             } catch (\Exception $e) {
                 // If there's an error checking local storage, continue to CloudFront fallback
@@ -47,6 +46,7 @@ class ImageUrlExtension extends AbstractExtension
         }
 
         // Final fallback to local route (for backwards compatibility)
-        return $this->urlGenerator->generate('app_image_serve', ['path' => $imagePath]);
+//        return $this->urlGenerator->generate('app_image_serve', ['path' => $imagePath]);
+        return '';
     }
 }
