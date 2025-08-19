@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/CesarScur/reliquary/compare/v2.0.0...v2.1.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* **twig:** correct local image path and disable fallback url generation ([dbe09ee](https://github.com/CesarScur/reliquary/commit/dbe09ee6116b550ba312d939b7d063033a061c15))
+
+
+### Features
+
+* **admin:** add S3 image migration tool with caching and integrity checks ([15ce515](https://github.com/CesarScur/reliquary/commit/15ce515002498e1bb5f4257129b5e2514180cce8))
+
 # [2.0.0](https://github.com/CesarScur/reliquary/compare/v1.63.1...v2.0.0) (2025-08-15)
 
 
