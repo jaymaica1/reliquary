@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.s3_migration.title'|trans({}, 'admin') }} - {{ 'admin.title'|trans({}, 'admin') }}{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">{{ 'admin.s3_migration.title'|trans({}, 'admin') }}</h1>
+
+            <div class="alert alert-info mb-4">
+                {% if output is null %}
+                <h4 class="alert-heading"><i class="fas fa-cloud-upload-alt me-2"></i>{{ 'admin.s3_migration.info.heading'|trans({}, 'admin') }}</h4>
+                <p class="mb-0">{{ 'admin.s3_migration.info.description'|trans({}, 'admin') }}</p>
+                <ul class="mb-0 mt-2">
+                    <li>{{ 'admin.s3_migration.info.migrate_local'|trans({}, 'admin') }}</li>
+                    <li>{{ 'admin.s3_migration.info.verify_integrity'|trans({}, 'admin') }}</li>
+                    <li>{{ 'admin.s3_migration.info.optional_cleanup'|trans({}, 'admin') }}</li>
+                    <li>{{ 'admin.s3_migration.info.dry_run_available'|trans({}, 'admin') }}</li>
+                </ul>
+                <hr>
+                <p class="mb-0"><strong>{{ 'admin.s3_migration.info.recommendation'|trans({}, 'admin') }}</strong> {{ 'admin.s3_migration.info.dry_run_first'|trans({}, 'admin') }}</p>
+                {% endif %}
+            </div>
+
+            {% if options['delete-local'] and not options['dry-run'] %}
+            <div class="alert alert-danger mb-4">
+                <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>{{ 'admin.s3_migration.warning.heading'|trans({}, 'admin') }}</h4>
+                <p class="mb-0">{{ 'admin.s3_migration.warning.delete_local'|trans({}, 'admin') }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ 'admin.s3_migration.options.title'|trans({}, 'admin') }}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" data-turbo="false">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" id="dry_run" name="dry_run" class="form-check-input" 
+                                           {% if options['dry-run'] %}checked{% endif %}>
+                                    <label for="dry_run" class="form-check-label">{{ 'admin.s3_migration.options.dry_run.label'|trans({}, 'admin') }}</label>
+                                    <div class="form-text">{{ 'admin.s3_migration.options.dry_run.help'|trans({}, 'admin') }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" id="force" name="force" class="form-check-input" 
+                                           {% if options['force'] %}checked{% endif %}>
+                                    <label for="force" class="form-check-label">{{ 'admin.s3_migration.options.force.label'|trans({}, 'admin') }}</label>
+                                    <div class="form-text">{{ 'admin.s3_migration.options.force.help'|trans({}, 'admin') }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" id="delete_local" name="delete_local" class="form-check-input" 
+                                           {% if options['delete-local'] %}checked{% endif %}>
+                                    <label for="delete_local" class="form-check-label text-danger">
+                                        <i class="fas fa-trash me-1"></i>{{ 'admin.s3_migration.options.delete_local.label'|trans({}, 'admin') }}
+                                    </label>
+                                    <div class="form-text text-danger">{{ 'admin.s3_migration.options.delete_local.help'|trans({}, 'admin') }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <a href="{{ path('app_admin_users_index') }}" class="btn btn-outline-secondary">{{ 'admin.back_to_admin'|trans({}, 'admin') }}</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-cloud-upload-alt me-2"></i>{{ 'admin.s3_migration.buttons.migrate'|trans({}, 'admin') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            {% if output is not null and output|length > 0 %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">{{ 'admin.s3_migration.output.title'|trans({}, 'admin') }}</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        {% include 'components/_console.html.twig' with {
+                            'title': 'admin.s3_migration.output.title'|trans({}, 'admin'),
+                            'content': output,
+                            'max_height': 500
+                        } %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

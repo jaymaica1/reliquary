@@ -72,3 +72,34 @@ admin:
         import_translations: 'Importar Traduções'
       output:
         title: 'Saída do Console'
+  
+  # S3 Migration section
+  s3_migration:
+    title: "Migração de Imagens para S3"
+    info:
+      heading: "Migração de Imagens para Armazenamento S3"
+      description: "Esta ferramenta migra imagens locais para o armazenamento em nuvem S3 com verificação de integridade."
+      migrate_local: "Migra imagens que existem localmente mas não no S3"
+      verify_integrity: "Verifica a integridade dos arquivos após o upload usando comparação de tamanho"
+      optional_cleanup: "Opcionalmente exclui arquivos locais após migração bem-sucedida"
+      dry_run_available: "Modo de simulação disponível para visualizar alterações"
+      recommendation: "Recomendação:"
+      dry_run_first: "Sempre execute uma simulação primeiro para ver o que será migrado."
+    warning:
+      heading: "Aviso de Operação Destrutiva"
+      delete_local: "Você habilitou a exclusão de arquivos locais. Os arquivos locais serão removidos permanentemente após migração bem-sucedida."
+    options:
+      title: "Opções de Migração"
+      dry_run:
+        label: "Simulação"
+        help: "Visualizar o que seria migrado sem fazer alterações"
+      force:
+        label: "Forçar Migração"
+        help: "Remigrar imagens mesmo se já existirem no S3"
+      delete_local:
+        label: "Excluir Arquivos Locais"
+        help: "PERIGO: Excluir permanentemente arquivos locais após migração bem-sucedida"
+    buttons:
+      migrate: "Iniciar Migração"
+    output:
+      title: "Resultados da Migração"

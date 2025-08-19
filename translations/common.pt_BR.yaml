@@ -31,6 +31,7 @@ common:
     pending_relics: 'Relíquias Pendentes'
     import_saints: 'Importar Santos'
     import_translations: 'Importar Traduções'
+    s3_migration: 'Migração de Imagens para S3'
   auth:
     login: 'Entrar'
     signup: 'Cadastre-se'

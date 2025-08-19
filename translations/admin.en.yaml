@@ -72,3 +72,34 @@ admin:
         import_translations: 'Import Translations'
       output:
         title: 'Console Output'
+  
+  # S3 Migration section
+  s3_migration:
+    title: "S3 Image Migration"
+    info:
+      heading: "Image Migration to S3 Storage"
+      description: "This tool migrates local images to S3 cloud storage with integrity verification."
+      migrate_local: "Migrates images that exist locally but not in S3"
+      verify_integrity: "Verifies file integrity after upload using size comparison"
+      optional_cleanup: "Optionally deletes local files after successful migration"
+      dry_run_available: "Dry run mode available to preview changes"
+      recommendation: "Recommendation:"
+      dry_run_first: "Always run a dry run first to see what will be migrated."
+    warning:
+      heading: "Destructive Operation Warning"
+      delete_local: "You have enabled local file deletion. Local files will be permanently removed after successful migration."
+    options:
+      title: "Migration Options"
+      dry_run:
+        label: "Dry Run"
+        help: "Preview what would be migrated without making changes"
+      force:
+        label: "Force Migration"
+        help: "Re-migrate images even if they already exist on S3"
+      delete_local:
+        label: "Delete Local Files"
+        help: "DANGER: Permanently delete local files after successful migration"
+    buttons:
+      migrate: "Start Migration"
+    output:
+      title: "Migration Results"

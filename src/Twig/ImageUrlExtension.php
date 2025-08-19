@@ -2,8 +2,8 @@
 
 namespace App\Twig;
 
+use App\Service\CachedFileExistenceService;
 use League\Flysystem\FilesystemOperator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -13,7 +13,8 @@ class ImageUrlExtension extends AbstractExtension
     public function __construct(
         private ?string             $cloudfrontDomain = null,
         private ?string             $s3Prefix = null,
-        private ?FilesystemOperator $localStorage = null
+        private ?FilesystemOperator $localStorage = null,
+        private ?CachedFileExistenceService $cachedFileExistence = null
     )
     {
     }
@@ -28,7 +29,17 @@ class ImageUrlExtension extends AbstractExtension
     public function generateImageUrl(string $imagePath): string
     {
         // Check if image exists in local storage first
-        if ($this->localStorage !== null) {
+        if ($this->localStorage !== null && $this->cachedFileExistence !== null) {
+            try {
+                // Use cached file existence check instead of direct call
+                if ($this->cachedFileExistence->remoteFileExists($this->localStorage, $imagePath)) {
+                    return "/uploads/images/$imagePath";
+                }
+            } catch (\Exception $e) {
+                // If there's an error checking local storage, continue to CloudFront fallback
+            }
+        } elseif ($this->localStorage !== null) {
+            // Fallback to direct check if cache service is not available
             try {
                 if ($this->localStorage->fileExists($imagePath)) {
                     return "/uploads/images/$imagePath";

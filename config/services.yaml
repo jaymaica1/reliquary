@@ -65,11 +65,17 @@ services:
         arguments:
             - '%kernel.project_dir%/public/uploads/images'
 
+    # Cached file existence service
+    App\Service\CachedFileExistenceService:
+        arguments:
+            $cache: '@cache.app'
+
     App\Twig\ImageUrlExtension:
         arguments:
             $cloudfrontDomain: '%env(default::AWS_CLOUDFRONT_DOMAIN)%'
             $s3Prefix: '%env(default:empty_string:AWS_S3_PREFIX)%'
             $localStorage: '@local.storage'
+            $cachedFileExistence: '@App\Service\CachedFileExistenceService'
 
     Intervention\Image\ImageManager:
         factory: ['Intervention\Image\ImageManager', 'imagick']
@@ -90,6 +96,10 @@ services:
         autowire: false
         autoconfigure: false
             
+    App\Command\MigrateImagesToS3Command:
+        arguments:
+            $uploadDir: '%kernel.project_dir%/public/uploads'
+
     # Access Log PII Protection Service Configuration
     App\Service\AccessLogPIIProtection:
         arguments:
