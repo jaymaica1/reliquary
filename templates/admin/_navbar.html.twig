@@ -1,0 +1,81 @@
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo-container">
+            <img src="{{ asset('images/relic.png') }}" alt="{{ 'common.logo'|trans({}, 'common') }}">
+            <h4 class="mb-0">{{ 'common.reliquary'|trans({}, 'common') }}</h4>
+        </div>
+    </div>
+
+    <div class="sidebar-nav">
+        <!-- Dashboard -->
+        <div class="nav-section">
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_dashboard' ? 'active' : '' }}" data-href="{{ path('app_admin_dashboard') }}">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </button>
+        </div>
+
+        <!-- Content Management -->
+        <div class="nav-section">
+            <div class="nav-section-title">Content Management</div>
+            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_saints' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_incomplete') }}">
+                <i class="fas fa-cross"></i>
+                {{ 'common.admin.incomplete_saints'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_pending_relics' ? 'active' : '' }}" data-href="{{ path('app_pending_relics') }}">
+                <i class="fas fa-gem"></i>
+                {{ 'common.admin.pending_relics'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_translations' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_missing') }}">
+                <i class="fas fa-language"></i>
+                {{ 'common.admin.translation_status'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_scan' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_scan') }}">
+                <i class="fas fa-search"></i>
+                {{ 'common.admin.scan_untranslated'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_import' ? 'active' : '' }}" data-href="{{ path('app_admin_import_saints') }}">
+                <i class="fas fa-upload"></i>
+                {{ 'common.admin.import_saints'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_import' ? 'active' : '' }}" data-href="{{ path('app_admin_import_translations') }}">
+                <i class="fas fa-language"></i>
+                {{ 'common.admin.import_translations'|trans({}, 'common') }}
+            </button>
+        </div>
+
+        <!-- Community -->
+        <div class="nav-section">
+            <div class="nav-section-title">Community</div>
+            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_users' ? 'active' : '' }}" data-href="{{ path('app_admin_users_index') }}">
+                <i class="fas fa-users"></i>
+                {{ 'common.admin.user_management'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                Community Activity
+            </button>
+        </div>
+
+        <!-- System -->
+        <div class="nav-section">
+            <div class="nav-section-title">System</div>
+            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_access_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_access_logs_index') }}">
+                <i class="fas fa-shield-alt"></i>
+                Access Logs
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_logs') }}">
+                <i class="fas fa-exclamation-triangle"></i>
+                {{ 'common.admin.system_logs'|trans({}, 'common') }}
+                {% if notificationCount is defined and notificationCount > 0 %}
+                    <span class="badge badge-notification ms-auto">{{ notificationCount }}</span>
+                {% endif %}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_s3_migration' ? 'active' : '' }}" data-href="{{ path('app_admin_s3_migration') }}">
+                <i class="fas fa-cloud-upload-alt"></i>
+                {{ 'common.admin.s3_migration'|trans({}, 'common') }}
+            </button>
+        </div>
+    </div>
+</nav>

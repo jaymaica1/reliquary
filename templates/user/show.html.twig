@@ -1,119 +1,104 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}User Details{% endblock %}
+{% block pageTitle %}User Details{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="mb-4">User Details</h1>
-
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">User Information</h5>
+    <div class="content-section col-md-8 offset-md-2">
+        <div class="section-header">
+            <h5>{{ user.id }} - {{ user.username }} </h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Email:</strong> {{ user.email }}</p>
                 </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>ID:</strong> {{ user.id }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Username:</strong> {{ user.username }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Email:</strong> {{ user.email }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                <strong>Verified:</strong> 
-                                {% if user.isVerified %}
-                                    <span class="badge bg-success">Yes</span>
-                                {% else %}
-                                    <span class="badge bg-warning text-dark">No</span>
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <p>
-                                <strong>Roles:</strong> 
-                                {% for role in user.roles %}
-                                    <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'primary' }}">{{ role }}</span>
-                                {% endfor %}
-                            </p>
-                        </div>
-                    </div>
-
-                    {% if user.latitude and user.longitude %}
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <p><strong>Geolocation:</strong></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Latitude: {{ user.latitude }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Longitude: {{ user.longitude }}</p>
-                        </div>
-                        <div class="col-md-12">
-                            <p>Last Updated: {{ user.geolocationTimestamp ? user.geolocationTimestamp|date('Y-m-d H:i:s') : 'N/A' }}</p>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if user.relics|length > 0 %}
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <p><strong>Relics:</strong></p>
-                            <ul class="list-group">
-                                {% for relic in user.relics %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="{{ path('app_relic_show', {'id': relic.id}) }}">{{ relic.location }}</a>
-                                        <span class="badge bg-primary rounded-pill">{{ relic.saint ? relic.saint.name : 'No saint' }}</span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    {% endif %}
+                <div class="col-md-6">
+                    <p>
+                        <strong>Verified:</strong>
+                        {% if user.isVerified %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">No</span>
+                        {% endif %}
+                    </p>
                 </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ path('app_admin_users_index') }}" class="btn btn-outline-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to list
-                        </a>
-                        <div>
-                            <a href="{{ path('app_admin_users_edit', {'id': user.id}) }}" class="btn btn-primary">
-                                <i class="fas fa-pencil"></i> Edit
-                            </a>
-                            <form method="post" action="{{ path('app_admin_users_reset_password', {'id': user.id}) }}"
-                                  class="d-inline ms-2">
-                                <input type="hidden" name="_token" value="{{ csrf_token('reset-password' ~ user.id) }}">
-                                <button type="submit" class="btn btn-warning"
-                                        onclick="return confirm('Send password reset email to {{ user.email }}?');">
-                                    <i class="fas fa-key"></i> Reset Password
-                                </button>
-                            </form>
-                            {% if app.user != user %}
-                                <form method="post" action="{{ path('app_admin_users_delete', {'id': user.id}) }}"
-                                      onsubmit="return confirm('Are you sure you want to delete this user?');"
-                                      class="d-inline ms-2">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                            </form>
-                            {% endif %}
-                        </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <p>
+                        <strong>Roles:</strong>
+                        {% for role in user.roles %}
+                            <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'primary' }}">{{ role }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+
+            {% if user.latitude and user.longitude %}
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <p><strong>Geolocation:</strong></p>
                     </div>
+                    <div class="col-md-6">
+                        <p>Latitude: {{ user.latitude }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Longitude: {{ user.longitude }}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p>Last
+                            Updated: {{ user.geolocationTimestamp ? user.geolocationTimestamp|date('Y-m-d H:i:s') : 'N/A' }}</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if user.relics|length > 0 %}
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <p><strong>Relics:</strong></p>
+                        <ul class="list-group">
+                            {% for relic in user.relics %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="{{ path('app_relic_show', {'id': relic.id}) }}">{{ relic.location }}</a>
+                                    <span class="badge bg-primary rounded-pill">{{ relic.saint ? relic.saint.name : 'No saint' }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <a href="{{ path('app_admin_users_index') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to list
+                </a>
+                <div>
+                    <a href="{{ path('app_admin_users_edit', {'id': user.id}) }}" class="btn btn-primary">
+                        <i class="fas fa-pencil"></i> Edit
+                    </a>
+                    <form method="post" action="{{ path('app_admin_users_reset_password', {'id': user.id}) }}"
+                          class="d-inline ms-2">
+                        <input type="hidden" name="_token" value="{{ csrf_token('reset-password' ~ user.id) }}">
+                        <button type="submit" class="btn btn-warning"
+                                onclick="return confirm('Send password reset email to {{ user.email }}?');">
+                            <i class="fas fa-key"></i> Reset Password
+                        </button>
+                    </form>
+                    {% if app.user != user %}
+                        <form method="post" action="{{ path('app_admin_users_delete', {'id': user.id}) }}"
+                              onsubmit="return confirm('Are you sure you want to delete this user?');"
+                              class="d-inline ms-2">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

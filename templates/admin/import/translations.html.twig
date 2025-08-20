@@ -1,13 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}{{ 'admin.import.translations.title'|trans({}, 'admin') }} - {{ 'admin.title'|trans({}, 'admin') }}{% endblock %}
+{% block pageTitle %}{{ 'admin.import.translations.title'|trans({}, 'admin') }}{% endblock %}
 
 {% block stylesheets %}
 {{ parent() }}
 {% endblock %}
 
 {% block body %}
-<div class="container my-4">
     <div class="row">
         <div class="col-12">
             <h1 class="mb-4">{{ 'admin.import.translations.title'|trans({}, 'admin') }}</h1>
@@ -28,8 +28,8 @@
                     {% endif %}
                 </div>
             
-            <div class="card mb-4">
-                <div class="card-header">
+            <div class="content-section">
+                <div class="section-header">
                     <h5 class="mb-0">{{ 'admin.import.translations.options.title'|trans({}, 'admin') }}</h5>
                 </div>
                 <div class="card-body">
@@ -79,5 +79,4 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

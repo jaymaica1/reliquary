@@ -1,105 +1,72 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}Access Logs - Admin{% endblock %}
+{% block pageTitle %}Access Logs Management{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5 fw-bold">Access Logs Management</h1>
-            <p class="text-muted">Monitor and analyze system access logs with advanced filtering and security insights.</p>
-        </div>
-    </div>
-
-    <!-- Statistics Dashboard -->
     {% if statistics %}
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4 class="card-title">{{ statistics.totalAccesses ?? 0 }}</h4>
-                            <p class="card-text">Total Accesses</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-chart-line fa-2x"></i>
-                        </div>
-                    </div>
+        <div class="dashboard-widgets">
+            <div class="widget-card primary-accent">
+                <div class="widget-number">{{ statistics.totalAccesses ?? 0 }}</div>
+                <div class="widget-label">Total Accesses</div>
+                <div class="widget-trend">
+                    <i class="fas fa-chart-line me-1"></i>
+                    All Time
+                </div>
+            </div>
+
+            <div class="widget-card gold-accent">
+                <div class="widget-number">{{ statistics.uniqueUsers ?? 0 }}</div>
+                <div class="widget-label">Unique Users</div>
+                <div class="widget-trend">
+                    <i class="fas fa-users me-1"></i>
+                    Active
+                </div>
+            </div>
+
+            <div class="widget-card success-accent">
+                <div class="widget-number">
+                    {% set successCount = 0 %}
+                    {% if statistics.actionBreakdown %}
+                        {% for item in statistics.actionBreakdown %}
+                            {% if item.severity == 'success' or item.severity == 'info' %}
+                                {% set successCount = successCount + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {{ successCount }}
+                </div>
+                <div class="widget-label">Successful Actions</div>
+                <div class="widget-trend">
+                    <i class="fas fa-check-circle me-1"></i>
+                    Normal
+                </div>
+            </div>
+
+            <div class="widget-card red-accent">
+                <div class="widget-number">
+                    {% set warningCount = 0 %}
+                    {% if statistics.actionBreakdown %}
+                        {% for item in statistics.actionBreakdown %}
+                            {% if item.severity == 'warning' or item.severity == 'failure' %}
+                                {% set warningCount = warningCount + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {{ warningCount }}
+                </div>
+                <div class="widget-label">Warnings/Failures</div>
+                <div class="widget-trend">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    Requires Review
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4 class="card-title">{{ statistics.uniqueUsers ?? 0 }}</h4>
-                            <p class="card-text">Unique Users</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-users fa-2x"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4 class="card-title">
-                                {% set successCount = 0 %}
-                                {% if statistics.actionBreakdown %}
-                                    {% for item in statistics.actionBreakdown %}
-                                        {% if item.severity == 'success' or item.severity == 'info' %}
-                                            {% set successCount = successCount + 1 %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                                {{ successCount }}
-                            </h4>
-                            <p class="card-text">Successful Actions</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-check-circle fa-2x"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card bg-warning text-dark">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4 class="card-title">
-                                {% set warningCount = 0 %}
-                                {% if statistics.actionBreakdown %}
-                                    {% for item in statistics.actionBreakdown %}
-                                        {% if item.severity == 'warning' or item.severity == 'failure' %}
-                                            {% set warningCount = warningCount + 1 %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                                {{ warningCount }}
-                            </h4>
-                            <p class="card-text">Warnings/Failures</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-exclamation-triangle fa-2x"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     {% endif %}
 
     <!-- Filters -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-header">
+    <div class="content-section">
+        <div class="section-header">
             <h5 class="card-title mb-0">
                 <i class="fas fa-filter me-2"></i>Filters & Actions
             </h5>
@@ -164,7 +131,7 @@
     </div>
 
     <!-- Access Logs Table -->
-    <div class="card shadow-sm">
+    <div class="content-section">
         <div class="card-body">
             {% if access_logs is empty %}
                 <div class="text-center py-4 text-muted">
@@ -303,5 +270,4 @@
             </form>
         </div>
     </div>
-</div>
 {% endblock %}

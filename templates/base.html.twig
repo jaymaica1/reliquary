@@ -57,45 +57,9 @@
                   <li><a class="dropdown-item" href="{{ path('app_my_relics') }}">{{ 'common.user.my_relics'|trans({}, 'common') }}</a></li>
                   {% if is_granted('ROLE_ADMIN') %}
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_users_index') }}">
-                    <i class="fas fa-users me-2"></i>
-                    {{ 'common.admin.user_management'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_logs') }}">
-                    <i class="fas fa-circle-exclamation me-2"></i>
-                    {{ 'common.admin.system_logs'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_access_logs_index') }}">
-                    <i class="fas fa-shield-alt me-2"></i>
-                    Access Logs
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_translations_missing') }}">
-                    <i class="fas fa-code me-2"></i>
-                    {{ 'common.admin.translation_status'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_translations_scan') }}">
-                    <i class="fas fa-search me-2"></i>
-                    {{ 'common.admin.scan_untranslated'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_saints_incomplete') }}">
-                    <i class="fas fa-triangle-exclamation me-2"></i>
-                    {{ 'common.admin.incomplete_saints'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_pending_relics') }}">
-                    <i class="fas fa-circle-exclamation me-2"></i>
-                    {{ 'common.admin.pending_relics'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_import_saints') }}">
-                    <i class="fas fa-file-import me-2"></i>
-                    {{ 'common.admin.import_saints'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_import_translations') }}">
-                    <i class="fas fa-language me-2"></i>
-                    {{ 'common.admin.import_translations'|trans({}, 'common') }}
-                  </a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_admin_s3_migration') }}">
-                    <i class="fas fa-cloud-upload-alt me-2"></i>
-                    {{ 'common.admin.s3_migration'|trans({}, 'common') }}
+                  <li><a class="dropdown-item" href="{{ path('app_admin_dashboard') }}">
+                    <i class="fas fa-gauge-high me-2"></i>
+                    Admin Dashboard
                   </a></li>
                   {% endif %}
                   <li><hr class="dropdown-divider"></li>

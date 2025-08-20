@@ -1,23 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}User Management{% endblock %}
+{% block pageTitle %}User Management{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5 fw-bold">User Management</h1>
-            <p class="text-muted">Manage your users</p>
-        </div>
-    </div>
-
-
-    <div class="card shadow-sm">
-        <div class="card-body">
+    <div class="content-section">
             {% if users|length > 0 %}
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle">
-                        <thead class="table-dark">
+                    <table class="table table-hover">
+                        <thead>
                             <tr>
                                 <th style="width: 150px;"></th>
                                 <th scope="col">Username</th>
@@ -148,5 +139,4 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

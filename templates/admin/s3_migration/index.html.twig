@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}{{ 'admin.s3_migration.title'|trans({}, 'admin') }} - {{ 'admin.title'|trans({}, 'admin') }}{% endblock %}
+{% block pageTitle %}{{ 'admin.s3_migration.title'|trans({}, 'admin') }}{% endblock %}
 
 {% block body %}
-<div class="container my-4">
     <div class="row">
         <div class="col-12">
             <h1 class="mb-4">{{ 'admin.s3_migration.title'|trans({}, 'admin') }}</h1>
@@ -30,8 +30,8 @@
             </div>
             {% endif %}
             
-            <div class="card mb-4">
-                <div class="card-header">
+            <div class="content-section">
+                <div class="section-header">
                     <h5 class="mb-0">{{ 'admin.s3_migration.options.title'|trans({}, 'admin') }}</h5>
                 </div>
                 <div class="card-body">
@@ -93,5 +93,4 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

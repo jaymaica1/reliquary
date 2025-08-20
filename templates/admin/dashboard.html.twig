@@ -1,0 +1,323 @@
+{% extends 'admin_base.html.twig' %}
+{% block title %}Dashboard {% endblock %}
+{% block pageTitle %}Dashboard{% endblock %}
+
+{% block body %}
+    <div class="dashboard-widgets">
+        <div class="widget-card">
+            <div class="widget-number">7</div>
+            <div class="widget-label">Pending Relic Approvals</div>
+            <div class="widget-trend">
+                <i class="fas fa-arrow-up me-1"></i>
+                2 new this week
+            </div>
+        </div>
+
+        <div class="widget-card gold-accent">
+            <div class="widget-number">847</div>
+            <div class="widget-label">Active Community Members</div>
+            <div class="widget-trend">
+                <i class="fas fa-arrow-up me-1"></i>
+                +12% this month
+            </div>
+        </div>
+
+        <div class="widget-card success-accent">
+            <div class="widget-number">23</div>
+            <div class="widget-label">Saints Added This Month</div>
+            <div class="widget-trend">
+                <i class="fas fa-chart-line me-1"></i>
+                On track
+            </div>
+        </div>
+
+        <div class="widget-card">
+            <div class="widget-number">73%</div>
+            <div class="widget-label">Translation Progress</div>
+            <div class="progress-custom mt-2">
+                <div class="progress-bar-custom" style="width: 73%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="content-section">
+        <div class="section-header">
+            <h5 class="mb-0">
+                <i class="fas fa-clock me-2 text-primary"></i>
+                Recent Activity
+            </h5>
+            <button class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-eye"></i>
+                View All
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Action</th>
+                    <th>Item</th>
+                    <th>Status</th>
+                    <th>Admin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>10 min ago</td>
+                    <td><i class="fas fa-shield-check text-success me-2"></i>Relic Approved</td>
+                    <td>First-Class Relic of St. Francis</td>
+                    <td><span class="status-badge status-approved">Approved</span></td>
+                    <td>Admin Maria</td>
+                </tr>
+                <tr>
+                    <td>25 min ago</td>
+                    <td><i class="fas fa-cross text-primary me-2"></i>Saint Added</td>
+                    <td>St. Teresa of Calcutta Biography</td>
+                    <td><span class="status-badge status-approved">Published</span></td>
+                    <td>Admin João</td>
+                </tr>
+                <tr>
+                    <td>1 hour ago</td>
+                    <td><i class="fas fa-language text-warning me-2"></i>Translation Updated</td>
+                    <td>Portuguese - St. Padre Pio</td>
+                    <td><span class="status-badge status-pending">In Review</span></td>
+                    <td>Admin Carlos</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Urgent Items Alert -->
+    <div class="alert alert-custom" role="alert">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-exclamation-circle me-3 fs-4"></i>
+            <div>
+                <strong>Action Required:</strong> 7 relic submissions are awaiting approval.
+                <button class="btn btn-sm btn-outline-warning ms-2" data-content="relics">
+                    Review Now
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Relics Approval Content -->
+    <div id="relics-content" style="display: none;">
+        <div class="content-section">
+            <div class="section-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-gem me-2 text-warning"></i>
+                    Relic Approval Queue
+                </h5>
+                <div>
+                    <button class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i>
+                        Add Relic
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Relic</th>
+                        <th>Saint</th>
+                        <th>Type</th>
+                        <th>Submitted By</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%23f59e0b'/%3E%3Cpath d='M20 12l3 6h6l-5 4 2 6-6-4-6 4 2-6-5-4h6l3-6z' fill='white'/%3E%3C/svg%3E"
+                                     class="me-2" style="width: 32px; height: 32px;">
+                                <span>Sacred Cloth Fragment</span>
+                            </div>
+                        </td>
+                        <td>St. Francis of Assisi</td>
+                        <td><span class="badge bg-primary">First-Class</span></td>
+                        <td>Fr. Antonio Silva</td>
+                        <td>2 days ago</td>
+                        <td><span class="status-badge status-pending">Pending Review</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-success me-1" data-bs-toggle="modal"
+                                    data-bs-target="#approvalModal">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-sm btn-warning me-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%233b82f6'/%3E%3Cpath d='M12 18h16v4H12v-4z' fill='white'/%3E%3C/svg%3E"
+                                     class="me-2" style="width: 32px; height: 32px;">
+                                <span>Bone Fragment</span>
+                            </div>
+                        </td>
+                        <td>St. Padre Pio</td>
+                        <td><span class="badge bg-primary">First-Class</span></td>
+                        <td>Diocese of Rome</td>
+                        <td>3 days ago</td>
+                        <td><span class="status-badge status-pending">Pending Review</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-success me-1" data-bs-toggle="modal"
+                                    data-bs-target="#approvalModal">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-sm btn-warning me-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saints Management Content -->
+    <div id="saints-content" style="display: none;">
+        <div class="content-section">
+            <div class="section-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-cross me-2 text-primary"></i>
+                    Saints Management
+                </h5>
+                <div>
+                    <button class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i>
+                        Add Saint
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="widget-card">
+                        <div class="widget-number">156</div>
+                        <div class="widget-label">Total Saints</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="widget-card gold-accent">
+                        <div class="widget-number">23</div>
+                        <div class="widget-label">Incomplete Profiles</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="widget-card success-accent">
+                        <div class="widget-number">8</div>
+                        <div class="widget-label">Recently Added</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Saint</th>
+                        <th>Feast Day</th>
+                        <th>Patron Of</th>
+                        <th>Translation Status</th>
+                        <th>Relics</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23f59e0b'/%3E%3Cpath d='M20 8l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6l2-6z' fill='white'/%3E%3C/svg%3E"
+                                     class="me-2" style="width: 32px; height: 32px;">
+                                <div>
+                                    <strong>St. Francis of Assisi</strong><br>
+                                    <small class="text-muted">Francesco di Bernardone</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>October 4</td>
+                        <td>Animals, Environment</td>
+                        <td>
+                            <div class="progress-custom">
+                                <div class="progress-bar-custom" style="width: 85%"></div>
+                            </div>
+                            <small class="text-muted">85% Complete</small>
+                        </td>
+                        <td><span class="badge bg-success">12</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info me-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning">
+                                <i class="fas fa-language"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%233b82f6'/%3E%3Cpath d='M20 8l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6l2-6z' fill='white'/%3E%3C/svg%3E"
+                                     class="me-2" style="width: 32px; height: 32px;">
+                                <div>
+                                    <strong>St. Teresa of Calcutta</strong><br>
+                                    <small class="text-muted">Mother Teresa</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>September 5</td>
+                        <td>Poor, Missionaries</td>
+                        <td>
+                            <div class="progress-custom">
+                                <div class="progress-bar-custom" style="width: 60%"></div>
+                            </div>
+                            <small class="text-muted">60% Complete</small>
+                        </td>
+                        <td><span class="badge bg-success">8</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info me-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning">
+                                <i class="fas fa-language"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

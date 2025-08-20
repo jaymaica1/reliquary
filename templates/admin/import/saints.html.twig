@@ -1,107 +1,111 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}{{ 'admin.import.saints.title'|trans({}, 'admin') }} - {{ 'admin.title'|trans({}, 'admin') }}{% endblock %}
+{% block pageTitle %}{{ 'admin.import.saints.title'|trans({}, 'admin') }}{% endblock %}
 
 {% block stylesheets %}
-{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block body %}
-<div class="container my-4">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="mb-4">{{ 'admin.import.saints.title'|trans({}, 'admin') }}</h1>
+    <div class="alert alert-danger mb-4">
+        {% if output is null %}
+            <h4 class="alert-heading"><i
+                        class="fas fa-exclamation-triangle me-2"></i>{{ 'admin.import.saints.warning.heading'|trans({}, 'admin') }}
+            </h4>
+            <p class="mb-0">{{ 'admin.import.saints.warning.description'|trans({}, 'admin') }}</p>
+            <ul class="mb-0 mt-2">
+                <li>{{ 'admin.import.saints.warning.data_corruption'|trans({}, 'admin') }}</li>
+                <li>{{ 'admin.import.saints.warning.duplicate_entries'|trans({}, 'admin') }}</li>
+                <li>{{ 'admin.import.saints.warning.data_loss'|trans({}, 'admin') }}</li>
+                <li>{{ 'admin.import.saints.warning.sequence_issues'|trans({}, 'admin') }}</li>
+            </ul>
+            <hr>
+            <p class="mb-0">
+                <strong>{{ 'admin.import.saints.warning.proceed_warning'|trans({}, 'admin') }}</strong> {{ 'admin.import.saints.warning.dry_run_suggestion'|trans({}, 'admin') }}
+            </p>
+        {% else %}
+            <h4 class="alert-heading"><i
+                        class="fas fa-exclamation-triangle me-2"></i>{{ 'admin.import.saints.warning.too_late'|trans({}, 'admin') }}
+            </h4>
+        {% endif %}
+    </div>
 
-                <div class="alert alert-danger mb-4">
-                    {% if output is null %}
-                    <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>{{ 'admin.import.saints.warning.heading'|trans({}, 'admin') }}</h4>
-                    <p class="mb-0">{{ 'admin.import.saints.warning.description'|trans({}, 'admin') }}</p>
-                    <ul class="mb-0 mt-2">
-                        <li>{{ 'admin.import.saints.warning.data_corruption'|trans({}, 'admin') }}</li>
-                        <li>{{ 'admin.import.saints.warning.duplicate_entries'|trans({}, 'admin') }}</li>
-                        <li>{{ 'admin.import.saints.warning.data_loss'|trans({}, 'admin') }}</li>
-                        <li>{{ 'admin.import.saints.warning.sequence_issues'|trans({}, 'admin') }}</li>
-                    </ul>
-                    <hr>
-                    <p class="mb-0"><strong>{{ 'admin.import.saints.warning.proceed_warning'|trans({}, 'admin') }}</strong> {{ 'admin.import.saints.warning.dry_run_suggestion'|trans({}, 'admin') }}</p>
-                    {% else %}
-                        <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>{{ 'admin.import.saints.warning.too_late'|trans({}, 'admin') }}</h4>
-                    {% endif %}
-                </div>
-            
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">{{ 'admin.import.saints.options.title'|trans({}, 'admin') }}</h5>
-                </div>
-                <div class="card-body">
-                    <form method="POST" data-turbo="false">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="limit" class="form-label">{{ 'admin.import.saints.options.limit.label'|trans({}, 'admin') }}</label>
-                                    <input type="number" id="limit" name="limit" class="form-control" 
-                                           value="{{ options.limit }}" min="1"
-                                           placeholder="{{ 'admin.import.saints.options.limit.placeholder'|trans({}, 'admin') }}">
-                                    <div class="form-text">{{ 'admin.import.saints.options.limit.help'|trans({}, 'admin') }}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="batch_size" class="form-label">{{ 'admin.import.saints.options.batch_size.label'|trans({}, 'admin') }}</label>
-                                    <input type="number" id="batch_size" name="batch_size" class="form-control" 
-                                           value="{{ options['batch-size'] }}" min="1" required>
-                                    <div class="form-text">{{ 'admin.import.saints.options.batch_size.help'|trans({}, 'admin') }}</div>
-                                </div>
-                            </div>
+    <div class="content-section">
+        <div class="section-header">
+            <h5 class="mb-0">{{ 'admin.import.saints.options.title'|trans({}, 'admin') }}</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" data-turbo="false">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="limit"
+                                   class="form-label">{{ 'admin.import.saints.options.limit.label'|trans({}, 'admin') }}</label>
+                            <input type="number" id="limit" name="limit" class="form-control"
+                                   value="{{ options.limit }}" min="1"
+                                   placeholder="{{ 'admin.import.saints.options.limit.placeholder'|trans({}, 'admin') }}">
+                            <div class="form-text">{{ 'admin.import.saints.options.limit.help'|trans({}, 'admin') }}</div>
                         </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" id="reset_sequence" name="reset_sequence" class="form-check-input" 
-                                           {% if options['reset-sequence'] %}checked{% endif %}>
-                                    <label for="reset_sequence" class="form-check-label">{{ 'admin.import.saints.options.reset_sequence.label'|trans({}, 'admin') }}</label>
-                                    <div class="form-text">{{ 'admin.import.saints.options.reset_sequence.help'|trans({}, 'admin') }}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" id="dry_run" name="dry_run" class="form-check-input" 
-                                           {% if options['dry-run'] %}checked{% endif %}>
-                                    <label for="dry_run" class="form-check-label">{{ 'admin.import.saints.options.dry_run.label'|trans({}, 'admin') }}</label>
-                                    <div class="form-text">{{ 'admin.import.saints.options.dry_run.help'|trans({}, 'admin') }}</div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="batch_size"
+                                   class="form-label">{{ 'admin.import.saints.options.batch_size.label'|trans({}, 'admin') }}</label>
+                            <input type="number" id="batch_size" name="batch_size" class="form-control"
+                                   value="{{ options['batch-size'] }}" min="1" required>
+                            <div class="form-text">{{ 'admin.import.saints.options.batch_size.help'|trans({}, 'admin') }}</div>
                         </div>
-                        
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <a href="{{ path('app_admin_users_index') }}" class="btn btn-outline-secondary me-2">{{ 'admin.back_to_admin'|trans({}, 'admin') }}</a>
-                                <a href="{{ path('app_admin_import_translations') }}" class="btn btn-outline-info">
-                                    <i class="fas fa-language me-1"></i>{{ 'admin.import.saints.buttons.import_translations'|trans({}, 'admin') }}
-                                </a>
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-file-import me-2"></i>{{ 'admin.import.saints.buttons.import_saints'|trans({}, 'admin') }}
-                            </button>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-check mb-3">
+                            <input type="checkbox" id="reset_sequence" name="reset_sequence" class="form-check-input"
+                                   {% if options['reset-sequence'] %}checked{% endif %}>
+                            <label for="reset_sequence"
+                                   class="form-check-label">{{ 'admin.import.saints.options.reset_sequence.label'|trans({}, 'admin') }}</label>
+                            <div class="form-text">{{ 'admin.import.saints.options.reset_sequence.help'|trans({}, 'admin') }}</div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check mb-3">
+                            <input type="checkbox" id="dry_run" name="dry_run" class="form-check-input"
+                                   {% if options['dry-run'] %}checked{% endif %}>
+                            <label for="dry_run"
+                                   class="form-check-label">{{ 'admin.import.saints.options.dry_run.label'|trans({}, 'admin') }}</label>
+                            <div class="form-text">{{ 'admin.import.saints.options.dry_run.help'|trans({}, 'admin') }}</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            {% if output is not null and output|length > 0 %}
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    {# Header content can be added here if needed #}
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a href="{{ path('app_admin_users_index') }}"
+                           class="btn btn-outline-secondary me-2">{{ 'admin.back_to_admin'|trans({}, 'admin') }}</a>
+                        <a href="{{ path('app_admin_import_translations') }}" class="btn btn-outline-info">
+                            <i class="fas fa-language me-1"></i>{{ 'admin.import.saints.buttons.import_translations'|trans({}, 'admin') }}
+                        </a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-file-import me-2"></i>{{ 'admin.import.saints.buttons.import_saints'|trans({}, 'admin') }}
+                    </button>
                 </div>
-                <div class="card-body p-0">
-                    {% include 'components/_console.html.twig' with {
-                        'title': 'admin.import.saints.output.title'|trans({}, 'admin'),
-                        'content': output,
-                        'max_height': 500
-                    } %}
-                </div>
-            {% endif %}
+            </form>
         </div>
     </div>
-</div>
+
+    {% if output is not null and output|length > 0 %}
+        <div class="card-header d-flex justify-content-between align-items-center">
+            {# Header content can be added here if needed #}
+        </div>
+        <div class="card-body p-0">
+            {% include 'components/_console.html.twig' with {
+                'title': 'admin.import.saints.output.title'|trans({}, 'admin'),
+                'content': output,
+                'max_height': 500
+            } %}
+        </div>
+    {% endif %}
 {% endblock %}

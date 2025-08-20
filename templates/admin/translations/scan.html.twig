@@ -1,113 +1,103 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}{{ title }}{% endblock %}
+{% block pageTitle %}{{ title }}{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    <h1 class="mb-4">{{ title }}</h1>
-    
-    {# Filter form #}
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Filter by Directory</h5>
-            <form method="get" action="{{ path('app_admin_translations_scan') }}" class="row g-3">
-                <div class="col-md-6">
-                    <input type="text" class="form-control" id="directory" name="directory" 
-                           placeholder="e.g., relic, saint, etc." value="{{ directory }}">
+    <div class="dashboard-widgets">
+        {% if results.total_count is defined %}
+            <div class="widget-card gold-accent col-1">
+                <div class="widget-number">{{ results.total_count }}</div>
+                <div class="widget-label">Untranslated strings</div>
+                <div class="widget-trend">
+                    <i class="fas fa-file-alt"></i>
+                    <strong>{{ results.total_files }}</strong> files.
                 </div>
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="{{ path('app_admin_translations_scan') }}" class="btn btn-outline-secondary">Clear</a>
-                </div>
-            </form>
-        </div>
+            </div>
+        {% endif %}
     </div>
-    
-    {# Statistics #}
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Statistics</h5>
-            {% if results.total_count is defined %}
-                <p>Found <strong>{{ results.total_count }}</strong> untranslated strings in <strong>{{ results.total_files }}</strong> files.</p>
-            {% else %}
-                <p>Found untranslated strings in <strong>{{ results|length }}</strong> files.</p>
-            {% endif %}
-        </div>
+
+    <div class="content-section">
+        <h5 class="section-header">Filter by Directory</h5>
+        <form method="get" action="{{ path('app_admin_translations_scan') }}" class="row g-3">
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="directory" name="directory"
+                       placeholder="e.g., relic, saint, etc." value="{{ directory }}">
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="{{ path('app_admin_translations_scan') }}" class="btn btn-outline-secondary">Clear</a>
+            </div>
+        </form>
     </div>
-    
-    {# Results #}
+
     {% if results is empty %}
         <div class="alert alert-info">No untranslated strings found.</div>
     {% else %}
         {% set untranslatedStrings = results.untranslated_strings is defined ? results.untranslated_strings : results %}
-        
+
         {% for file, strings in untranslatedStrings %}
-            <div class="card mb-4">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0">{{ file }}</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Text</th>
-                                    <th>Suggested Key</th>
-                                    <th>Translation Code</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for string in strings %}
-                                    <tr>
-                                        <td>{{ string.text }}</td>
-                                        <td><code>{{ string.full_key }}</code></td>
-                                        <td>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control form-control-sm" 
-                                                       value="{{ string.translation_code }}" readonly>
-                                                <button class="btn btn-sm btn-outline-secondary copy-btn" 
-                                                        type="button" data-clipboard-text="{{ string.translation_code }}">
-                                                    <i class="fas fa-copy"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="content-section">
+                <h5 class="section-header">{{ file }}</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Text</th>
+                            <th>Suggested Key</th>
+                            <th>Translation Code</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for string in strings %}
+                            <tr>
+                                <td>{{ string.text }}</td>
+                                <td><code>{{ string.full_key }}</code></td>
+                                <td>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm"
+                                               value="{{ string.translation_code }}" readonly>
+                                        <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                type="button" data-clipboard-text="{{ string.translation_code }}">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         {% endfor %}
     {% endif %}
-    
+
     <div class="d-flex justify-content-between mt-4">
         <a href="{{ path('app_admin_translations_missing') }}" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left"></i> Back to Missing Translations
         </a>
     </div>
-</div>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize clipboard.js for copy buttons
-        if (typeof ClipboardJS !== 'undefined') {
-            new ClipboardJS('.copy-btn');
-            
-            // Add tooltip feedback when copied
-            document.querySelectorAll('.copy-btn').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    const originalText = btn.innerHTML;
-                    btn.innerHTML = '<i class="fas fa-check"></i>';
-                    setTimeout(function() {
-                        btn.innerHTML = originalText;
-                    }, 1500);
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize clipboard.js for copy buttons
+            if (typeof ClipboardJS !== 'undefined') {
+                new ClipboardJS('.copy-btn');
+
+                // Add tooltip feedback when copied
+                document.querySelectorAll('.copy-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = '<i class="fas fa-check"></i>';
+                        setTimeout(function () {
+                            btn.innerHTML = originalText;
+                        }, 1500);
+                    });
                 });
-            });
-        }
-    });
-</script>
+            }
+        });
+    </script>
 {% endblock %}

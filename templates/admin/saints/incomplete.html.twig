@@ -1,17 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}{{ 'admin.saints.incomplete.title'|trans({}, 'admin') }}{% endblock %}
+{% block pageTitle %}{{ 'admin.saints.incomplete.title'|trans({}, 'admin') }}{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5 fw-bold">{{ 'admin.saints.incomplete.title'|trans({}, 'admin') }}</h1>
-            <p class="text-muted">{{ 'admin.saints.incomplete.description'|trans({}, 'admin') }}</p>
-        </div>
-    </div>
-
-    <div class="card shadow-sm">
+    <div class="content-section">
         <div class="card-body">
             {% if pagination.items is empty %}
                 <div class="text-center py-4 text-muted">
@@ -70,5 +63,4 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

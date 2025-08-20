@@ -1,153 +1,122 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block title %}Access Logs Statistics - Admin{% endblock %}
 
+{% block pageTitle %}Access Logs Statistics{% endblock %}
+
 {% block body %}
-<div class="container py-4">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5 fw-bold">Access Logs Statistics</h1>
-            <p class="text-muted">Detailed analytics and insights from system access logs.</p>
+    <div class="dashboard-widgets">
+        <div class="widget-card">
+            <div class="widget-number">{{ statistics.totalAccesses ?? 0 }}</div>
+            <div class="widget-label">Total Access Events</div>
+            <div class="widget-trend">
+                {{ filters.dateFrom ?? 'All time' }} - {{ filters.dateTo ?? 'Present' }}
+            </div>
         </div>
-        <div class="col-auto">
-            <a href="{{ path('app_admin_access_logs_index') }}" class="btn btn-outline-primary">
-                <i class="fas fa-arrow-left me-1"></i>Back to Access Logs
-            </a>
+
+        <div class="widget-card gold-accent">
+            <div class="widget-number">{{ statistics.uniqueUsers ?? 0 }}</div>
+            <div class="widget-label">Unique Users</div>
+            <div class="widget-trend">
+                Distinct user identifiers
+            </div>
+        </div>
+
+        <div class="widget-card success-accent">
+            {% set successCount = 0 %}
+            {% if statistics.actionBreakdown %}
+                {% for item in statistics.actionBreakdown %}
+                    {% if item.severity == 'success' or item.severity == 'info' %}
+                        {% set successCount = successCount + 1 %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <div class="widget-number">{{ successCount }}</div>
+            <div class="widget-label">Successful Actions</div>
+            <div class="widget-trend">
+                Success
+                rate: {{ statistics.totalAccesses > 0 ? ((successCount / statistics.totalAccesses) * 100)|round(1) : 0 }}
+                %
+            </div>
+        </div>
+
+        <div class="widget-card warning-accent">
+            {% set warningCount = 0 %}
+            {% if statistics.actionBreakdown %}
+                {% for item in statistics.actionBreakdown %}
+                    {% if item.severity == 'warning' or item.severity == 'failure' %}
+                        {% set warningCount = warningCount + 1 %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <div class="widget-number">{{ warningCount }}</div>
+            <div class="widget-label">Warnings/Errors</div>
+            <div class="widget-trend">
+                Error
+                rate: {{ statistics.totalAccesses > 0 ? ((warningCount / statistics.totalAccesses) * 100)|round(1) : 0 }}
+                %
+            </div>
         </div>
     </div>
 
-    <!-- Date Range Filter -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-header">
-            <h5 class="card-title mb-0">
-                <i class="fas fa-calendar me-2"></i>Date Range Filter
+    <div class="content-section">
+        <div class="section-header">
+            <h5>
+                <i class="fas fa-calendar"></i>Date Range Filter
             </h5>
         </div>
-        <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-4">
-                    <label for="date_from" class="form-label">From Date</label>
-                    <input type="date" class="form-control" id="date_from" name="date_from" 
-                           value="{{ filters.dateFrom ?? '' }}">
-                </div>
-                <div class="col-md-4">
-                    <label for="date_to" class="form-label">To Date</label>
-                    <input type="date" class="form-control" id="date_to" name="date_to" 
-                           value="{{ filters.dateTo ?? '' }}">
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2">
-                        <i class="fas fa-search me-1"></i>Update Statistics
-                    </button>
-                    <a href="{{ path('app_admin_access_logs_statistics') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-times me-1"></i>Reset
-                    </a>
-                </div>
-            </form>
-        </div>
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <label for="date_from" class="form-label">From Date</label>
+                <input type="date" class="form-control" id="date_from" name="date_from"
+                       value="{{ filters.dateFrom ?? '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="date_to" class="form-label">To Date</label>
+                <input type="date" class="form-control" id="date_to" name="date_to"
+                       value="{{ filters.dateTo ?? '' }}">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">
+                    <i class="fas fa-search me-1"></i>Update Statistics
+                </button>
+                <a href="{{ path('app_admin_access_logs_statistics') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-times me-1"></i>Reset
+                </a>
+            </div>
+        </form>
     </div>
 
-    <!-- Main Statistics Cards -->
-    <div class="row mb-4">
-        <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card bg-primary text-white h-100">
-                <div class="card-body text-center">
-                    <i class="fas fa-chart-line fa-3x mb-3"></i>
-                    <h2 class="card-title">{{ statistics.totalAccesses ?? 0 }}</h2>
-                    <p class="card-text">Total Access Events</p>
-                    <small class="text-white-50">
-                        {{ filters.dateFrom ?? 'All time' }} - {{ filters.dateTo ?? 'Present' }}
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card bg-info text-white h-100">
-                <div class="card-body text-center">
-                    <i class="fas fa-users fa-3x mb-3"></i>
-                    <h2 class="card-title">{{ statistics.uniqueUsers ?? 0 }}</h2>
-                    <p class="card-text">Unique Users</p>
-                    <small class="text-white-50">
-                        Distinct user identifiers
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card bg-success text-white h-100">
-                <div class="card-body text-center">
-                    <i class="fas fa-check-circle fa-3x mb-3"></i>
-                    <h2 class="card-title">
-                        {% set successCount = 0 %}
-                        {% if statistics.actionBreakdown %}
-                            {% for item in statistics.actionBreakdown %}
-                                {% if item.severity == 'success' or item.severity == 'info' %}
-                                    {% set successCount = successCount + 1 %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                        {{ successCount }}
-                    </h2>
-                    <p class="card-text">Successful Actions</p>
-                    <small class="text-white-50">
-                        Success rate: {{ statistics.totalAccesses > 0 ? ((successCount / statistics.totalAccesses) * 100)|round(1) : 0 }}%
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card bg-warning text-dark h-100">
-                <div class="card-body text-center">
-                    <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
-                    <h2 class="card-title">
-                        {% set warningCount = 0 %}
-                        {% if statistics.actionBreakdown %}
-                            {% for item in statistics.actionBreakdown %}
-                                {% if item.severity == 'warning' or item.severity == 'failure' %}
-                                    {% set warningCount = warningCount + 1 %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                        {{ warningCount }}
-                    </h2>
-                    <p class="card-text">Warnings/Errors</p>
-                    <small class="text-dark-50">
-                        Error rate: {{ statistics.totalAccesses > 0 ? ((warningCount / statistics.totalAccesses) * 100)|round(1) : 0 }}%
-                    </small>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Action Breakdown -->
     {% if statistics.actionBreakdown %}
-    <div class="row mb-4">
-        <div class="col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-list me-2"></i>Action Breakdown
-                    </h5>
-                </div>
-                <div class="card-body">
-                    {% set actionCounts = {} %}
-                    {% for item in statistics.actionBreakdown %}
-                        {% set action = item.action %}
-                        {% set actionCounts = actionCounts|merge({(action): (actionCounts[action] ?? 0) + 1}) %}
-                    {% endfor %}
-                    
-                    {% if actionCounts %}
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-list me-2"></i>Action Breakdown
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% set actionCounts = {} %}
+                        {% for item in statistics.actionBreakdown %}
+                            {% set action = item.action %}
+                            {% set actionCounts = actionCounts|merge({(action): (actionCounts[action] ?? 0) + 1}) %}
+                        {% endfor %}
+
+                        {% if actionCounts %}
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
                                     <tr>
                                         <th>Action</th>
                                         <th>Count</th>
                                         <th>Percentage</th>
                                         <th>Visual</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    </thead>
+                                    <tbody>
                                     {% for action, count in actionCounts|sort|reverse %}
                                         {% set percentage = (count / statistics.totalAccesses) * 100 %}
                                         <tr>
@@ -155,59 +124,60 @@
                                             <td><strong>{{ count }}</strong></td>
                                             <td>{{ percentage|round(1) }}%</td>
                                             <td>
-                                                <div class="progress" style="height: 20px;">
-                                                    <div class="progress-bar bg-primary" role="progressbar" 
-                                                         style="width: {{ percentage }}%" 
-                                                         aria-valuenow="{{ percentage }}" 
-                                                         aria-valuemin="0" aria-valuemax="100">
-                                                    </div>
+                                                <div class="progress-custom mt-2">
+                                                    <div class="progress-bar-custom"
+                                                         style="width: {{ percentage }}%"></div>
                                                 </div>
                                             </td>
                                         </tr>
                                     {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <p class="text-muted">No action data available for the selected period.</p>
-                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No action data available for the selected period.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-chart-pie me-2"></i>Severity Distribution
-                    </h5>
-                </div>
-                <div class="card-body">
+            <div class="col-lg-4">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-chart-pie me-2"></i>Severity Distribution
+                        </h5>
+                    </div>
                     {% set severityCounts = {} %}
                     {% for item in statistics.actionBreakdown %}
                         {% set severity = item.severity %}
                         {% set severityCounts = severityCounts|merge({(severity): (severityCounts[severity] ?? 0) + 1}) %}
                     {% endfor %}
-                    
+
                     {% if severityCounts %}
-                        {% for severity, count in severityCounts %}
+                        {% for severity, count in severityCounts|sort((a, b) => b - a) %}
                             {% set percentage = (count / statistics.totalAccesses) * 100 %}
                             {% set severityClass = {
                                 'info': 'info',
-                                'success': 'success', 
+                                'success': 'success',
                                 'warning': 'warning',
                                 'failure': 'danger'
                             } %}
                             <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="col-1">
+
                                 <span class="badge bg-{{ severityClass[severity] ?? 'secondary' }} me-2">
                                     {{ severity|title }}
                                 </span>
-                                <div class="flex-grow-1 mx-2">
-                                    <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-{{ severityClass[severity] ?? 'secondary' }}" 
-                                             style="width: {{ percentage }}%"></div>
-                                    </div>
                                 </div>
-                                <small class="text-muted">{{ count }} ({{ percentage|round(1) }}%)</small>
+                                <div class="col-10">
+                                    <div class="progress-custom mt-2">
+                                        <div class="progress-bar-custom" style="width: {{ percentage }}%"></div>
+                                    </div>
+
+                                </div>
+                                <div class="col-1 floa">
+                                    <small class="text-muted">{{ count }} ({{ percentage|round(1) }}%)</small>
+                                </div>
                             </div>
                         {% endfor %}
                     {% else %}
@@ -216,84 +186,78 @@
                 </div>
             </div>
         </div>
-    </div>
     {% endif %}
 
     <!-- Activity Timeline (if we have date-based data) -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-header">
+    <div class="content-section">
+        <div class="section-header">
             <h5 class="card-title mb-0">
                 <i class="fas fa-clock me-2"></i>Activity Overview
             </h5>
         </div>
-        <div class="card-body">
-            {% if statistics.totalAccesses > 0 %}
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6 class="text-muted">Period Summary</h6>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-calendar-day text-primary me-2"></i>
-                                <strong>Date Range:</strong> 
-                                {{ filters.dateFrom ?? 'All time' }} to {{ filters.dateTo ?? 'Present' }}
-                            </li>
-                            <li><i class="fas fa-chart-line text-success me-2"></i>
-                                <strong>Total Events:</strong> {{ statistics.totalAccesses }}
-                            </li>
-                            <li><i class="fas fa-users text-info me-2"></i>
-                                <strong>Unique Users:</strong> {{ statistics.uniqueUsers }}
-                            </li>
-                            <li><i class="fas fa-calculator text-secondary me-2"></i>
-                                <strong>Avg per User:</strong> 
-                                {{ statistics.uniqueUsers > 0 ? (statistics.totalAccesses / statistics.uniqueUsers)|round(2) : 0 }}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="text-muted">Security Insights</h6>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-shield-alt text-success me-2"></i>
-                                <strong>IP Addresses:</strong> Hashed for privacy (GDPR compliant)
-                            </li>
-                            <li><i class="fas fa-user-shield text-info me-2"></i>
-                                <strong>Session Tracking:</strong> Session IDs are hashed
-                            </li>
-                            <li><i class="fas fa-clock text-warning me-2"></i>
-                                <strong>Retention:</strong> Logs auto-expire after 1 year
-                            </li>
-                            <li><i class="fas fa-lock text-primary me-2"></i>
-                                <strong>Access Control:</strong> Admin only access
-                            </li>
-                        </ul>
-                    </div>
+        {% if statistics.totalAccesses > 0 %}
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-muted">Period Summary</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-calendar-day text-primary me-2"></i>
+                            <strong>Date Range:</strong>
+                            {{ filters.dateFrom ?? 'All time' }} to {{ filters.dateTo ?? 'Present' }}
+                        </li>
+                        <li><i class="fas fa-chart-line text-success me-2"></i>
+                            <strong>Total Events:</strong> {{ statistics.totalAccesses }}
+                        </li>
+                        <li><i class="fas fa-users text-info me-2"></i>
+                            <strong>Unique Users:</strong> {{ statistics.uniqueUsers }}
+                        </li>
+                        <li><i class="fas fa-calculator text-secondary me-2"></i>
+                            <strong>Avg per User:</strong>
+                            {{ statistics.uniqueUsers > 0 ? (statistics.totalAccesses / statistics.uniqueUsers)|round(2) : 0 }}
+                        </li>
+                    </ul>
                 </div>
-            {% else %}
-                <div class="text-center py-4 text-muted">
-                    <i class="fas fa-chart-line fa-2x mb-2"></i>
-                    <p>No data available for the selected period.</p>
-                    <p class="small">Try adjusting the date range or check if access logging is properly configured.</p>
+                <div class="col-md-6">
+                    <h6 class="text-muted">Security Insights</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-shield-alt text-success me-2"></i>
+                            <strong>IP Addresses:</strong> Hashed for privacy (GDPR compliant)
+                        </li>
+                        <li><i class="fas fa-user-shield text-info me-2"></i>
+                            <strong>Session Tracking:</strong> Session IDs are hashed
+                        </li>
+                        <li><i class="fas fa-clock text-warning me-2"></i>
+                            <strong>Retention:</strong> Logs auto-expire after 1 year
+                        </li>
+                        <li><i class="fas fa-lock text-primary me-2"></i>
+                            <strong>Access Control:</strong> Admin only access
+                        </li>
+                    </ul>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+            <div class="text-center py-4 text-muted">
+                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                <p>No data available for the selected period.</p>
+                <p class="small">Try adjusting the date range or check if access logging is properly configured.</p>
+            </div>
+        {% endif %}
     </div>
 
     <!-- Export Options -->
-    <div class="card shadow-sm">
-        <div class="card-header">
+    <div class="content-section">
+        <div class="section-header">
             <h5 class="card-title mb-0">
                 <i class="fas fa-download me-2"></i>Export Data
             </h5>
         </div>
-        <div class="card-body">
-            <p class="text-muted mb-3">Export access logs and statistics for external analysis or reporting.</p>
-            <div class="btn-group">
-                <a href="{{ path('app_admin_access_logs_export', filters) }}" class="btn btn-success">
-                    <i class="fas fa-file-csv me-1"></i>Export as CSV
-                </a>
-                <a href="{{ path('app_admin_access_logs_index', filters) }}" class="btn btn-outline-primary">
-                    <i class="fas fa-table me-1"></i>View Raw Data
-                </a>
-            </div>
+        <p class="text-muted mb-3">Export access logs and statistics for external analysis or reporting.</p>
+        <div class="btn-group">
+            <a href="{{ path('app_admin_access_logs_export', filters) }}" class="btn btn-success">
+                <i class="fas fa-file-csv me-1"></i>Export as CSV
+            </a>
+            <a href="{{ path('app_admin_access_logs_index', filters) }}" class="btn btn-outline-primary">
+                <i class="fas fa-table me-1"></i>View Raw Data
+            </a>
         </div>
     </div>
-</div>
 {% endblock %}
