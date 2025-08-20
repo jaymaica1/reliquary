@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/CesarScur/reliquary/compare/v2.1.0...v2.2.0) (2025-08-20)
+
+
+### Features
+
+* **twig:** introduce shared admin base layout ([73ec793](https://github.com/CesarScur/reliquary/commit/73ec79348aad441f5ff06f7fffc993aaa39dd211))
+
 # [2.1.0](https://github.com/CesarScur/reliquary/compare/v2.0.0...v2.1.0) (2025-08-19)
 
 
