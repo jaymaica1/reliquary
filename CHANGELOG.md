@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/CesarScur/reliquary/compare/v2.2.0...v2.3.0) (2025-08-21)
+
+
+### Features
+
+* **command:** add `--no-interaction` option to S3 migration ([e3e4ba9](https://github.com/CesarScur/reliquary/commit/e3e4ba9d8e2763edda146e06db90a75daec76596))
+
 # [2.2.0](https://github.com/CesarScur/reliquary/compare/v2.1.0...v2.2.0) (2025-08-20)
 
 
