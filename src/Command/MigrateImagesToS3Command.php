@@ -61,6 +61,12 @@ class MigrateImagesToS3Command extends Command
                 InputOption::VALUE_NONE,
                 'Delete local files after successful migration (includes integrity verification)'
             )
+            ->addOption(
+                'no-interaction',
+                'n',
+                InputOption::VALUE_NONE,
+                'Do not ask any interactive questions'
+            )
             ->setHelp('This command migrates local images to S3 storage. Local images are identified by checking if they exist in the local uploads directory. Use --dry-run to see what would be migrated without performing the actual migration. Use --delete-local to remove local files after successful migration with verification.');
     }
 
@@ -77,7 +83,7 @@ class MigrateImagesToS3Command extends Command
             $deleteLocal = false;
         }
 
-        if ($deleteLocal && !$dryRun) {
+        if ($deleteLocal && !$dryRun && !$input->getOption('no-interaction')) {
             $io->warning('You have enabled --delete-local. Local files will be permanently deleted after successful S3 migration.');
             if (!$io->confirm('Are you sure you want to proceed? This action cannot be undone.', false)) {
                 $io->note('Operation cancelled by user.');

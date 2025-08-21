@@ -53,6 +53,7 @@ class AdminS3MigrationController extends AbstractController
                 '--dry-run' => $options['dry-run'],
                 '--force' => $options['force'],
                 '--delete-local' => $options['delete-local'],
+                '-n' => true
             ]);
 
             // Capture the command output with maximum verbosity
