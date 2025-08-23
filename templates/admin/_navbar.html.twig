@@ -27,7 +27,7 @@
                 <i class="fas fa-gem"></i>
                 {{ 'common.admin.pending_relics'|trans({}, 'common') }}
             </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_translations' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_missing') }}">
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_missing' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_missing') }}">
                 <i class="fas fa-language"></i>
                 {{ 'common.admin.translation_status'|trans({}, 'common') }}
             </button>
@@ -35,11 +35,11 @@
                 <i class="fas fa-search"></i>
                 {{ 'common.admin.scan_untranslated'|trans({}, 'common') }}
             </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_import' ? 'active' : '' }}" data-href="{{ path('app_admin_import_saints') }}">
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_import_saints' ? 'active' : '' }}" data-href="{{ path('app_admin_import_saints') }}">
                 <i class="fas fa-upload"></i>
                 {{ 'common.admin.import_saints'|trans({}, 'common') }}
             </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_import' ? 'active' : '' }}" data-href="{{ path('app_admin_import_translations') }}">
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_import_translations' ? 'active' : '' }}" data-href="{{ path('app_admin_import_translations') }}">
                 <i class="fas fa-language"></i>
                 {{ 'common.admin.import_translations'|trans({}, 'common') }}
             </button>
