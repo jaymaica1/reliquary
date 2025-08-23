@@ -12,14 +12,14 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body id="admin">
+<body id="admin" data-controller="admin-base">
     {{ include('admin/_navbar.html.twig') }}
     <!-- Main Content -->
-    <div class="main-content" id="mainContent">
+    <div class="main-content" id="mainContent" data-admin-base-target="mainContent">
         <!-- Top Navigation -->
         <header class="top-navbar">
             <div class="d-flex align-items-center">
-                <button class="btn btn-link text-dark p-0 me-3" id="toggleSidebar">
+                <button class="btn btn-link text-dark p-0 me-3" data-action="click->admin-base#toggleSidebar" data-admin-base-target="toggleButton">
                     <i class="fas fa-bars"></i>
                 </button>
                 <h5 class="mb-0" id="pageTitle">{% block pageTitle %}{{ 'common.admin.dashboard_overview'|trans({}, 'common') }}{% endblock %}</h5>
@@ -64,40 +64,6 @@
     </div>
 
     {% block footer_javascripts %}
-    <script>
-        // Toggle Sidebar
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('sidebar-collapsed');
-            document.getElementById('mainContent').classList.toggle('expanded');
-        });
-
-        // Responsive behavior for sidebar
-        function handleResize() {
-            if (window.innerWidth < 768) {
-                document.getElementById('sidebar').classList.remove('sidebar-collapsed');
-                document.getElementById('mainContent').classList.remove('expanded');
-            }
-        }
-
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initialize on page load
-
-        // Sidebar nav-link button navigation
-        document.querySelectorAll('#sidebar .nav-link[data-href]').forEach(function(btn) {
-            btn.addEventListener('click', function () {
-                const href = this.getAttribute('data-href');
-                if (href) {
-                    window.location.href = href;
-                }
-            });
-            btn.addEventListener('keydown', function (e) {
-                if ((e.key === 'Enter' || e.key === ' ') && this.getAttribute('data-href')) {
-                    e.preventDefault();
-                    window.location.href = this.getAttribute('data-href');
-                }
-            });
-        });
-    </script>
     {% endblock %}
 </body>
 </html>
