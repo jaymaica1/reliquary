@@ -1,0 +1,88 @@
+# Landing page translations
+title: 'Reliquary - A Sacred Digital Repository'
+
+nav:
+  browse_relics: 'Browse Relics'
+  saints: 'Saints'
+  submit_relic: 'Submit Relic'
+  about: 'About'
+  contact: 'Contact'
+
+hero:
+  subtitle: 'A Sacred Digital Repository'
+  description: 'Preserving and venerating the physical connections to holiness through time. Explore authenticated relics, discover the lives of saints, and deepen your spiritual journey through our carefully curated collection of sacred artifacts.'
+  explore_collection: 'Explore Collection'
+  submit_relic: 'Submit a Relic'
+  join_now: 'Join Now'
+
+classes:
+  title: 'Classes of Relics'
+  subtitle: 'Understanding the Sacred Hierarchy of Veneration'
+  first:
+    title: 'First-Class Relics'
+    description: 'Physical remains of saints including bones, hair, and blood. These most precious relics provide the closest physical connection to the holy person.'
+  second:
+    title: 'Second-Class Relics'
+    description: 'Items owned or frequently used by saints during their lifetime, such as clothing, books, rosaries, or instruments of their martyrdom.'
+  third:
+    title: 'Third-Class Relics'
+    description: 'Objects that have been touched to first-class relics, allowing the faithful to venerate saints through blessed items.'
+
+saints:
+  title: 'Featured Saints'
+  subtitle: 'Discover the Lives of the Holy'
+  francis:
+    name: 'St. Francis of Assisi'
+    dates: '1181 - 1226'
+    bio: 'Founder of the Franciscan Order, known for his devotion to nature, the poor, and peace. Received the stigmata in 1224.'
+  teresa:
+    name: 'St. Teresa of Ávila'
+    dates: '1515 - 1582'
+    bio: 'Spanish mystic, reformer of the Carmelite Order, and Doctor of the Church. Known for her spiritual writings on contemplative prayer.'
+  aquinas:
+    name: 'St. Thomas Aquinas'
+    dates: '1225 - 1274'
+    bio: 'Dominican friar, philosopher, and theologian. Author of the Summa Theologica, one of the most influential works in Western philosophy.'
+  catherine:
+    name: 'St. Catherine of Siena'
+    dates: '1347 - 1380'
+    bio: 'Mystic, activist, and Doctor of the Church. Played a significant role in returning the papacy from Avignon to Rome.'
+
+cta:
+  title: 'Join Our Sacred Mission'
+  text: 'Help us preserve and share these precious connections to holiness. Whether you are a scholar, collector, or faithful devotee, your contribution helps build this digital sanctuary for future generations.'
+  create_account: 'Create Account'
+  learn_more: 'Learn More'
+
+contact:
+  title: 'Contact Us'
+  subtitle: 'Get in touch with our team for questions, submissions, or collaboration opportunities'
+  info:
+    title: 'Contact Information'
+    email: 'Email:'
+    mission: 'Our Mission:'
+    mission_text: 'We are dedicated to preserving and sharing sacred relics for the faithful worldwide. Your inquiries and contributions help us build this digital sanctuary.'
+    response: 'Response Time:'
+    response_text: 'We typically respond within 24-48 hours. For urgent matters regarding relic authentication, please mark your subject accordingly.'
+  form:
+    title: 'Send us a Message'
+    name: 'Full Name'
+    email: 'Email Address'
+    subject: 'Subject'
+    select_subject: 'Please select a subject'
+    subjects:
+      relic_submission: 'Relic Submission'
+      authentication: 'Relic Authentication'
+      general_inquiry: 'General Inquiry'
+      technical_support: 'Technical Support'
+      partnership: 'Partnership Opportunity'
+    message: 'Message'
+    send: 'Send Message'
+
+footer:
+  privacy: 'Privacy Policy'
+  terms: 'Terms of Use'
+  guidelines: 'Submission Guidelines'
+  authentication: 'Authentication Process'
+  support: 'Support'
+  copyright: 'Reliquary Project. Dedicated to the preservation and veneration of sacred relics.'

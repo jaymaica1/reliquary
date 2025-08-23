@@ -22,6 +22,15 @@ use Knp\Component\Pager\PaginatorInterface;
 final class HomeController extends AbstractController
 {
     private const DEFAULT_RADIUS_KM = 45;
+    #[Route('/', name: 'app_landing')]
+    public function landing(SaintRepository $saintRepository): Response
+    {
+        $featuredSaints = $saintRepository->findFeatured();
+
+        return $this->render('home/landing.html.twig', [
+            'featuredSaints' => $featuredSaints,
+        ]);
+    }
 
     #[Route('/', name: 'app_home')]
     public function index(RelicRepository $relicRepository, SaintRepository $saintRepository, Request $request, Security $security, LocationResolverService $locationResolver): Response

@@ -1,0 +1,98 @@
+{% extends 'landing_base.html.twig' %}
+
+{% block title %}{{ 'home.title'|trans({}, 'home') }} - {{ 'home.welcome'|trans({}, 'home') }}{% endblock %}
+
+{% block body %}
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ 'common.reliquary'|trans({}, 'common') }}</h1>
+            <p class="hero-subtitle">{{ 'hero.subtitle'|trans({}, 'landing') }}</p>
+            <p class="hero-description">
+                {{ 'hero.description'|trans({}, 'landing') }}
+            </p>
+            <div class="cta-buttons">
+                <a href="{{ path('app_relic_index') }}"
+                   class="btn btn-primary">{{ 'hero.explore_collection'|trans({}, 'landing') }}</a>
+                {% if app.user %}
+                    <a href="{{ path('app_relic_new') }}"
+                       class="btn btn-secondary">{{ 'hero.submit_relic'|trans({}, 'landing') }}</a>
+                {% else %}
+                    <a href="{{ path('app_register') }}"
+                       class="btn btn-secondary">{{ 'hero.join_now'|trans({}, 'landing') }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Relic Classes Section -->
+    <section class="relic-classes">
+        <h2 class="section-title">{{ 'classes.title'|trans({}, 'landing') }}</h2>
+        <p class="section-subtitle">{{ 'classes.subtitle'|trans({}, 'landing') }}</p>
+        <div class="classes-grid">
+            <a href="{{ path('app_relic_index', {'filter': 'first-class'}) }}" class="relic-card">
+                <span class="relic-icon">⊕</span>
+                <h3 class="relic-title">{{ 'classes.first.title'|trans({}, 'landing') }}</h3>
+                <p class="relic-description">
+                    {{ 'classes.first.description'|trans({}, 'landing') }}
+                </p>
+            </a>
+            <a href="{{ path('app_relic_index', {'filter': 'second-class'}) }}" class="relic-card">
+                <span class="relic-icon">✠</span>
+                <h3 class="relic-title">{{ 'classes.second.title'|trans({}, 'landing') }}</h3>
+                <p class="relic-description">
+                    {{ 'classes.second.description'|trans({}, 'landing') }}
+                </p>
+            </a>
+            <a href="{{ path('app_relic_index', {'filter': 'third-class'}) }}" class="relic-card">
+                <span class="relic-icon">✚</span>
+                <h3 class="relic-title">{{ 'classes.third.title'|trans({}, 'landing') }}</h3>
+                <p class="relic-description">
+                    {{ 'classes.third.description'|trans({}, 'landing') }}
+                </p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Saints Section -->
+    <section class="featured-saints">
+        <h2 class="section-title">{{ 'saints.title'|trans({}, 'landing') }}</h2>
+        <p class="section-subtitle">{{ 'saints.subtitle'|trans({}, 'landing') }}</p>
+        {% block saints_content %}
+            <div class="saints-carousel" data-controller="carousel">
+                {% for saint in featuredSaints %}
+                    <div class="saint-card">
+                        <div class="saint-image">
+                            {% if saint.images.first %}
+                                <img src="{{ image_url(saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}" alt="{{ saint.name }}" />
+                            {% endif %}
+                        </div>
+                        <div class="saint-info">
+                            <h3 class="saint-name">{{ saint|format_saint_name }}</h3>
+                            {% if saint.feastDate %}
+                                <p class="saint-dates">{{ saint.feastDate|format_date('medium', pattern=('common.date_formats.feast_date'|trans({}, 'common'))) }}</p>
+                            {% endif %}
+                            <p class="saint-bio">
+                                {{ saint.getTranslatedPhrase(app.request.locale) }}
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="saint-card">
+                        <div class="saint-image"></div>
+                        <div class="saint-info">
+                            <h3 class="saint-name">{{ 'saints.francis.name'|trans({}, 'landing') }}</h3>
+                            <p class="saint-dates">{{ 'saints.francis.dates'|trans({}, 'landing') }}</p>
+                            <p class="saint-bio">
+                                {{ 'saints.francis.bio'|trans({}, 'landing') }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    </section>
+{% endblock %}
+

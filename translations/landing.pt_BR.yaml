@@ -1,0 +1,88 @@
+# Landing page translations - Portuguese Brazil
+title: 'Relicário - Um Repositório Digital Sagrado'
+
+nav:
+  browse_relics: 'Explorar Relíquias'
+  saints: 'Santos'
+  submit_relic: 'Enviar Relíquia'
+  about: 'Sobre'
+  contact: 'Contato'
+
+hero:
+  subtitle: 'Um Repositório Digital Sagrado'
+  description: 'Preservando e venerando as conexões físicas à santidade através do tempo. Explore relíquias autenticadas, descubra as vidas dos santos e aprofunde sua jornada espiritual através de nossa coleção cuidadosamente curada de artefatos sagrados.'
+  explore_collection: 'Explorar Coleção'
+  submit_relic: 'Enviar uma Relíquia'
+  join_now: 'Junte-se Agora'
+
+classes:
+  title: 'Classes de Relíquias'
+  subtitle: 'Compreendendo a Hierarquia Sagrada de Veneração'
+  first:
+    title: 'Relíquias de Primeira Classe'
+    description: 'Restos físicos de santos incluindo ossos, cabelos e sangue. Estas relíquias mais preciosas proporcionam a conexão física mais próxima à pessoa santa.'
+  second:
+    title: 'Relíquias de Segunda Classe'
+    description: 'Itens possuídos ou frequentemente usados pelos santos durante sua vida, como roupas, livros, rosários ou instrumentos de seu martírio.'
+  third:
+    title: 'Relíquias de Terceira Classe'
+    description: 'Objetos que foram tocados em relíquias de primeira classe, permitindo aos fiéis venerar santos através de itens abençoados.'
+
+saints:
+  title: 'Santos em Destaque'
+  subtitle: 'Descubra as Vidas dos Santos'
+  francis:
+    name: 'São Francisco de Assis'
+    dates: '1181 - 1226'
+    bio: 'Fundador da Ordem Franciscana, conhecido por sua devoção à natureza, aos pobres e à paz. Recebeu os estigmas em 1224.'
+  teresa:
+    name: 'Santa Teresa de Ávila'
+    dates: '1515 - 1582'
+    bio: 'Mística espanhola, reformadora da Ordem Carmelita e Doutora da Igreja. Conhecida por seus escritos espirituais sobre oração contemplativa.'
+  aquinas:
+    name: 'São Tomás de Aquino'
+    dates: '1225 - 1274'
+    bio: 'Frade dominicano, filósofo e teólogo. Autor da Suma Teológica, uma das obras mais influentes da filosofia ocidental.'
+  catherine:
+    name: 'Santa Catarina de Siena'
+    dates: '1347 - 1380'
+    bio: 'Mística, ativista e Doutora da Igreja. Desempenhou papel significativo no retorno do papado de Avignon para Roma.'
+
+cta:
+  title: 'Junte-se à Nossa Missão Sagrada'
+  text: 'Ajude-nos a preservar e compartilhar essas preciosas conexões à santidade. Seja você um acadêmico, colecionador ou devoto fiel, sua contribuição ajuda a construir este santuário digital para as gerações futuras.'
+  create_account: 'Criar Conta'
+  learn_more: 'Saiba Mais'
+
+contact:
+  title: 'Entre em Contato'
+  subtitle: 'Entre em contato com nossa equipe para perguntas, submissões ou oportunidades de colaboração'
+  info:
+    title: 'Informações de Contato'
+    email: 'Email:'
+    mission: 'Nossa Missão:'
+    mission_text: 'Somos dedicados a preservar e compartilhar relíquias sagradas para os fiéis ao redor do mundo. Suas perguntas e contribuições nos ajudam a construir este santuário digital.'
+    response: 'Tempo de Resposta:'
+    response_text: 'Normalmente respondemos em 24-48 horas. Para assuntos urgentes sobre autenticação de relíquias, por favor marque seu assunto adequadamente.'
+  form:
+    title: 'Envie-nos uma Mensagem'
+    name: 'Nome Completo'
+    email: 'Endereço de Email'
+    subject: 'Assunto'
+    select_subject: 'Por favor selecione um assunto'
+    subjects:
+      relic_submission: 'Submissão de Relíquia'
+      authentication: 'Autenticação de Relíquia'
+      general_inquiry: 'Consulta Geral'
+      technical_support: 'Suporte Técnico'
+      partnership: 'Oportunidade de Parceria'
+    message: 'Mensagem'
+    send: 'Enviar Mensagem'
+
+footer:
+  privacy: 'Política de Privacidade'
+  terms: 'Termos de Uso'
+  guidelines: 'Diretrizes de Envio'
+  authentication: 'Processo de Autenticação'
+  support: 'Suporte'
+  copyright: 'Projeto Relicário. Dedicado à preservação e veneração de relíquias sagradas.'
