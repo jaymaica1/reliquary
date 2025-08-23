@@ -1,3 +1,19 @@
+# [2.4.0](https://github.com/CesarScur/reliquary/compare/v2.3.0...v2.4.0) (2025-08-23)
+
+
+### Bug Fixes
+
+* **twig:** refine active state logic in admin navbar links ([e11ef7b](https://github.com/CesarScur/reliquary/commit/e11ef7b4a60678b0099aa00ec40775382ace96bf))
+
+
+### Features
+
+* **admin:** add featured saints management section ([a7b716e](https://github.com/CesarScur/reliquary/commit/a7b716e05ba7319f43e54939ee72d647ece517c2))
+* **admin:** enhance admin layout with Stimulus controllers and tidy up sidebar functionality ([9fb3086](https://github.com/CesarScur/reliquary/commit/9fb308673e6effc0038402bce0683e42a9d97778))
+* **contact:** add contact page controller and template ([567d789](https://github.com/CesarScur/reliquary/commit/567d789ebd4d301d8d959cb63e4e75311ee1d19b))
+* **entity:** add `featured` property and repository method for featured saints ([04df06c](https://github.com/CesarScur/reliquary/commit/04df06c326b1df04ae9b29978b0050c454f85423))
+* **landing:** implement landing page with animations, translations, and responsive design ([e73ea5b](https://github.com/CesarScur/reliquary/commit/e73ea5b96729d0080a2bad2da146df95457f666a))
+
 # [2.3.0](https://github.com/CesarScur/reliquary/compare/v2.2.0...v2.3.0) (2025-08-21)
 
 
