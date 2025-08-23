@@ -52,6 +52,9 @@ class Saint implements ImageOwnerInterface
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $is_incomplete = false;
 
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $featured = false;
+
     /**
      * @var Collection<int, Relic>
      */
@@ -259,6 +262,18 @@ class Saint implements ImageOwnerInterface
     public function setIsIncomplete(bool $is_incomplete): static
     {
         $this->is_incomplete = $is_incomplete;
+
+        return $this;
+    }
+
+    public function isFeatured(): bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(bool $featured): static
+    {
+        $this->featured = $featured;
 
         return $this;
     }

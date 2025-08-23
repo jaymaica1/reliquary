@@ -150,4 +150,21 @@ class SaintRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery();
     }
+
+    /**
+     * Find featured saints
+     * 
+     * @return Saint[] Returns an array of featured Saint objects
+     */
+    public function findFeatured(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.featured = :featured')
+            ->setParameter('featured', true)
+            ->andWhere('s.is_incomplete = :incomplete')
+            ->setParameter('incomplete', false)
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
