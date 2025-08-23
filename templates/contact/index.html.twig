@@ -1,0 +1,184 @@
+{% extends 'landing_base.html.twig' %}
+
+{% block title %}{{ 'contact.title'|trans({}, 'landing') }}{% endblock %}
+
+{% block body %}
+<section id="contact" class="contact-section">
+    <div class="contact-container">
+        <h2 class="section-title">{{ 'contact.title'|trans({}, 'landing') }}</h2>
+        <p class="section-subtitle">{{ 'contact.subtitle'|trans({}, 'landing') }}</p>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>{{ 'contact.info.title'|trans({}, 'landing') }}</h3>
+                <div class="contact-item">
+                    <strong>{{ 'contact.info.email'|trans({}, 'landing') }}</strong>
+                    <p>contact@reliquary.org</p>
+                </div>
+                <div class="contact-item">
+                    <strong>{{ 'contact.info.mission'|trans({}, 'landing') }}</strong>
+                    <p>{{ 'contact.info.mission_text'|trans({}, 'landing') }}</p>
+                </div>
+                <div class="contact-item">
+                    <strong>{{ 'contact.info.response'|trans({}, 'landing') }}</strong>
+                    <p>{{ 'contact.info.response_text'|trans({}, 'landing') }}</p>
+                </div>
+            </div>
+            
+            <div class="contact-form-section">
+                <h3>{{ 'contact.form.title'|trans({}, 'landing') }}</h3>
+                <form class="contact-form" action="{{ path('app_contact') }}" method="post">
+                    <div class="form-group">
+                        <label for="name">{{ 'contact.form.name'|trans({}, 'landing') }}</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">{{ 'contact.form.email'|trans({}, 'landing') }}</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">{{ 'contact.form.subject'|trans({}, 'landing') }}</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">{{ 'contact.form.select_subject'|trans({}, 'landing') }}</option>
+                            <option value="relic_submission">{{ 'contact.form.subjects.relic_submission'|trans({}, 'landing') }}</option>
+                            <option value="authentication">{{ 'contact.form.subjects.authentication'|trans({}, 'landing') }}</option>
+                            <option value="general_inquiry">{{ 'contact.form.subjects.general_inquiry'|trans({}, 'landing') }}</option>
+                            <option value="technical_support">{{ 'contact.form.subjects.technical_support'|trans({}, 'landing') }}</option>
+                            <option value="partnership">{{ 'contact.form.subjects.partnership'|trans({}, 'landing') }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">{{ 'contact.form.message'|trans({}, 'landing') }}</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{ 'contact.form.send'|trans({}, 'landing') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.contact-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #ffffff;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 50px;
+}
+
+.contact-info {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-info h3 {
+    color: #d4af37;
+    font-family: 'Cinzel', serif;
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.contact-item {
+    margin-bottom: 25px;
+}
+
+.contact-item strong {
+    display: block;
+    color: #d4af37;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.contact-form-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-form-section h3 {
+    color: #d4af37;
+    font-family: 'Cinzel', serif;
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d4af37;
+    font-weight: 500;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.contact-form option {
+    background: #1a1a2e;
+    color: #ffffff;
+}
+
+.contact-form .btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .contact-info,
+    .contact-form-section {
+        padding: 30px 20px;
+    }
+}
+</style>
+{% endblock %}
