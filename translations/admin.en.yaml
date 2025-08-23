@@ -11,6 +11,28 @@ admin:
       no_saints: 'No incomplete saints found.'
       not_set: 'Not Set'
       mark_complete: 'Mark Complete'
+    featured:
+      title: 'Featured Saints'
+      bulk_feature: 'Feature Selected'
+      bulk_unfeature: 'Unfeature Selected'
+      select_all: 'Select All'
+      no_saints: 'No saints found.'
+      status: 'Featured Status'
+      featured: 'Featured'
+      not_featured: 'Not Featured'
+      feature: 'Feature'
+      unfeature: 'Unfeature'
+      confirm_feature: 'Are you sure you want to feature this saint?'
+      confirm_unfeature: 'Are you sure you want to unfeature this saint?'
+      no_selection: 'Please select at least one saint.'
+      confirm_bulk: 'Are you sure you want to %action% %count% saint(s)?'
+      flash:
+        saint_featured: 'Saint "%name%" has been featured.'
+        saint_unfeatured: 'Saint "%name%" has been unfeatured.'
+        bulk_error: 'Invalid bulk action or no saints selected.'
+        bulk_featured: '%count% saint(s) have been featured.'
+        bulk_unfeatured: '%count% saint(s) have been unfeatured.'
+        no_changes: 'No changes were made.'
   
   # Import section
   import:

@@ -11,6 +11,28 @@ admin:
       no_saints: 'Nenhum santo incompleto encontrado.'
       not_set: 'Não Definido'
       mark_complete: 'Marcar como Completo'
+    featured:
+      title: 'Santos em Destaque'
+      bulk_feature: 'Destacar Selecionados'
+      bulk_unfeature: 'Remover Destaque'
+      select_all: 'Selecionar Todos'
+      no_saints: 'Nenhum santo encontrado.'
+      status: 'Status de Destaque'
+      featured: 'Em Destaque'
+      not_featured: 'Não Destacado'
+      feature: 'Destacar'
+      unfeature: 'Remover Destaque'
+      confirm_feature: 'Tem certeza de que deseja destacar este santo?'
+      confirm_unfeature: 'Tem certeza de que deseja remover o destaque deste santo?'
+      no_selection: 'Por favor, selecione pelo menos um santo.'
+      confirm_bulk: 'Tem certeza de que deseja %action% %count% santo(s)?'
+      flash:
+        saint_featured: 'Santo "%name%" foi destacado.'
+        saint_unfeatured: 'Santo "%name%" teve o destaque removido.'
+        bulk_error: 'Ação em lote inválida ou nenhum santo selecionado.'
+        bulk_featured: '%count% santo(s) foram destacado(s).'
+        bulk_unfeatured: '%count% santo(s) tiveram o destaque removido.'
+        no_changes: 'Nenhuma alteração foi feita.'
   
   # Import section
   import:

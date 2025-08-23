@@ -12,16 +12,20 @@
         <div class="nav-section">
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_dashboard' ? 'active' : '' }}" data-href="{{ path('app_admin_dashboard') }}">
                 <i class="fas fa-tachometer-alt"></i>
-                Dashboard
+                {{ 'common.admin.dashboard'|trans({}, 'common') }}
             </button>
         </div>
 
         <!-- Content Management -->
         <div class="nav-section">
-            <div class="nav-section-title">Content Management</div>
-            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_saints' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_incomplete') }}">
+            <div class="nav-section-title">{{ 'common.admin.content_management'|trans({}, 'common') }}</div>
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_incomplete' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_incomplete') }}">
                 <i class="fas fa-cross"></i>
                 {{ 'common.admin.incomplete_saints'|trans({}, 'common') }}
+            </button>
+            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_featured' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_featured') }}">
+                <i class="fas fa-star"></i>
+                {{ 'common.admin.featured_saints'|trans({}, 'common') }}
             </button>
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_pending_relics' ? 'active' : '' }}" data-href="{{ path('app_pending_relics') }}">
                 <i class="fas fa-gem"></i>
@@ -47,23 +51,23 @@
 
         <!-- Community -->
         <div class="nav-section">
-            <div class="nav-section-title">Community</div>
+            <div class="nav-section-title">{{ 'common.admin.community'|trans({}, 'common') }}</div>
             <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_users' ? 'active' : '' }}" data-href="{{ path('app_admin_users_index') }}">
                 <i class="fas fa-users"></i>
                 {{ 'common.admin.user_management'|trans({}, 'common') }}
             </button>
             <button type="button" class="nav-link">
                 <i class="fas fa-chart-line"></i>
-                Community Activity
+                {{ 'common.admin.community_activity'|trans({}, 'common') }}
             </button>
         </div>
 
         <!-- System -->
         <div class="nav-section">
-            <div class="nav-section-title">System</div>
+            <div class="nav-section-title">{{ 'common.admin.system'|trans({}, 'common') }}</div>
             <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_access_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_access_logs_index') }}">
                 <i class="fas fa-shield-alt"></i>
-                Access Logs
+                {{ 'common.admin.access_logs'|trans({}, 'common') }}
             </button>
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_logs') }}">
                 <i class="fas fa-exclamation-triangle"></i>
