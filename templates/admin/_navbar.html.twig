@@ -22,6 +22,9 @@
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_incomplete' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_incomplete') }}">
                 <i class="fas fa-cross"></i>
                 {{ 'common.admin.incomplete_saints'|trans({}, 'common') }}
+                {% if notifications is defined and notifications.incompleteSaints > 0 %}
+                    <span class="badge badge-notification ms-auto">{{ notifications.incompleteSaints }}</span>
+                {% endif %}
             </button>
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_featured' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_featured') }}">
                 <i class="fas fa-star"></i>
@@ -30,6 +33,9 @@
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_pending_relics' ? 'active' : '' }}" data-href="{{ path('app_pending_relics') }}">
                 <i class="fas fa-gem"></i>
                 {{ 'common.admin.pending_relics'|trans({}, 'common') }}
+                {% if notifications is defined and notifications.pendingRelics > 0 %}
+                    <span class="badge badge-notification ms-auto">{{ notifications.pendingRelics }}</span>
+                {% endif %}
             </button>
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_missing' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_missing') }}">
                 <i class="fas fa-language"></i>
@@ -72,8 +78,8 @@
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_logs') }}">
                 <i class="fas fa-exclamation-triangle"></i>
                 {{ 'common.admin.system_logs'|trans({}, 'common') }}
-                {% if notificationCount is defined and notificationCount > 0 %}
-                    <span class="badge badge-notification ms-auto">{{ notificationCount }}</span>
+                {% if notifications is defined and notifications.errorLogs > 0 %}
+                    <span class="badge badge-notification ms-auto">{{ notifications.errorLogs }}</span>
                 {% endif %}
             </button>
             <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_s3_migration' ? 'active' : '' }}" data-href="{{ path('app_admin_s3_migration') }}">

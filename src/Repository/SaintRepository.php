@@ -167,4 +167,19 @@ class SaintRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Count incomplete saints
+     * 
+     * @return int The count of incomplete saints
+     */
+    public function countIncomplete(): int
+    {
+        return $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->andWhere('s.is_incomplete = :incomplete')
+            ->setParameter('incomplete', true)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

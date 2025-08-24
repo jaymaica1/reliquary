@@ -27,6 +27,12 @@
                 <div class="position-relative">
                     <button class="btn btn-link text-dark position-relative">
                         <i class="fas fa-bell"></i>
+                        {% if notifications is defined and (notifications.incompleteSaints > 0 or notifications.pendingRelics > 0 or notifications.errorLogs > 0) %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ notifications.incompleteSaints + notifications.pendingRelics + notifications.errorLogs }}
+                                <span class="visually-hidden">unread notifications</span>
+                            </span>
+                        {% endif %}
                     </button>
                 </div>
                 <div class="dropdown">

@@ -37,6 +37,22 @@ class RelicRepository extends ServiceEntityRepository
     }
 
     /**
+     * Count relics by status
+     *
+     * @param RelicStatus $status The status to filter by
+     * @return int The count of relics with the specified status
+     */
+    public function countByStatus(RelicStatus $status): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->andWhere('r.status = :status')
+            ->setParameter('status', $status->value, ParameterType::STRING)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Find relics within a specified radius of a given location
      *
      * @param float $latitude The latitude of the center point
