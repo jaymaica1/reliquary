@@ -22,6 +22,13 @@ common:
     language: 'Language'
   admin:
     dashboard: 'Dashboard'
+    dashboard_overview: 'Dashboard Overview'
+    notifications: 'Notifications'
+    no_notifications: 'No new notifications'
+    view_dashboard: 'View Dashboard'
+    incomplete_saints_count: 'saints need attention'
+    pending_relics_count: 'relics pending approval'
+    error_logs_count: 'error entries'
     content_management: 'Content Management'
     community: 'Community'
     system: 'System'

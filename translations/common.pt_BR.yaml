@@ -24,6 +24,13 @@ common:
     language: 'Idioma'
   admin:
     dashboard: 'Painel de Controle'
+    dashboard_overview: 'Visão Geral do Painel'
+    notifications: 'Notificações'
+    no_notifications: 'Nenhuma notificação nova'
+    view_dashboard: 'Ver Painel'
+    incomplete_saints_count: 'santos precisam de atenção'
+    pending_relics_count: 'relíquias aguardando aprovação'
+    error_logs_count: 'entradas de erro'
     content_management: 'Gerenciamento de Conteúdo'
     community: 'Comunidade'
     system: 'Sistema'
