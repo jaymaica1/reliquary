@@ -17,6 +17,7 @@ common:
     search_by: 'Buscar por:'
     saint: 'Santo'
     address: 'Endereço'
+    main_site: 'Site Principal'
   user:
     profile: 'Meu Perfil'
     my_relics: 'Minhas Relíquias'

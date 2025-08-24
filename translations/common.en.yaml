@@ -15,6 +15,7 @@ common:
     search_by: 'Search by:'
     saint: 'Saint'
     address: 'Address'
+    main_site: 'Main Site'
   user:
     profile: 'My Profile'
     my_relics: 'My Relics'
