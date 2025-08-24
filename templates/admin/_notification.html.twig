@@ -1,0 +1,79 @@
+<div class="position-relative dropdown">
+    <button class="btn"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+            id="notificationDropdown">
+        <i class="fas fa-bell"></i>
+        {% if notifications is defined and (notifications.incompleteSaints > 0 or notifications.pendingRelics > 0 or notifications.errorLogs > 0) %}
+            <div class="notification-dot"></div>
+        {% endif %}
+    </button>
+    <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown">
+        <div class="dropdown-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">{{ 'common.admin.notifications'|trans({}, 'common') }}</h6>
+            {% set totalNotifications = 0 %}
+            {% if notifications is defined %}
+                {% set totalNotifications = notifications.incompleteSaints + notifications.pendingRelics + notifications.errorLogs %}
+            {% endif %}
+            <span class="badge bg-primary rounded-pill">{{ totalNotifications }}</span>
+        </div>
+        <div class="dropdown-divider"></div>
+
+        {% if notifications is defined and totalNotifications > 0 %}
+            {% if notifications.incompleteSaints > 0 %}
+                <a class="dropdown-item notification-item" href="{{ path('app_admin_saints_incomplete') }}">
+                    <div class="d-flex align-items-center">
+                        <div class="notification-icon bg-warning text-white rounded-circle me-3">
+                            <i class="fas fa-cross"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="notification-title">{{ 'common.admin.incomplete_saints'|trans({}, 'common') }}</div>
+                            <div class="notification-desc text-muted">{{ notifications.incompleteSaints }} {{ 'common.admin.incomplete_saints_count'|trans({}, 'common') }}</div>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if notifications.pendingRelics > 0 %}
+                <a class="dropdown-item notification-item" href="{{ path('app_pending_relics') }}">
+                    <div class="d-flex align-items-center">
+                        <div class="notification-icon bg-info text-white rounded-circle me-3">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="notification-title">{{ 'common.admin.pending_relics'|trans({}, 'common') }}</div>
+                            <div class="notification-desc text-muted">{{ notifications.pendingRelics }} {{ 'common.admin.pending_relics_count'|trans({}, 'common') }}</div>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if notifications.errorLogs > 0 %}
+                <a class="dropdown-item notification-item" href="{{ path('app_admin_logs') }}">
+                    <div class="d-flex align-items-center">
+                        <div class="notification-icon bg-danger text-white rounded-circle me-3">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="notification-title">{{ 'common.admin.system_logs'|trans({}, 'common') }}</div>
+                            <div class="notification-desc text-muted">{{ notifications.errorLogs }} {{ 'common.admin.error_logs_count'|trans({}, 'common') }}</div>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        {% else %}
+            <div class="dropdown-item-text text-center text-muted py-4">
+                <i class="fas fa-check-circle mb-2" style="font-size: 2rem; opacity: 0.5;"></i>
+                <div>{{ 'common.admin.no_notifications'|trans({}, 'common') }}</div>
+            </div>
+        {% endif %}
+
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-footer text-center">
+            <a href="{{ path('app_admin_dashboard') }}" class="btn btn-sm btn-outline-primary">
+                {{ 'common.admin.view_dashboard'|trans({}, 'common') }}
+            </a>
+        </div>
+    </div>
+</div>

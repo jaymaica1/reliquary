@@ -1,0 +1,21 @@
+<div class="dropdown">
+    <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
+        {% if app.user and app.user.profileImage %}
+            <img src="{{ image_url(app.user.profileImage.filename) }}"
+                 alt="{{ app.user.username }}"
+                 class="rounded-circle me-2"
+                 style="width: 32px; height: 32px; object-fit: cover;">
+        {% else %}
+            <i class="fas fa-user-circle me-2"></i>
+        {% endif %}
+        {{ app.user.username }}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ path('app_profile_show') }}"><i class="fas fa-user me-2"></i>{{ 'common.user.profile'|trans({}, 'common') }}</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_my_relics') }}"><i class="fas fa-gem me-2"></i>{{ 'common.user.my_relics'|trans({}, 'common') }}</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-home me-2"></i>{{ 'common.navigation.main_site'|trans({}, 'common') }}</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt me-2"></i>{{ 'common.user.logout'|trans({}, 'common') }}</a></li>
+    </ul>
+</div>
