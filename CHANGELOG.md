@@ -1,3 +1,14 @@
+# [2.6.0](https://github.com/CesarScur/reliquary/compare/v2.5.0...v2.6.0) (2025-08-24)
+
+
+### Features
+
+* **admin:** add dropdown for detailed notifications in admin layout ([c5c0214](https://github.com/CesarScur/reliquary/commit/c5c0214c42386ba242a9446d23b298e1194f56e3))
+* **admin:** translate admin dashboard link in base template ([1c5e80f](https://github.com/CesarScur/reliquary/commit/1c5e80f896625fd8e7689e40db9d20ac5a62f690))
+* **landing:** add mobile menu with responsive design and navigation toggle ([1cbc3df](https://github.com/CesarScur/reliquary/commit/1cbc3df6954b1170ab01e600a9e382bb38c9b3c5))
+* **translations:** add `main_site` key to English and Brazilian Portuguese files ([52161d0](https://github.com/CesarScur/reliquary/commit/52161d0979ae1c7973fc198a478c922f73b5a696))
+* **translations:** add new admin dashboard strings for notifications and stats ([80f85c4](https://github.com/CesarScur/reliquary/commit/80f85c4693df1d69138219c3f7200f6fe01953ad))
+
 # [2.5.0](https://github.com/CesarScur/reliquary/compare/v2.4.0...v2.5.0) (2025-08-24)
 
 
