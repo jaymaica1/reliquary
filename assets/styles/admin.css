@@ -196,6 +196,100 @@ body {
     100% { transform: scale(1); opacity: 1; }
 }
 
+/* Notification Dropdown Styles */
+.notification-dropdown {
+    width: 350px;
+    max-height: 480px;
+    overflow-y: auto;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+.notification-dropdown .dropdown-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: var(--sacred-white);
+    padding: 1rem 1.25rem;
+    border-radius: 12px 12px 0 0;
+    margin: 0;
+    border: none;
+}
+
+.notification-dropdown .dropdown-header h6 {
+    font-weight: 600;
+    color: var(--sacred-white);
+}
+
+.notification-dropdown .dropdown-divider {
+    margin: 0;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.notification-item {
+    padding: 1rem 1.25rem;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.notification-item:hover {
+    background: rgba(59, 130, 246, 0.05);
+    color: inherit;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.notification-desc {
+    font-size: 0.8rem;
+    line-height: 1.3;
+}
+
+.dropdown-footer {
+    background: #f8fafc;
+    padding: 1rem 1.25rem;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-footer .btn-outline-primary {
+    border-color: var(--secondary-blue);
+    color: var(--secondary-blue);
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-footer .btn-outline-primary:hover {
+    background: var(--secondary-blue);
+    border-color: var(--secondary-blue);
+    transform: translateY(-1px);
+}
+
+.dropdown-item-text {
+    padding: 2rem 1.25rem;
+}
+
+.dropdown-item-text i {
+    color: var(--warm-gray);
+}
+
 .loading-spinner {
     display: none;
     width: 20px;
