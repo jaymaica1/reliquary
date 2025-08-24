@@ -1,6 +1,7 @@
 admin:
   # Common admin elements
   title: 'Admin'
+  dashboard: 'Admin Dashboard'
   back_to_admin: 'Back to Admin'
   
   # Saints section

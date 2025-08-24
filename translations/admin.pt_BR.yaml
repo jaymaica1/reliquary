@@ -1,6 +1,7 @@
 admin:
   # Common admin elements
   title: 'Admin'
+  dashboard: 'Painel Administrativo'
   back_to_admin: 'Voltar para Admin'
   
   # Saints section
