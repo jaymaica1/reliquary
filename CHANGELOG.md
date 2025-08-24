@@ -1,3 +1,14 @@
+# [2.7.0](https://github.com/CesarScur/reliquary/compare/v2.6.0...v2.7.0) (2025-08-24)
+
+
+### Features
+
+* **admin:** modularize notification and user menu templates ([03c202b](https://github.com/CesarScur/reliquary/commit/03c202b6adc6f23975a09f61173ad048f5470411))
+* **landing:** add user authentication and admin navigation links ([78072d1](https://github.com/CesarScur/reliquary/commit/78072d1cf8424cf8ed558bcb428d37652cc4b81a))
+* **landing:** enhance styles with dynamic font sizing and mobile-specific adjustments ([9447698](https://github.com/CesarScur/reliquary/commit/9447698037e4c8d086f5481e7aa61c74bf06c9c1))
+* **landing:** update nav background with semi-transparency and blur effect ([82fbb69](https://github.com/CesarScur/reliquary/commit/82fbb69a0230b130fdcdcdaeb0b724255aab319f))
+* **security:** redesign login page and integrate with landing theme ([be892ee](https://github.com/CesarScur/reliquary/commit/be892eebe156318849075451cbf9d630b5d03e95))
+
 # [2.6.0](https://github.com/CesarScur/reliquary/compare/v2.5.0...v2.6.0) (2025-08-24)
 
 
