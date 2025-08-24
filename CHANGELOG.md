@@ -1,3 +1,18 @@
+# [2.5.0](https://github.com/CesarScur/reliquary/compare/v2.4.0...v2.5.0) (2025-08-24)
+
+
+### Bug Fixes
+
+* **styles:** ensure links in relic cards have no underline ([9b1e365](https://github.com/CesarScur/reliquary/commit/9b1e3656217da2a30fea41dcf56be7531b227929))
+* **twig:** correct `importmap` usage in admin base template ([8073535](https://github.com/CesarScur/reliquary/commit/8073535052a1284783bf9d6b809d7ccb1fca572b))
+
+
+### Features
+
+* **admin:** introduce notifications badge system in admin layout ([d5d6280](https://github.com/CesarScur/reliquary/commit/d5d62800ccc13001c1686e4148f921667203a9c5))
+* **particles:** implement responsive particle count based on screen size ([e7c755d](https://github.com/CesarScur/reliquary/commit/e7c755d3ff4c910f5b8b72ca8f04a9437aedb94f))
+* **twig:** display user profile image in admin dropdown if available ([bca4fda](https://github.com/CesarScur/reliquary/commit/bca4fda05fceb474a3d7946a6fb5ee06d80da8f1))
+
 # [2.4.0](https://github.com/CesarScur/reliquary/compare/v2.3.0...v2.4.0) (2025-08-23)
 
 
