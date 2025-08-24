@@ -6,10 +6,9 @@
     <title>{% block title %}{{ 'common.admin'|trans({}, 'common') }}{% endblock %}</title>  <link rel="preload" href="{{ asset('/images/relic.png') }}" as="image" type="image/png">
     <link rel="icon" href="{{ asset('/images/relic.png') }}">
     {% block stylesheets %}
-        {{ importmap('admin') }}
     {% endblock %}
     {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% block importmap %}{{ importmap('admin') }}{% endblock %}
     {% endblock %}
 </head>
 <body id="admin" data-controller="admin-base">
