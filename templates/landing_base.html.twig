@@ -16,10 +16,19 @@
     <div class="particles" id="particles" data-controller="particles"></div>
     
     <!-- Navigation -->
-    <nav id="navbar" data-controller="navbar-scroll">
+    <nav id="navbar" data-controller="navbar-scroll mobile-menu">
         <div class="nav-container">
             <a href="{{ path('app_home') }}" class="logo">{{ 'common.reliquary'|trans({}, 'common') }}</a>
-            <ul class="nav-links">
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" data-action="click->mobile-menu#toggle" data-mobile-menu-target="toggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Navigation Links -->
+            <ul class="nav-links" data-mobile-menu-target="menu">
                 <li><a href="{{ path('app_relic_index') }}">{{ 'nav.browse_relics'|trans({}, 'landing') }}</a></li>
                 <li><a href="{{ path('app_saint_index') }}">{{ 'nav.saints'|trans({}, 'landing') }}</a></li>
                 {% if app.user %}
