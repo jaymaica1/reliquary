@@ -15,27 +15,20 @@ export default class extends Controller {
     }
 
     getResponsiveParticleCount() {
-        const viewport = window.innerWidth * window.innerHeight;
         const baseCount = this.countValue;
         
-        // Define breakpoints based on common screen resolutions
-        // Mobile (up to 768px width): reduce to 20% of particles
         if (window.innerWidth <= 768) {
             return Math.floor(baseCount * 0.2);
         }
-        // Tablet (769px to 1024px width): reduce to 40% of particles
         else if (window.innerWidth <= 1024) {
             return Math.floor(baseCount * 0.4);
         }
-        // Small desktop (1025px to 1366px width): reduce to 60% of particles
         else if (window.innerWidth <= 1366) {
             return Math.floor(baseCount * 0.6);
         }
-        // Large desktop (1367px to 1920px width): reduce to 80% of particles
         else if (window.innerWidth <= 1920) {
             return Math.floor(baseCount * 0.8);
         }
-        // Ultra-wide/4K screens: use full particle count
         else {
             return baseCount;
         }
@@ -49,7 +42,7 @@ export default class extends Controller {
             particle.className = 'particle';
             particle.style.width = Math.random() * 6 + 4 + 'px';
             particle.style.height = particle.style.width;
-            particle.style.left = Math.random() * 100 + '%';
+            particle.style.left = 'calc(' + (Math.random() * 130) + '% - 100px)';
             
             // Use negative delays for some particles to make them visible immediately
             // Half particles start with negative delays (already in progress)
@@ -65,7 +58,6 @@ export default class extends Controller {
     }
 
     disconnect() {
-        // Clean up particles when controller is disconnected
         this.element.innerHTML = '';
     }
 }
