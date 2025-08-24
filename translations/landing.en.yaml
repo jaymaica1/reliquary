@@ -5,6 +5,10 @@ nav:
   browse_relics: 'Browse Relics'
   saints: 'Saints'
   submit_relic: 'Submit Relic'
+  login: 'Login'
+  profile: 'Profile'
+  dashboard: 'Dashboard'
+  logout: 'Logout'
   about: 'About'
   contact: 'Contact'
 

@@ -31,11 +31,18 @@
             <ul class="nav-links" data-mobile-menu-target="menu">
                 <li><a href="{{ path('app_relic_index') }}">{{ 'nav.browse_relics'|trans({}, 'landing') }}</a></li>
                 <li><a href="{{ path('app_saint_index') }}">{{ 'nav.saints'|trans({}, 'landing') }}</a></li>
-                {% if app.user %}
-                    <li><a href="{{ path('app_relic_new') }}">{{ 'nav.submit_relic'|trans({}, 'landing') }}</a></li>
-                {% endif %}
                 <li><a href="{{ path('app_about') }}">{{ 'nav.about'|trans({}, 'landing') }}</a></li>
                 <li><a href="{{ path('app_contact') }}">{{ 'nav.contact'|trans({}, 'landing') }}</a></li>
+                {% if app.user %}
+                    <li><a href="{{ path('app_relic_new') }}">{{ 'nav.submit_relic'|trans({}, 'landing') }}</a></li>
+                    <li><a href="{{ path('app_profile_show') }}">{{ 'nav.profile'|trans({}, 'landing') }}</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('app_admin_dashboard') }}">{{ 'nav.dashboard'|trans({}, 'landing') }}</a></li>
+                    {% endif %}
+                    <li><a href="{{ path('app_logout') }}">{{ 'nav.logout'|trans({}, 'landing') }}</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}">{{ 'nav.login'|trans({}, 'landing') }}</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>

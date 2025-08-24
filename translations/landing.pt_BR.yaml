@@ -5,6 +5,10 @@ nav:
   browse_relics: 'Explorar Relíquias'
   saints: 'Santos'
   submit_relic: 'Enviar Relíquia'
+  login: 'Login'
+  profile: 'Perfil'
+  dashboard: 'Dashboard'
+  logout: 'Sair'
   about: 'Sobre'
   contact: 'Contato'
 
