@@ -31,7 +31,14 @@
                 </div>
                 <div class="dropdown">
                     <button class="btn btn-link text-dark dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fas fa-user-circle me-2"></i>
+                        {% if app.user and app.user.profileImage %}
+                            <img src="{{ image_url(app.user.profileImage.filename) }}"
+                                 alt="{{ app.user.username }}"
+                                 class="rounded-circle me-2"
+                                 style="width: 32px; height: 32px; object-fit: cover;">
+                        {% else %}
+                            <i class="fas fa-user-circle me-2"></i>
+                        {% endif %}
                         {% if app.user %}
                             {{ app.user.username }}
                         {% else %}
