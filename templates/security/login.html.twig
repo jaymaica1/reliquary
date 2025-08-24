@@ -1,65 +1,69 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'security.login.title'|trans({}, 'security') }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <form method="post">
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
+<section class="contact-section">
+    <div class="contact-container">
+        <h2 class="section-title">{{ 'security.login.heading'|trans({}, 'security') }}</h2>
+        
+        <div class="contact-content contact-content-single">
+            <div class="contact-form-section">
+                <form class="contact-form" method="post">
+                    {% if error %}
+                        <div class="form-error-message">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
 
-                            {% if app.user %}
-                                <div class="mb-3">
-                                    {{ 'security.login.logged_in_as'|trans({}, 'security') }} {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{{ 'security.logout'|trans({}, 'security') }}</a>
-                                </div>
-                            {% endif %}
+                    {% if app.user %}
+                        <div class="form-user-info">
+                            {{ 'security.login.logged_in_as'|trans({}, 'security') }} {{ app.user.userIdentifier }}, 
+                            <a href="{{ path('app_logout') }}" class="gold-link">{{ 'security.logout'|trans({}, 'security') }}</a>
+                        </div>
+                    {% endif %}
 
-                            <h1 class="h3 mb-3 font-weight-normal text-center">{{ 'security.login.heading'|trans({}, 'security') }}</h1>
-
-                            <div class="mb-3">
-                                <label for="username" class="form-label">{{ 'security.login.username'|trans({}, 'security') }}</label>
-                                <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">{{ 'security.login.password'|trans({}, 'security') }}</label>
-                                <div class="input-group" data-controller="password-toggle">
-                                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required data-password-toggle-target="input">
-                                    <button class="btn btn-outline-secondary" type="button" data-action="password-toggle#toggle">
-                                        <i class="fas fa-eye" data-password-toggle-target="icon"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <input type="hidden" name="_csrf_token"
-                                   value="{{ csrf_token('authenticate') }}"
-                            >
-
-                            <div class="checkbox mb-3">
-                                <input type="checkbox" name="_remember_me" id="_remember_me">
-                                <label for="_remember_me">{{ 'security.login.remember_me'|trans({}, 'security') }}</label>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-lg btn-primary" type="submit">
-                                    {{ 'security.login.submit'|trans({}, 'security') }}
-                                </button>
-                            </div>
-
-                            <div class="mt-3 text-center">
-                                <p>{{ 'security.login.no_account'|trans({}, 'security') }} <a href="{{ path('app_register') }}">{{ 'security.login.sign_up'|trans({}, 'security') }}</a></p>
-                                <p>{{ 'security.login.forgot_password'|trans({}, 'security') }} <a href="{{ path('app_forgot_password_request') }}">{{ 'security.login.reset_password'|trans({}, 'security') }}</a></p>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="username">{{ 'security.login.username'|trans({}, 'security') }}</label>
+                        <input type="text" value="{{ last_username }}" name="_username" id="username" autocomplete="username" required autofocus>
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label for="password">{{ 'security.login.password'|trans({}, 'security') }}</label>
+                        <div class="password-toggle-wrapper" data-controller="password-toggle">
+                            <input type="password" name="_password" id="password" autocomplete="current-password" required data-password-toggle-target="input">
+                            <button type="button" data-action="password-toggle#toggle" class="password-toggle-btn">
+                                <i class="fas fa-eye" data-password-toggle-target="icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="_remember_me" id="_remember_me">
+                            {{ 'security.login.remember_me'|trans({}, 'security') }}
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        {{ 'security.login.submit'|trans({}, 'security') }}
+                    </button>
+
+                    <div class="form-actions-center">
+                        <p>
+                            {{ 'security.login.no_account'|trans({}, 'security') }} 
+                            <a href="{{ path('app_register') }}" class="gold-link">{{ 'security.login.sign_up'|trans({}, 'security') }}</a>
+                        </p>
+                        <p>
+                            {{ 'security.login.forgot_password'|trans({}, 'security') }} 
+                            <a href="{{ path('app_forgot_password_request') }}" class="gold-link">{{ 'security.login.reset_password'|trans({}, 'security') }}</a>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
+</section>
 {% endblock %}
