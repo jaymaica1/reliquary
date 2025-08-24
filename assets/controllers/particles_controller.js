@@ -14,8 +14,35 @@ export default class extends Controller {
         this.createParticles();
     }
 
+    getResponsiveParticleCount() {
+        const viewport = window.innerWidth * window.innerHeight;
+        const baseCount = this.countValue;
+        
+        // Define breakpoints based on common screen resolutions
+        // Mobile (up to 768px width): reduce to 20% of particles
+        if (window.innerWidth <= 768) {
+            return Math.floor(baseCount * 0.2);
+        }
+        // Tablet (769px to 1024px width): reduce to 40% of particles
+        else if (window.innerWidth <= 1024) {
+            return Math.floor(baseCount * 0.4);
+        }
+        // Small desktop (1025px to 1366px width): reduce to 60% of particles
+        else if (window.innerWidth <= 1366) {
+            return Math.floor(baseCount * 0.6);
+        }
+        // Large desktop (1367px to 1920px width): reduce to 80% of particles
+        else if (window.innerWidth <= 1920) {
+            return Math.floor(baseCount * 0.8);
+        }
+        // Ultra-wide/4K screens: use full particle count
+        else {
+            return baseCount;
+        }
+    }
+
     createParticles() {
-        const particleCount = this.countValue;
+        const particleCount = this.getResponsiveParticleCount();
         
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
