@@ -10,58 +10,58 @@
     <div class="sidebar-nav">
         <!-- Dashboard -->
         <div class="nav-section">
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_dashboard' ? 'active' : '' }}" data-href="{{ path('app_admin_dashboard') }}">
+            <a href="{{ path('app_admin_dashboard') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_dashboard' ? 'active' : '' }}">
                 <i class="fas fa-tachometer-alt"></i>
                 {{ 'common.admin.dashboard'|trans({}, 'common') }}
-            </button>
+            </a>
         </div>
 
         <!-- Content Management -->
         <div class="nav-section">
             <div class="nav-section-title">{{ 'common.admin.content_management'|trans({}, 'common') }}</div>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_incomplete' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_incomplete') }}">
+            <a href="{{ path('app_admin_saints_incomplete') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_incomplete' ? 'active' : '' }}">
                 <i class="fas fa-cross"></i>
                 {{ 'common.admin.incomplete_saints'|trans({}, 'common') }}
                 {% if notifications is defined and notifications.incompleteSaints > 0 %}
                     <span class="badge badge-notification ms-auto">{{ notifications.incompleteSaints }}</span>
                 {% endif %}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_featured' ? 'active' : '' }}" data-href="{{ path('app_admin_saints_featured') }}">
+            </a>
+            <a href="{{ path('app_admin_saints_featured') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_featured' ? 'active' : '' }}">
                 <i class="fas fa-star"></i>
                 {{ 'common.admin.featured_saints'|trans({}, 'common') }}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_pending_relics' ? 'active' : '' }}" data-href="{{ path('app_pending_relics') }}">
+            </a>
+            <a href="{{ path('app_pending_relics') }}" class="nav-link {{ app.request.get('_route') == 'app_pending_relics' ? 'active' : '' }}">
                 <i class="fas fa-gem"></i>
                 {{ 'common.admin.pending_relics'|trans({}, 'common') }}
                 {% if notifications is defined and notifications.pendingRelics > 0 %}
                     <span class="badge badge-notification ms-auto">{{ notifications.pendingRelics }}</span>
                 {% endif %}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_missing' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_missing') }}">
+            </a>
+            <a href="{{ path('app_admin_translations_missing') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_missing' ? 'active' : '' }}">
                 <i class="fas fa-language"></i>
                 {{ 'common.admin.translation_status'|trans({}, 'common') }}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_scan' ? 'active' : '' }}" data-href="{{ path('app_admin_translations_scan') }}">
+            </a>
+            <a href="{{ path('app_admin_translations_scan') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_translations_scan' ? 'active' : '' }}">
                 <i class="fas fa-search"></i>
                 {{ 'common.admin.scan_untranslated'|trans({}, 'common') }}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_import_saints' ? 'active' : '' }}" data-href="{{ path('app_admin_import_saints') }}">
+            </a>
+            <a href="{{ path('app_admin_import_saints') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_import_saints' ? 'active' : '' }}">
                 <i class="fas fa-upload"></i>
                 {{ 'common.admin.import_saints'|trans({}, 'common') }}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_import_translations' ? 'active' : '' }}" data-href="{{ path('app_admin_import_translations') }}">
+            </a>
+            <a href="{{ path('app_admin_import_translations') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_import_translations' ? 'active' : '' }}">
                 <i class="fas fa-language"></i>
                 {{ 'common.admin.import_translations'|trans({}, 'common') }}
-            </button>
+            </a>
         </div>
 
         <!-- Community -->
         <div class="nav-section">
             <div class="nav-section-title">{{ 'common.admin.community'|trans({}, 'common') }}</div>
-            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_users' ? 'active' : '' }}" data-href="{{ path('app_admin_users_index') }}">
+            <a href="{{ path('app_admin_users_index') }}" class="nav-link {{ app.request.get('_route') starts with 'app_admin_users' ? 'active' : '' }}">
                 <i class="fas fa-users"></i>
                 {{ 'common.admin.user_management'|trans({}, 'common') }}
-            </button>
+            </a>
             <button type="button" class="nav-link">
                 <i class="fas fa-chart-line"></i>
                 {{ 'common.admin.community_activity'|trans({}, 'common') }}
@@ -71,21 +71,21 @@
         <!-- System -->
         <div class="nav-section">
             <div class="nav-section-title">{{ 'common.admin.system'|trans({}, 'common') }}</div>
-            <button type="button" class="nav-link {{ app.request.get('_route') starts with 'app_admin_access_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_access_logs_index') }}">
+            <a href="{{ path('app_admin_access_logs_index') }}" class="nav-link {{ app.request.get('_route') starts with 'app_admin_access_logs' ? 'active' : '' }}">
                 <i class="fas fa-shield-alt"></i>
                 {{ 'common.admin.access_logs'|trans({}, 'common') }}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_logs' ? 'active' : '' }}" data-href="{{ path('app_admin_logs') }}">
+            </a>
+            <a href="{{ path('app_admin_logs') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_logs' ? 'active' : '' }}">
                 <i class="fas fa-exclamation-triangle"></i>
                 {{ 'common.admin.system_logs'|trans({}, 'common') }}
                 {% if notifications is defined and notifications.errorLogs > 0 %}
                     <span class="badge badge-notification ms-auto">{{ notifications.errorLogs }}</span>
                 {% endif %}
-            </button>
-            <button type="button" class="nav-link {{ app.request.get('_route') == 'app_admin_s3_migration' ? 'active' : '' }}" data-href="{{ path('app_admin_s3_migration') }}">
+            </a>
+            <a href="{{ path('app_admin_s3_migration') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_s3_migration' ? 'active' : '' }}">
                 <i class="fas fa-cloud-upload-alt"></i>
                 {{ 'common.admin.s3_migration'|trans({}, 'common') }}
-            </button>
+            </a>
         </div>
     </div>
 </nav>
