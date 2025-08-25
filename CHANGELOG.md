@@ -1,3 +1,11 @@
+# [2.8.0](https://github.com/CesarScur/reliquary/compare/v2.7.0...v2.8.0) (2025-08-25)
+
+
+### Features
+
+* **relic:** redesign edit and new relic pages with landing theme ([88167c1](https://github.com/CesarScur/reliquary/commit/88167c1fa82adda7ea75e2810782169a7daec041))
+* **security:** redesign reset password and registration pages with landing theme ([4a64592](https://github.com/CesarScur/reliquary/commit/4a64592c140f1cb39e41e1d91e5eeb1813591478))
+
 # [2.7.0](https://github.com/CesarScur/reliquary/compare/v2.6.0...v2.7.0) (2025-08-24)
 
 
