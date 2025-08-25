@@ -1,14 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'relic.new_title'|trans({}, 'relic') }}{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    {{ include('relic/_header.html.twig', {'title': 'relic.add_new'|trans({}, 'relic')}) }}
-    <div class="row">
-        <div class="col-12">
-            {{ include('relic/_form.html.twig') }}
+<section class="contact-section">
+    <div class="contact-container">
+        <h2 class="section-title">{{ 'relic.add_new'|trans({}, 'relic') }}</h2>
+        <p class="section-subtitle">{{ 'relic.add_subtitle'|trans({}, 'relic') }}</p>
+        
+        <div class="contact-content contact-content-single">
+            <div class="contact-form-section">
+                {{ include('relic/_form.html.twig') }}
+            </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

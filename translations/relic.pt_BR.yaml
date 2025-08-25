@@ -9,6 +9,7 @@ relic:
     all_relics: 'Todas as Relíquias'
     button: 'Filtrar'
   add_new: 'Adicionar Nova Relíquia'
+  add_subtitle: 'Envie uma nova relíquia sagrada para nossa coleção para verificação e aprovação'
   no_relics: 'Nenhuma relíquia foi encontrada. Clique "Adicionar Nova Relíquia" para criar uma.'
   edit_title: 'Editar Relíquia'
   new_title: 'Nova Relíquia'

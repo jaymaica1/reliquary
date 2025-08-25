@@ -7,6 +7,7 @@ relic:
     all_relics: 'All Relics'
     button: 'Filter'
   add_new: 'Add New Relic'
+  add_subtitle: 'Submit a new sacred relic to our collection for verification and approval'
   no_relics: 'No relics found. Click "Add New Relic" to create one.'
   edit_title: 'Edit Relic'
   new_title: 'New Relic'

@@ -770,6 +770,73 @@ footer {
     margin-top: 20px;
 }
 
+/* Image Management for Relic Forms */
+.current-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.current-image-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.current-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-remove-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+}
+
+.image-remove-button .btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(220, 53, 69, 0.9);
+    border: none;
+    color: white;
+    font-size: 14px;
+}
+
+.image-remove-button .btn:hover {
+    background: rgba(220, 53, 69, 1);
+}
+
+/* Form Help Text */
+.form-help-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9em;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* Form Error Messages */
+.form-error-message {
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #dc3545;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
 /* Single Column Layout for Forms */
 .contact-content-single {
     grid-template-columns: 1fr;
