@@ -1,37 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'security.reset_password.title'|trans({}, 'security') }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card mt-5">
-                    <div class="card-body">
+<section class="contact-section">
+    <div class="contact-container">
+        <h2 class="section-title">{{ 'security.reset_password.title'|trans({}, 'security') }}</h2>
+        
+        <div class="contact-content contact-content-single">
+            <div class="contact-form-section">
+                <form class="contact-form" method="post">
+                    {{ form_start(requestForm) }}
 
-                        <h1 class="h3 mb-3 font-weight-normal text-center">{{ 'security.reset_password.title'|trans({}, 'security') }}</h1>
-
-                        {{ form_start(requestForm) }}
-                            <div class="mb-3">
-                                {{ form_row(requestForm.email, {'attr': {'class': 'form-control'}}) }}
-                                <div class="form-text">
-                                    <small>
-                                        {{ 'security.reset_password.email_help'|trans({}, 'security') }}
-                                    </small>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-lg btn-primary" type="submit">{{ 'security.reset_password.send_email'|trans({}, 'security') }}</button>
-                            </div>
-
-                            <div class="mt-3 text-center">
-                                <p><a href="{{ path('app_login') }}">{{ 'security.login.back_to_login'|trans({}, 'security') }}</a></p>
-                            </div>
-                        {{ form_end(requestForm) }}
+                    <div class="form-group">
+                        <label for="{{ requestForm.email.vars.id }}">{{ 'security.reset_password.email'|trans({}, 'security') }}</label>
+                        {{ form_widget(requestForm.email, {'attr': {'class': '', 'type': 'email', 'required': true}}) }}
+                        <small class="form-help">{{ 'security.reset_password.email_help'|trans({}, 'security') }}</small>
+                        {{ form_errors(requestForm.email) }}
                     </div>
-                </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        {{ 'security.reset_password.send_email'|trans({}, 'security') }}
+                    </button>
+
+                    <div class="form-actions-center">
+                        <p>
+                            <a href="{{ path('app_login') }}" class="gold-link">{{ 'security.login.back_to_login'|trans({}, 'security') }}</a>
+                        </p>
+                    </div>
+
+                    {{ form_end(requestForm) }}
+                </form>
             </div>
         </div>
     </div>
+</section>
 {% endblock %}
