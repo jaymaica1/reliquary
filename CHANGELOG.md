@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/CesarScur/reliquary/compare/v2.8.0...v2.9.0) (2025-08-25)
+
+
+### Features
+
+* **relic:** redesign relic index page with landing theme ([1a2ccbd](https://github.com/CesarScur/reliquary/commit/1a2ccbd6ac4ebcc4e0bec60e0f84aadd639a62f7))
+
 # [2.8.0](https://github.com/CesarScur/reliquary/compare/v2.7.0...v2.8.0) (2025-08-25)
 
 
