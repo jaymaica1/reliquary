@@ -50,7 +50,8 @@
     <!-- Additional Content Block -->
     {% block body %}{% endblock %}
 
-    <!-- Call to Action Section -->
+    <!-- Call to Action Section - Only show if user is not logged in -->
+    {% if not app.user %}
     <section class="cta-section">
         <div class="cta-content">
             <h2 class="cta-title">{{ 'cta.title'|trans({}, 'landing') }}</h2>
@@ -58,13 +59,12 @@
                 {{ 'cta.text'|trans({}, 'landing') }}
             </p>
             <div class="cta-buttons">
-                {% if not app.user %}
-                    <a href="{{ path('app_register') }}" class="btn btn-primary">{{ 'cta.create_account'|trans({}, 'landing') }}</a>
-                {% endif %}
+                <a href="{{ path('app_register') }}" class="btn btn-primary">{{ 'cta.create_account'|trans({}, 'landing') }}</a>
                 <a href="{{ path('app_about') }}" class="btn btn-secondary">{{ 'cta.learn_more'|trans({}, 'landing') }}</a>
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Footer -->
     <footer>

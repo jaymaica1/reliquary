@@ -2,6 +2,7 @@
 # It will be populated with actual translations in the future
 relic:
   title: 'Relíquias'
+  subtitle: 'Tesouros Sagrados da Fé Pelos Seculos'
   my_relics: 'Minhas Relíquias'
   description: 'Gerencie sua coleção de relíquias sagradas'
   filter:

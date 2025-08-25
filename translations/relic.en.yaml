@@ -1,5 +1,6 @@
 relic:
   title: 'Relics'
+  subtitle: 'Sacred Treasures of Faith Through the Ages'
   my_relics: 'My Relics'
   description: 'Manage your sacred relics collection'
   filter:
