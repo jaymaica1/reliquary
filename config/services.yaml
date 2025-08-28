@@ -106,3 +106,7 @@ services:
             $protectionLevel: '%env(default:access_log_pii_protection_default:ACCESS_LOG_PII_PROTECTION)%'
             $fieldProtection: '%access_log.field_protection%'
             $environment: '%kernel.environment%'
+
+    App\EventSubscriber\RelicWorkflowSubscriber:
+        arguments:
+            $fromAddress: '%env(default:no-reply@santasreliquias.com.br:MAILER_FROM)%'

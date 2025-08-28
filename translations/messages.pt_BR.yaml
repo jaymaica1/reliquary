@@ -1,0 +1,6 @@
+email:
+  relic:
+    approved:
+      subject: "Sua relíquia foi aprovada"
+    rejected:
+      subject: "Sua submissão de relíquia não foi aceita"

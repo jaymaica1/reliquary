@@ -1,0 +1,6 @@
+email:
+  relic:
+    approved:
+      subject: "Your relic has been approved"
+    rejected:
+      subject: "Your relic submission was not accepted"
