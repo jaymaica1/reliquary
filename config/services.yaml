@@ -109,4 +109,4 @@ services:
 
     App\EventSubscriber\RelicWorkflowSubscriber:
         arguments:
-            $fromAddress: '%env(default:MAILER_FROM_DEFAULT:MAILER_FROM)%'
+            $fromAddress: '%env(MAILER_FROM)%'
