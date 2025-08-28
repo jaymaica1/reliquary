@@ -1,3 +1,11 @@
+# [2.10.0](https://github.com/CesarScur/reliquary/compare/v2.9.0...v2.10.0) (2025-08-28)
+
+
+### Features
+
+* **admin:** introduce admin base Stimulus controller for sidebar and navigation handling ([1632110](https://github.com/CesarScur/reliquary/commit/16321104344bb4086c0f14f6e4dd451a9607c935))
+* **relic:** implement email notifications for relic approval and rejection ([457640d](https://github.com/CesarScur/reliquary/commit/457640d6628700725bf7b66af52e84f442f26030))
+
 # [2.9.0](https://github.com/CesarScur/reliquary/compare/v2.8.0...v2.9.0) (2025-08-25)
 
 
