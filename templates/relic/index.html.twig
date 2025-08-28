@@ -12,19 +12,19 @@
         <div class="filter-section" data-controller="filter-toggle">
             {{ include('relic/_header.html.twig') }}
 
-            <div class="filter-controls d-none" data-filter-toggle-target="filter">
-                <form method="get" class="filter-form">
-                    <div class="input-group">
-                        <label class="input-group-text" for="filter">{{ 'relic.filter.by_degree'|trans({}, 'relic') }}</label>
-                        <select class="form-select" id="filter" name="filter" onchange="this.form.submit()">
-                            <option value="">{{ 'relic.filter.all_relics'|trans({}, 'relic') }}</option>
-                            {% for degree in relic_degrees %}
-                                <option value="{{ degree.value }}" {% if filter == degree.value %}selected{% endif %}>
-                                    {{ degree.getTitleTransKey|trans({}, 'relic') }}
-                                </option>
-                            {% endfor %}
-                        </select>
+            <div class="filter-bar d-none" data-filter-toggle-target="filter">
+                <form method="get" class="filter-form" style="width: 100%; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <div class="search-box">
+                        <input type="text" placeholder="{{ 'relic.search.placeholder'|trans({}, 'relic')|default('Search relics...') }}" id="relicSearch" />
                     </div>
+                    <select class="filter-select" id="filter" name="filter" onchange="this.form.submit()">
+                        <option value="">{{ 'relic.filter.all_relics'|trans({}, 'relic') }}</option>
+                        {% for degree in relic_degrees %}
+                            <option value="{{ degree.value }}" {% if filter == degree.value %}selected{% endif %}>
+                                {{ degree.getTitleTransKey|trans({}, 'relic') }}
+                            </option>
+                        {% endfor %}
+                    </select>
                     {% if filter %}
                         <a href="{{ app.request.get('_route') == 'app_my_relics' ? path('app_my_relics') : path('app_relic_index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-circle-xmark"></i>
