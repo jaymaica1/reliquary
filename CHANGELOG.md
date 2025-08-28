@@ -1,3 +1,10 @@
+## [2.10.2](https://github.com/CesarScur/reliquary/compare/v2.10.1...v2.10.2) (2025-08-28)
+
+
+### Bug Fixes
+
+* **mailer:** simplify `MAILER_FROM` environment variable configuration ([e7968f0](https://github.com/CesarScur/reliquary/commit/e7968f083ffca736dba657ee26e0ab94e7b758c1))
+
 ## [2.10.1](https://github.com/CesarScur/reliquary/compare/v2.10.0...v2.10.1) (2025-08-28)
 
 
