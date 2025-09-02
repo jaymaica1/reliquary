@@ -37,7 +37,7 @@
 
         <!-- Relics Grid -->
         {% if pagination.items|length > 0 %}
-            <div class="saints-carousel">
+            <div class="relics-grid">
                 {% for relic in pagination %}
                     <div class="saint-card" style="cursor: pointer;" data-controller="link" data-link-url-value="{{ path('app_relic_show', {'id': relic.id}) }}" data-action="click->link#click">
                         <div class="saint-image">

@@ -1128,3 +1128,17 @@ footer {
         max-width: 250px;
     }
 }
+
+/* Relics grid layout */
+.relics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.relics-grid .saint-card {
+    min-width: 0; /* allow cards to shrink within grid cells */
+}
