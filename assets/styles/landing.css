@@ -43,7 +43,7 @@ body::before {
 }
 
 /* Navigation */
-nav {
+nav#navbar {
     position: fixed;
     top: 0;
     width: 100%;
@@ -55,7 +55,7 @@ nav {
     transition: all 0.3s ease;
 }
 
-nav.scrolled {
+nav#navbar.scrolled {
     background: rgba(10, 14, 39, 0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -1005,6 +1005,51 @@ footer {
     padding: 0 2rem;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+/* Reliquary themed pagination (buttons-based) */
+.relic-pagination {
+    background: linear-gradient(180deg, rgba(254, 254, 254, 0.06), rgba(254, 254, 254, 0.03));
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(254, 254, 254, 0.06);
+}
+
+.relic-pagination .btn-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    background-color: rgba(254, 254, 254, 0.06);
+    color: var(--sacred-white);
+}
+
+.relic-pagination .btn-icon:hover:not(.disabled) {
+    background-color: rgba(245, 158, 11, 0.15);
+    border-color: var(--accent-gold);
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25);
+    transform: translateY(-1px);
+}
+
+.relic-pagination .btn-icon:active:not(.disabled) {
+    transform: translateY(0);
+    background-color: rgba(245, 158, 11, 0.22);
+}
+
+.relic-pagination .btn-icon.disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    border-color: rgba(254, 254, 254, 0.15);
+}
+
+.relic-pagination .page-status {
+    font-size: 0.95rem;
+    color: rgba(254, 254, 254, 0.85);
 }
 
 .pagination-info {

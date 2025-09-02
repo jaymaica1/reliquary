@@ -3,49 +3,49 @@
 {# See: https://material.io/components/data-tables #}
 
 {% if pageCount > 1 %}
-    <nav aria-label="Page navigation" class="material-pagination">
-        <div class="d-flex align-items-center">
+    <nav aria-label="Page navigation" class="material-pagination relic-pagination">
+        <div class="d-flex align-items-center gap-2">
             {% if first is defined and current != first %}
-                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}" class="btn btn-icon p-1 me-1" aria-label="First page">
-                    <i class="fas fa-angle-double-left"></i>
+                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}" class="btn btn-icon p-1 me-1" aria-label="First page" title="First">
+                    <i class="fas fa-angles-left"></i>
                 </a>
             {% else %}
-                <span class="btn btn-icon p-1 me-1 disabled" aria-label="First page">
-                    <i class="fas fa-angle-double-left text-muted"></i>
+                <span class="btn btn-icon p-1 me-1 disabled" aria-label="First page" title="First">
+                    <i class="fas fa-angles-left text-muted"></i>
                 </span>
             {% endif %}
 
             {% if previous is defined %}
-                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="btn btn-icon p-1 me-3" aria-label="Previous page">
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="btn btn-icon p-1 me-2" aria-label="Previous page" title="Previous">
                     <i class="fas fa-angle-left"></i>
                 </a>
             {% else %}
-                <span class="btn btn-icon p-1 me-3 disabled" aria-label="Previous page">
+                <span class="btn btn-icon p-1 me-2 disabled" aria-label="Previous page" title="Previous">
                     <i class="fas fa-angle-left text-muted"></i>
                 </span>
             {% endif %}
 
-            <span class="text-muted small">
-                Page {{ current }} of {{ pageCount }}
+            <span class="page-status">
+                {{ 'Page'|trans }} <strong>{{ current }}</strong> {{ 'of'|trans }} {{ pageCount }}
             </span>
 
             {% if next is defined %}
-                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="btn btn-icon p-1 ms-3" aria-label="Next page">
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="btn btn-icon p-1 ms-2" aria-label="Next page" title="Next">
                     <i class="fas fa-angle-right"></i>
                 </a>
             {% else %}
-                <span class="btn btn-icon p-1 ms-3 disabled" aria-label="Next page">
+                <span class="btn btn-icon p-1 ms-2 disabled" aria-label="Next page" title="Next">
                     <i class="fas fa-angle-right text-muted"></i>
                 </span>
             {% endif %}
 
             {% if last is defined and current != last %}
-                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}" class="btn btn-icon p-1 ms-1" aria-label="Last page">
-                    <i class="fas fa-angle-double-right"></i>
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}" class="btn btn-icon p-1 ms-1" aria-label="Last page" title="Last">
+                    <i class="fas fa-angles-right"></i>
                 </a>
             {% else %}
-                <span class="btn btn-icon p-1 ms-1 disabled" aria-label="Last page">
-                    <i class="fas fa-angle-double-right text-muted"></i>
+                <span class="btn btn-icon p-1 ms-1 disabled" aria-label="Last page" title="Last">
+                    <i class="fas fa-angles-right text-muted"></i>
                 </span>
             {% endif %}
         </div>
