@@ -1,3 +1,17 @@
+# [2.11.0](https://github.com/CesarScur/reliquary/compare/v2.10.2...v2.11.0) (2025-09-02)
+
+
+### Bug Fixes
+
+* **landing:** reorder CSS imports for proper styling application ([302c4d3](https://github.com/CesarScur/reliquary/commit/302c4d3a03aab6055d7a110abe19d2dc74372e1e))
+* **mailer:** update `.env` to simplify `MAILER_FROM` variable configuration ([476c3cc](https://github.com/CesarScur/reliquary/commit/476c3cc9b4e4bed2f01ac6152690b4fabd570884))
+
+
+### Features
+
+* **pagination:** enhance pagination design with Reliquary theme ([fdf3a25](https://github.com/CesarScur/reliquary/commit/fdf3a251d8ef1072ccec12c4b59160e1212c7afa))
+* **relic:** update relics grid layout for improved responsiveness and consistency ([b0f9629](https://github.com/CesarScur/reliquary/commit/b0f9629f83c34a561637c5df06a69dff6082dd40))
+
 ## [2.10.2](https://github.com/CesarScur/reliquary/compare/v2.10.1...v2.10.2) (2025-08-28)
 
 
