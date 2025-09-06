@@ -1,3 +1,12 @@
+# [2.12.0](https://github.com/CesarScur/reliquary/compare/v2.11.0...v2.12.0) (2025-09-06)
+
+
+### Features
+
+* **home:** make featured saint cards clickable with dynamic links ([df82a6f](https://github.com/CesarScur/reliquary/commit/df82a6fd64f41ea7ae30a2b5a2d61348560c9600))
+* **relic:** apply new list styles and refine index layout ([fc32a93](https://github.com/CesarScur/reliquary/commit/fc32a93f140931b3701b373e3a8544f6cf73fc79))
+* **relic:** enhance filter functionality with searchable input and improved layout ([92e1940](https://github.com/CesarScur/reliquary/commit/92e1940752aef26d034f18f4dbb69dd496dad6db))
+
 # [2.11.0](https://github.com/CesarScur/reliquary/compare/v2.10.2...v2.11.0) (2025-09-02)
 
 
