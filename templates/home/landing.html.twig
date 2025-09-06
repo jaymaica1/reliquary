@@ -63,7 +63,7 @@
         {% block saints_content %}
             <div class="saints-carousel" data-controller="carousel">
                 {% for saint in featuredSaints %}
-                    <div class="saint-card">
+                    <div class="saint-card" style="cursor: pointer;" data-controller="link" data-link-url-value="{{ path('app_saint_show', {'id': saint.id}) }}" data-action="click->link#click">
                         <div class="saint-image">
                             {% if saint.images.first %}
                                 <img src="{{ image_url(saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}" alt="{{ saint.name }}" />
