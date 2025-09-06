@@ -916,7 +916,14 @@ footer {
     }
 }
 
-/* Relic Index Specific Styles */
+
+.list {
+    padding: 5rem 2rem;
+    position: relative;
+    background: linear-gradient(180deg, rgba(30, 58, 138, 0.95), rgba(10, 14, 39, 0.95));
+    z-index: 2;
+}
+
 .filter-section {
     max-width: 1400px;
     margin: 0 auto 2rem;

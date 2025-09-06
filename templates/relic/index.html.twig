@@ -3,12 +3,10 @@
 {% block title %}{{ title ?? 'relic.title'|trans({}, 'relic') }}{% endblock %}
 
 {% block body %}
-    <!-- Relic Collection Section -->
-    <section class="featured-saints">
+    <section class="list">
         <h2 class="section-title">{{ title ?? 'relic.title'|trans({}, 'relic') }}</h2>
         <p class="section-subtitle">{{ 'relic.subtitle'|trans({}, 'relic') }}</p>
-        
-        <!-- Filter Section -->
+
         <div class="filter-section" data-controller="filter-toggle">
             {{ include('relic/_header.html.twig') }}
 
@@ -35,7 +33,6 @@
             </div>
         </div>
 
-        <!-- Relics Grid -->
         {% if pagination.items|length > 0 %}
             <div class="relics-grid">
                 {% for relic in pagination %}
@@ -71,7 +68,6 @@
                 {% endfor %}
             </div>
             
-            <!-- Pagination -->
             <div class="pagination-wrapper">
                 <div class="pagination-info">
                     {{ ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1) }}-{{ min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount) }} of {{ pagination.getTotalItemCount }} items
