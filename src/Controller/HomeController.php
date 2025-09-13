@@ -27,8 +27,15 @@ final class HomeController extends AbstractController
     {
         $featuredSaints = $saintRepository->findFeatured();
 
+        $today = new \DateTime();
+        $saintsOfDay = $saintRepository->findByFeastDate($today);
+        $saintOfDay = !empty($saintsOfDay) ? $saintsOfDay[0] : null;
+        $otherSaints = !empty($saintsOfDay) && count($saintsOfDay) > 1 ? array_slice($saintsOfDay, 1) : [];
+
         return $this->render('home/landing.html.twig', [
             'featuredSaints' => $featuredSaints,
+            'saintOfDay' => $saintOfDay,
+            'otherSaints' => $otherSaints,
         ]);
     }
 

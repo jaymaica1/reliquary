@@ -1247,3 +1247,34 @@ footer {
 .relics-grid .saint-card {
     min-width: 0; /* allow cards to shrink within grid cells */
 }
+
+
+
+/* Saint of the Day integrated card styles */
+.saint-card.saint-of-day {
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 16px 40px rgba(245, 158, 11, 0.18);
+    position: relative;
+}
+
+.saint-card.saint-of-day .saint-image {
+    position: relative; /* ensure label positions correctly */
+}
+
+.sod-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.95), rgba(245, 158, 11, 0.75));
+    color: #0a0e27;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 1;
+}

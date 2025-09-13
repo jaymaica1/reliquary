@@ -62,8 +62,31 @@
         <p class="section-subtitle">{{ 'saints.subtitle'|trans({}, 'landing') }}</p>
         {% block saints_content %}
             <div class="saints-carousel" data-controller="carousel">
+                {# Prepend Saint of the Day as a special card inside the carousel #}
+                {% if saintOfDay %}
+                    <div class="saint-card saint-of-day">
+                        <div class="saint-image">
+                            <div class="sod-label"><i class="fas fa-star me-1"></i> {{ 'home.saint_of_day'|trans({}, 'home')|default('Saint of the Day') }}</div>
+                            {% if saintOfDay.images is defined and saintOfDay.images|length > 0 %}
+                                <img src="{{ image_url(saintOfDay.images.first.thumbnailFilename ?? saintOfDay.images.first.filename) }}" alt="{{ saintOfDay.name }}" />
+                            {% endif %}
+                        </div>
+                        <div class="saint-info">
+                            <h3 class="saint-name">{{ saintOfDay|format_saint_name }}</h3>
+                            {% if saintOfDay.feastDate %}
+                                <p class="saint-dates">{{ saintOfDay.feastDate|format_date('medium', pattern=('common.date_formats.feast_date'|trans({}, 'common'))) }}</p>
+                            {% endif %}
+                            {% if saintOfDay.saintPhrase %}
+                                <p class="saint-bio">{{ saintOfDay.getTranslatedPhrase(app.request.locale) }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# Render the rest of featured saints; avoid duplicating the SoD if present in the list #}
                 {% for saint in featuredSaints %}
-                    <div class="saint-card" style="cursor: pointer;" data-controller="link" data-link-url-value="{{ path('app_saint_show', {'id': saint.id}) }}" data-action="click->link#click">
+                    {% if not (saintOfDay and saint.id == saintOfDay.id) %}
+                        <div class="saint-card" style="cursor: pointer;" data-controller="link" data-link-url-value="{{ path('app_saint_show', {'id': saint.id}) }}" data-action="click->link#click">
                         <div class="saint-image">
                             {% if saint.images.first %}
                                 <img src="{{ image_url(saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}" alt="{{ saint.name }}" />
@@ -79,7 +102,9 @@
                             </p>
                         </div>
                     </div>
+                    {% endif %}
                 {% else %}
+                    {# Fallback example card if there are no featured saints at all #}
                     <div class="saint-card">
                         <div class="saint-image"></div>
                         <div class="saint-info">
