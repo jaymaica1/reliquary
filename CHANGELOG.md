@@ -1,3 +1,11 @@
+# [2.13.0](https://github.com/CesarScur/reliquary/compare/v2.12.0...v2.13.0) (2025-09-13)
+
+
+### Features
+
+* **home:** add Saint of the Day feature to landing page ([c15c2d6](https://github.com/CesarScur/reliquary/commit/c15c2d66a73e0d3a8c40f2338063317c52bca473))
+* **home:** make "Saint of the Day" card clickable ([dac9462](https://github.com/CesarScur/reliquary/commit/dac9462aff9110ba029926d0c4f82de784e67011))
+
 # [2.12.0](https://github.com/CesarScur/reliquary/compare/v2.11.0...v2.12.0) (2025-09-06)
 
 
