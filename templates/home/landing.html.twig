@@ -64,7 +64,7 @@
             <div class="saints-carousel" data-controller="carousel">
                 {# Prepend Saint of the Day as a special card inside the carousel #}
                 {% if saintOfDay %}
-                    <div class="saint-card saint-of-day">
+                <div class="saint-card saint-of-day" style="cursor: pointer;" data-controller="link" data-link-url-value="{{ path('app_saint_show', {'id': saintOfDay.id}) }}" data-action="click->link#click">
                         <div class="saint-image">
                             <div class="sod-label"><i class="fas fa-star me-1"></i> {{ 'home.saint_of_day'|trans({}, 'home')|default('Saint of the Day') }}</div>
                             {% if saintOfDay.images is defined and saintOfDay.images|length > 0 %}
