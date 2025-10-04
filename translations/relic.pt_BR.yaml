@@ -21,6 +21,7 @@ relic:
   additional_image: 'Imagem adicional'
   image_uploaded_by: 'Enviado por'
   no_image: 'Nenhuma imagem disponível'
+  relic_of: 'Relíquia de'
   table:
     saint: 'Santo'
     address: 'Endereço'
@@ -75,6 +76,7 @@ relic:
     edit: 'Editar'
     delete: 'Excluir'
     back: 'Voltar à lista'
+    back_to_relics: 'Voltar às Relíquias'
     clear: 'Limpar'
     confirm_delete: 'Tem certeza de que deseja deletar esta relíquia?'
     approve: 'Aprovar'

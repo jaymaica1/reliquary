@@ -1,233 +1,183 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
-{% block title %}{{ 'relic.show_title'|trans({}, 'relic') }}{% endblock %}
+{% block title %}{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }} - {{ 'relic.show_title'|trans({}, 'relic') }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/relic-show.css') }}">
+{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    {{ include('relic/_header.html.twig', {'title': 'relic.show_title'|trans({}, 'relic')}) }}
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow border rounded overflow-hidden">
-                <div class="position-relative">
+    <div class="relic-show-page">
+        <div class="relic-show-container">
+
+            <!-- Back to Relics Link -->
+            <a href="{{ path('app_relic_index') }}" class="back-link">
+                <span>←</span> {{ 'relic.actions.back_to_relics'|trans({'default': 'Back to Relics'}, 'relic') }}
+            </a>
+
+            <!-- Relic Header with Title and Badge -->
+{#            <div class="relic-header">#}
+{#                <h1 class="relic-title">#}
+{#                    {{ 'relic.title_of'|trans({'default': 'Relic of'}, 'relic') }} {{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }}#}
+{#                </h1>#}
+{#                <span class="relic-badge">#}
+{#                {{ relic.degree.getTitleTransKey()|trans({}, 'relic') }}#}
+{#            </span>#}
+{#            </div>#}
+
+            <!-- Main Content: Image and Details -->
+            <div class="relic-content">
+                <!-- Image Section -->
+                <div class="relic-image-section">
                     {% if relic.images|length > 0 %}
-                        <div class="position-relative">
-                            <img src="{{ image_url(relic.images[0].filename) }}"
-                                 alt="Image of {{ relic.saint ? relic.saint ~ '\'s' : '' }} relic" 
-                                 class="w-100"
-                                 style="height: 480px; object-fit: cover; object-position: 0 40%">
-                            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white p-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h4 class="mb-0">{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }}</h4>
-                                    {% if relic.images[0].uploader %}
-                                    <div class="d-flex align-items-center">
-                                        <small class="me-2">{{ 'relic.image_uploaded_by'|trans({}, 'relic') }}:</small>
-                                        {% if relic.images[0].uploader.profileImage %}
-                                            <img src="{{ image_url(relic.images[0].uploader.profileImage.thumbnailFilename ?? relic.images[0].uploader.profileImage.filename) }}"
-                                                 alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
-                                                 class="rounded-circle me-2" 
-                                                 style="width: 24px; height: 24px; object-fit: cover;">
-                                        {% else %}
-                                            <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center me-2" 
-                                                 style="width: 24px; height: 24px;">
-                                                <i class="fa fa-user text-dark" style="font-size: 0.8rem;"></i>
-                                            </div>
-                                        {% endif %}
-                                        <span>{{ relic.images[0].uploader.username }}</span>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+                        <img src="{{ image_url(relic.images[0].filename) }}"
+                             alt="{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }}"
+                             class="relic-main-image">
                     {% else %}
-                        <div class="position-relative">
-                            <img src="{{ asset('/images/relic.png') }}" 
-                                 alt="{{ 'relic.no_image'|trans({}, 'relic') }}" 
-                                 class="w-100 opacity-25"
-                                 style="height: 280px; object-fit: contain; filter: grayscale(100%);">
-                            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white p-3">
-                                <h4 class="mb-0">{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }}</h4>
-                            </div>
-                        </div>
+                        <img src="{{ asset('/images/relic.png') }}"
+                             alt="{{ 'relic.no_image'|trans({}, 'relic') }}"
+                             class="relic-main-image"
+                             style="opacity: 0.3; max-width: 200px;">
                     {% endif %}
                 </div>
 
-                <div class="card-body p-4">
-                    {% if relic.images|length > 1 %}
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <h5 class="border-bottom pb-2 mb-3">{{ 'relic.additional_images'|trans({}, 'relic') }}</h5>
-                                <div class="row">
-                                    {% for image in relic.images|slice(1) %}
-                                        <div class="col-md-4 col-sm-6 mb-3">
-                                            <div class="card h-100 border-0 shadow-sm">
-                                                <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
-                                                     alt="{{ 'relic.additional_image'|trans({}, 'relic') }}" 
-                                                     class="card-img-top"
-                                                     style="height: 160px; object-fit: cover;">
-                                                <div class="card-body p-2">
-                                                    <p class="small text-muted mb-0">{{ image.originalFilename }}</p>
-                                                    {% if image.uploader %}
-                                                    <div class="mt-2">
-                                                        <small class="text-muted">{{ 'relic.image_uploaded_by'|trans({}, 'relic') }}:</small>
-                                                        <div class="d-flex align-items-center mt-1">
-                                                            {% if image.uploader.profileImage %}
-                                                                <img src="{{ image_url(image.uploader.profileImage.thumbnailFilename ?? image.uploader.profileImage.filename) }}"
-                                                                     alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
-                                                                     class="rounded-circle me-2" 
-                                                                     style="width: 24px; height: 24px; object-fit: cover;">
-                                                            {% else %}
-                                                                <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center me-2" 
-                                                                     style="width: 24px; height: 24px;">
-                                                                    <i class="fa fa-user"
-                                                                       style="font-size: 0.8rem;"></i>
-                                                                </div>
-                                                            {% endif %}
-                                                            <span class="small">{{ image.uploader.username }}</span>
-                                                        </div>
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="row mb-4">
-                        <div class="col-md-6 mb-3">
-                            <div class="mb-3">
-                                <strong>{{ 'relic.table.address'|trans({}, 'relic') }}:</strong><br>
-                                <span class="text-muted">{{ relic.address }}</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ 'relic.table.location'|trans({}, 'relic') }}:</strong><br>
-                                <span class="text-muted">{{ relic.location }}</span>
-                            </div>
-
-                            {% if relic.description %}
-                            <div class="mb-3">
-                                <strong>{{ 'relic.form.description'|trans({}, 'relic') }}:</strong><br>
-                                <span class="text-muted">{{ relic.description }}</span>
-                            </div>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-md-6">
-                            {% if relic.saint %}
-                            <div class="mb-3">
-                                <strong>{{ 'relic.table.saint'|trans({}, 'relic') }}:</strong><br>
-                                <span class="text-muted">
-                                    <a href="{{ path('app_saint_show', {'id': relic.saint.id}) }}" class="text-decoration-none">
-                                        {{ relic.saint }}
-                                    </a>
-                                </span>
-                            </div>
-                            {% endif %}
-
-                            <div class="mb-3">
-                                <strong>{{ 'relic.table.degree'|trans({}, 'relic') }}:</strong><br>
-                                <span class="text-muted">
-                                    {% if relic.degree == constant('App\\Enum\\RelicDegree::FIRST_CLASS') %}
-                                        {{ relic.degree.getTitleTransKey()|trans({}, 'relic') }} 
-                                        <span class="d-block small">{{ 'relic.degree.first_class_description'|trans({}, 'relic') }}</span>
-                                    {% elseif relic.degree == constant('App\\Enum\\RelicDegree::SECOND_CLASS') %}
-                                        {{ relic.degree.getTitleTransKey()|trans({}, 'relic') }}
-                                        <span class="d-block small">{{ 'relic.degree.second_class_description'|trans({}, 'relic') }}</span>
-                                    {% elseif relic.degree == constant('App\\Enum\\RelicDegree::THIRD_CLASS') %}
-                                        {{ relic.degree.getTitleTransKey()|trans({}, 'relic') }}
-                                        <span class="d-block small">{{ 'relic.degree.third_class_description'|trans({}, 'relic') }}</span>
-                                    {% else %}
-                                        {{ relic.degree.getTitleTransKey()|trans({}, 'relic') }}
-                                    {% endif %}
-                                </span>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ 'relic.table.status'|trans({}, 'relic') }}:</strong><br>
-                                <span class="text-muted">
-                                    {% if relic.status == constant('App\\Enum\\RelicStatus::PENDING') %}
-                                        <span class="badge bg-warning">{{ relic.status.getTitleTransKey()|trans({}, 'relic') }}</span>
-                                    {% elseif relic.status == constant('App\\Enum\\RelicStatus::APPROVED') %}
-                                        <span class="badge bg-success">{{ relic.status.getTitleTransKey()|trans({}, 'relic') }}</span>
-                                    {% elseif relic.status == constant('App\\Enum\\RelicStatus::REJECTED') %}
-                                        {% if app.user and relic.creator and app.user.id == relic.creator.id %}
-                                            <span class="badge bg-danger">{{ 'relic.status.not_accepted'|trans({'default': 'Not Accepted'}, 'relic') }}</span>
-                                        {% else %}
-                                            <span class="badge bg-danger">{{ relic.status.getTitleTransKey()|trans({}, 'relic') }}</span>
-                                        {% endif %}
-                                    {% endif %}
-                                </span>
-                                {% if relic.status == constant('App\\Enum\\RelicStatus::REJECTED') and relic.rejectionReason and app.user and relic.creator and app.user.id == relic.creator.id %}
-                                    <div class="mt-2 p-2 border rounded bg-light">
-                                        <small class="d-block mb-1 fw-bold">{{ 'relic.rejection_reason'|trans({'default': 'Reason'}, 'relic') }}:</small>
-                                        <p class="mb-0 small">{{ relic.rejectionReason }}</p>
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>{{ 'relic.table.added_by'|trans({}, 'relic') }}:</strong><br>
-                                <div class="d-flex align-items-center mt-1">
-                                    {% if relic.creator.profileImage %}
-                                        <img src="{{ image_url(relic.creator.profileImage.thumbnailFilename ?? relic.creator.profileImage.filename) }}"
-                                             alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
-                                             class="rounded-circle me-2" 
-                                             style="width: 32px; height: 32px; object-fit: cover;">
-                                    {% else %}
-                                        <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center me-2" 
-                                             style="width: 32px; height: 32px;">
-                                            <i class="fa fa-user" style="font-size: 1.2rem;"></i>
-                                        </div>
-                                    {% endif %}
-                                    <span class="text-muted">{{ relic.creator.username }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-footer bg-light p-3">
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ path('app_relic_index') }}" class="btn btn-outline-secondary">
-                            <i class="fa fa-arrow-left"></i>
-                            {{ 'relic.actions.back'|trans({}, 'relic') }}
-                        </a>
-                        <div>
-                            {% if relic.latitude is not null and relic.longitude is not null %}
-                                <a href="https://www.google.com/maps?q={{ relic.latitude }},{{ relic.longitude }}" 
-                                   class="btn btn-success me-2" 
-                                   target="_blank" 
-                                   rel="noopener noreferrer"
-                                   data-bs-toggle="tooltip"
-                                   data-bs-placement="top"
-                                   title="{{ 'relic.actions.visit_maps_tooltip'|trans({}, 'relic') }}">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    {{ 'relic.actions.visit_maps'|trans({}, 'relic') }}
-                                </a>
-                            {% endif %}
-
-                            {% if relic.status == constant('App\\Enum\\RelicStatus::REJECTED') and app.user and relic.creator and app.user.id == relic.creator.id %}
-                                <a href="{{ path('app_relic_resubmit', {'id': relic.id}) }}" class="btn btn-primary me-2">
-                                    <i class="fas fa-redo"></i>
-                                    {{ 'relic.actions.resubmit'|trans({'default': 'Resubmit'}, 'relic') }}
-                                </a>
-                            {% endif %}
-                            
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('app_relic_edit', {'id': relic.id}) }}" class="btn btn-outline-secondary me-2">
-                                <i class="fas fa-pencil"></i>
-                                {{ 'relic.actions.edit'|trans({}, 'relic') }}
+                <!-- Details Section -->
+                <div class="relic-details-section">
+                    <!-- Description Section -->
+                    <div class="relic-section">
+                        <h2 class="section-heading">{{ 'relic.relic_of'|trans({}, 'relic') }}
+                            <a href="{{ path('app_saint_show', {'id': relic.saint.id}) }}">
+                                {{ relic.saint|format_saint_name }}
                             </a>
-                            {{ include('relic/_delete_form.html.twig', {'form_class': '', 'button_class': ''}) }}
+                        </h2>
+
+                        {% if relic.description %}
+                            <p class="historical-text">{{ relic.description }}</p>
+                        {% endif %}
+
+                        <div class="detail-item">
+                            <span class="detail-label">{{ 'relic.form.degree'|trans({}, 'relic') }}:</span>
+                            <span class="detail-value">{{ relic.degree.getTitleTransKey()|trans({}, 'relic') }}</span>
+                        </div>
+
+                        {% if relic.provenance and (is_granted('ROLE_ADMIN')) %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'relic.form.provenance'|trans({'default': 'Provenance'}, 'relic') }}:</span>
+                                <span class="detail-value">{{ relic.provenance }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if relic.location %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'relic.form.location'|trans({}, 'relic') }}:</span>
+                                <span class="detail-value">{{ relic.location }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if relic.address %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'relic.form.address'|trans({}, 'relic') }}:</span>
+                                <span class="detail-value">{{ relic.address }}</span>
+                            </div>
+                        {% endif %}
+
+                        <div class="detail-item">
+                            <span class="detail-label">{{ 'relic.table.status'|trans({}, 'relic') }}:</span>
+                            <span class="detail-value">
+                            {% if relic.status == constant('App\\Enum\\RelicStatus::PENDING') %}
+                                <span class="status-badge status-pending">{{ relic.status.getTitleTransKey()|trans({}, 'relic') }}</span>
+                            {% elseif relic.status == constant('App\\Enum\\RelicStatus::APPROVED') %}
+                                <span class="status-badge status-approved">{{ relic.status.getTitleTransKey()|trans({}, 'relic') }}</span>
+                            {% elseif relic.status == constant('App\\Enum\\RelicStatus::REJECTED') %}
+                                {% if app.user and relic.creator and app.user.id == relic.creator.id %}
+                                    <span class="status-badge status-rejected">{{ 'relic.status.not_accepted'|trans({'default': 'Not Accepted'}, 'relic') }}</span>
+                                {% else %}
+                                    <span class="status-badge status-rejected">{{ relic.status.getTitleTransKey()|trans({}, 'relic') }}</span>
+                                {% endif %}
                             {% endif %}
+                        </span>
+                        </div>
+
+                        {% if relic.status == constant('App\\Enum\\RelicStatus::REJECTED') and relic.rejectionReason and app.user and relic.creator and app.user.id == relic.creator.id %}
+                            <div class="rejection-reason">
+                                <span class="rejection-reason-label">{{ 'relic.rejection_reason'|trans({'default': 'Reason'}, 'relic') }}:</span>
+                                <p class="rejection-reason-text">{{ relic.rejectionReason }}</p>
+                            </div>
+                        {% endif %}
+
+                        <div class="detail-item">
+                            <span class="detail-label">{{ 'relic.table.added_by'|trans({}, 'relic') }}:</span>
+                            <span class="detail-value">{{ relic.creator.username }}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Historical Significance Section -->
+        {% if relic.description and false %}
+            <div class="historical-section">
+                <h2 class="section-heading">{{ 'relic.historical_significance'|trans({'default': 'Historical Significance'}, 'relic') }}</h2>
+                <p class="historical-text">
+                    {{ relic.description }}
+                </p>
+            </div>
+        {% endif %}
+
+        <!-- Thumbnail Gallery -->
+        {% if relic.images|length > 1 %}
+            <div class="thumbnail-gallery">
+                {% for image in relic.images %}
+                    <div class="thumbnail-item" data-controller="link"
+                         data-link-url-value="{{ image_url(image.filename) }}" data-action="click->link#click">
+                        <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
+                             alt="{{ 'relic.image'|trans({'default': 'Relic Image'}, 'relic') }} {{ loop.index }}"
+                             class="thumbnail-image">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="relic-actions">
+            <div class="action-group">
+                {% if relic.latitude is not null and relic.longitude is not null %}
+                    <a href="https://www.google.com/maps?q={{ relic.latitude }},{{ relic.longitude }}"
+                       class="btn-action btn-success-action"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ 'relic.actions.visit_maps'|trans({}, 'relic') }}
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="action-group">
+                {% if relic.status == constant('App\\Enum\\RelicStatus::REJECTED') and app.user and relic.creator and app.user.id == relic.creator.id %}
+                    <a href="{{ path('app_relic_resubmit', {'id': relic.id}) }}" class="btn-action btn-primary-action">
+                        <i class="fas fa-redo"></i>
+                        {{ 'relic.actions.resubmit'|trans({'default': 'Resubmit'}, 'relic') }}
+                    </a>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_relic_edit', {'id': relic.id}) }}" class="btn-action btn-outline">
+                        <i class="fas fa-pencil"></i>
+                        {{ 'relic.actions.edit'|trans({}, 'relic') }}
+                    </a>
+                    <form method="post" action="{{ path('app_relic_delete', {'id': relic.id}) }}"
+                          onsubmit="return confirm('{{ 'relic.confirm_delete'|trans({'default': 'Are you sure you want to delete this relic?'}, 'relic') }}');"
+                          style="display: inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ relic.id) }}">
+                        <button type="submit" class="btn-action btn-danger-action">
+                            <i class="fas fa-trash"></i>
+                            {{ 'relic.actions.delete'|trans({}, 'relic') }}
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
-</div>
+    </div>
 {% endblock %}
