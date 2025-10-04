@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/CesarScur/reliquary/compare/v2.13.0...v2.14.0) (2025-10-04)
+
+
+### Features
+
+* **relic:** redesign relic show page with updated layout and styles ([f7b4a63](https://github.com/CesarScur/reliquary/commit/f7b4a63868b3bc851cdcc96d4a64b808671edbf4))
+
 # [2.13.0](https://github.com/CesarScur/reliquary/compare/v2.12.0...v2.13.0) (2025-09-13)
 
 
