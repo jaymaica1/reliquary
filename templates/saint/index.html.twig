@@ -1,64 +1,132 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
-{% block title %}{{ title ?? 'Saint index' }}{% endblock %}
+{% block title %}{{ title ?? 'saint.title'|trans({}, 'saint') }}{% endblock %}
 
 {% block body %}
-    <div class="container py-4" data-controller="filter-toggle">
-        {{ include('saint/_header.html.twig') }}
-        <div class="row mb-4 {% if not app.request.query.get('filter') and not app.request.query.get('q') %}d-none{% endif %}"
-             data-filter-toggle-target="filter">
-            <div class="col-md-6">
-                <form method="get" class="d-flex">
-                    <div class="input-group">
-                        <label class="input-group-text"
-                               for="filter">{{ 'saint.filter.status'|trans({}, 'saint') }}</label>
-                        <select class="form-select" id="filter" name="filter" onchange="this.form.submit()">
-                            <option value="">{{ 'saint.filter.allsaints'|trans({}, 'saint') }}</option>
-                            {% for status in canonical_statuses %}
-                                <option value="{{ status.value }}" {% if filter == status.value %}selected{% endif %}>
-                                    {{ status.getTitleTransKey()|trans({}, 'saint') }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
+    <section class="list">
+        <h2 class="section-title">{{ title ?? 'saint.title'|trans({}, 'saint') }}</h2>
+        <p class="section-subtitle">{{ 'saint.subtitle'|trans({'default': 'Discover the lives of saints and their sacred legacy'}, 'saint') }}</p>
 
-                    {% if filter %}
-                        <a href="{{ app.request.get('_route') == 'app_my_saints' ? path('app_my_saints') : path('app_saint_index') }}"
-                           class="btn btn-outline-secondary ms-2">
-                            <i class="fas fa-circle-xmark"></i>
-                            {{ 'saint.filter.clear'|trans({}, 'saint') }}
-                        </a>
+        <div class="filter-section" data-controller="filter-toggle">
+            <div class="filter-header">
+                <div class="filter-header-content">
+                    {% if app.request.get('_route') == 'app_saint_index' %}
+                    <button type="button" class="btn btn-secondary" data-action="filter-toggle#toggle">
+                        <i class="fas fa-eye" data-filter-toggle-target="icon"></i>
+                        {{ 'saint.filter.filter'|trans({'default': 'Filter'}, 'saint') }}
+                    </button>
                     {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_saint_new') }}" class="btn btn-primary">
+                        <i class="fas fa-circle-plus me-2"></i>
+                        {{ 'saint.add_new'|trans({'default': 'Add New Saint'}, 'saint') }}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="filter-bar d-none" data-filter-toggle-target="filter">
+                <form method="get" class="filter-form" style="width: 100%; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <div class="search-box" style="position: relative; flex: 1; min-width: 200px;">
+                        <input type="text" 
+                               name="q"
+                               value="{{ app.request.query.get('q') }}"
+                               placeholder="{{ 'saint.filter.placeholder'|trans({'default': 'Search saints...'}, 'saint') }}" 
+                               id="saintSearch"
+                               style="padding-right: {{ app.request.query.get('q') ? '2.5rem' : '1rem' }};" />
+                        {% if app.request.query.get('q') %}
+                            <a href="{{ app.request.get('_route') == 'app_my_saints' ? path('app_my_saints') : path('app_saint_index') }}" 
+                               class="search-clear-btn"
+                               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(254, 254, 254, 0.6); cursor: pointer; padding: 0.25rem 0.5rem; transition: color 0.3s ease; text-decoration: none; font-size: 1.2rem;"
+                               onmouseover="this.style.color='var(--accent-gold)'"
+                               onmouseout="this.style.color='rgba(254, 254, 254, 0.6)'">
+                                <i class="fas fa-circle-xmark"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <select class="filter-select" id="filter" name="filter">
+                        <option value="">{{ 'saint.filter.allsaints'|trans({}, 'saint') }}</option>
+                        {% for status in canonical_statuses %}
+                            <option value="{{ status.value }}" {% if filter == status.value %}selected{% endif %}>
+                                {{ status.getTitleTransKey()|trans({}, 'saint') }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                        {{ 'saint.filter.search'|trans({'default': 'Search'}, 'saint') }}
+                    </button>
                 </form>
             </div>
-            <div class="col-md-6">
-                {{ include('_search_card.html.twig', {
-                    'title': 'saint.find_saints',
-                    'domain': 'saint',
-                    'route': 'app_saint_index',
-                    'default_type': 'saint',
-                    'placeholder': 'common.navigation.search_saint',
-                    'query_value': app.request.query.get('q')
-                }) }}
-
-            </div>
         </div>
 
-        <!-- Single responsive turbo frame -->
-        <div class="row">
-            <div class="col-12">
-                <turbo-frame id="saints-list"
-                             data-controller="responsive-frame"
-                             data-responsive-frame-desktop-src-value="{{ path('app_saint_desktop', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) }}"
-                             data-responsive-frame-mobile-src-value="{{ path('app_saint_mobile', {'q': app.request.query.get('q'), 'filter': app.request.query.get('filter')}) }}">
-                    <div class="d-none d-md-block">
-                        {{ include('saint/_skeleton_list.html.twig') }}
+        {% if pagination.items|length > 0 %}
+            <div class="relics-grid">
+                {% for saint in pagination %}
+                    <div class="saint-card" style="cursor: pointer;" 
+                         data-controller="link" 
+                         data-link-url-value="{{ path('app_saint_show', {'id': saint.id}) }}" 
+                         data-action="click->link#click">
+                        <div class="saint-image">
+                            {% if saint.images is defined and saint.images|length > 0 %}
+                                <div data-controller="image-loader">
+                                    <div data-image-loader-target="skeleton" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                        <img src="{{ asset('/images/relic.png') }}" class="w-100 h-100 skeleton-animation" style="object-fit: contain; filter: grayscale(100%);" />
+                                    </div>
+                                    <img data-image-loader-target="image" 
+                                         data-action="load->image-loader#imageLoaded" 
+                                         src="{{ image_url(saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}" 
+                                         alt="{{ saint|format_saint_name }}" />
+                                </div>
+                            {% else %}
+                                <img src="{{ asset('/images/relic.png') }}" 
+                                     alt="{{ 'saint.no_image_available'|trans({}, 'saint') }}" 
+                                     class="opacity-25" 
+                                     style="filter: grayscale(100%);" />
+                            {% endif %}
+                        </div>
+                        <div class="saint-info">
+                            <h3 class="saint-name">{{ saint|format_saint_name }}</h3>
+                            {% if saint.canonicalStatus %}
+                                <p class="saint-dates">{{ saint.canonicalStatus.getTitleTransKey()|trans({}, 'saint') }}</p>
+                            {% endif %}
+                            <div class="relic-details">
+                                {% if saint.feastDate %}
+                                    <p class="relic-location">
+                                        <strong>{{ 'saint.table.feast_date'|trans({}, 'saint') }}:</strong> 
+                                        {{ saint.feastDate|format_date('medium', pattern=('common.date_formats.feast_date'|trans({}, 'common'))) }}
+                                    </p>
+                                {% endif %}
+                                {% if saint.saintPhrase %}
+                                    <p class="saint-bio">{{ saint.getTranslatedPhrase(app.request.locale)|slice(0, 150) }}{% if saint.getTranslatedPhrase(app.request.locale)|length > 150 %}...{% endif %}</p>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-block d-md-none">
-                        {{ include('saint/_skeleton_list_mobile.html.twig') }}
-                    </div>
-                </turbo-frame>
+                {% endfor %}
             </div>
-        </div>
-    </div>
+
+            <div class="pagination-wrapper">
+                <div class="pagination-info">
+                    {{ ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1) }}-{{ min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount) }} of {{ pagination.getTotalItemCount }} items
+                </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="saint-card">
+                <div class="saint-image">
+                    <img src="{{ asset('/images/relic.png') }}" 
+                         alt="{{ 'saint.no_saints'|trans({'default': 'No saints found'}, 'saint') }}" 
+                         class="opacity-25" 
+                         style="filter: grayscale(100%);" />
+                </div>
+                <div class="saint-info">
+                    <h3 class="saint-name">{{ 'saint.no_saints'|trans({'default': 'No saints found'}, 'saint') }}</h3>
+                    <p class="saint-bio">{{ 'saint.no_saints_description'|trans({'default': 'No saints match your current search or filter criteria.'}, 'saint') }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </section>
 {% endblock %}

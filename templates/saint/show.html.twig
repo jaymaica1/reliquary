@@ -1,141 +1,140 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
-{% block title %}{{ 'saint.show_title'|trans({}, 'saint') }}{% endblock %}
+{% block title %}{{ saint|format_saint_name }} - {{ 'saint.show_title'|trans({}, 'saint') }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/saint-show.css') }}">
+{% endblock %}
 
 {% block body %}
-<div class="container py-4">
-    {{ include('saint/_header.html.twig', {'title': 'saint.show_title'|trans({}, 'saint')}) }}
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow border rounded overflow-hidden">
-                <div class="position-relative">
+    <div class="saint-show-page">
+        <div class="saint-show-container">
+
+            <!-- Back to Saints Link -->
+            <a href="{{ path('app_saint_index') }}" class="back-link">
+                <span>←</span> {{ 'saint.actions.back'|trans({}, 'saint') }}
+            </a>
+
+            <!-- Main Content: Image and Details -->
+            <div class="saint-content">
+                <!-- Image Section -->
+                <div class="saint-image-section">
                     {% if saint.images is defined and saint.images|length > 0 %}
-                        <div class="position-relative">
-                            <img src="{{ image_url(saint.images.first.filename) }}" 
-                                 alt="{{ saint|format_saint_name }}" 
-                                 class="w-100"
-                                 style="height: 480px; object-fit: cover; object-position: 0 40%;">
-                            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white p-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h4 class="mb-0">{{ saint|format_saint_name }}</h4>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="{{ image_url(saint.images.first.filename) }}"
+                             alt="{{ saint|format_saint_name }}"
+                             class="saint-main-image">
                     {% else %}
-                        <div class="position-relative">
-                            <img src="{{ asset('/images/relic.png') }}" 
-                                 alt="{{ 'saint.no_image_available'|trans({}, 'saint') }}" 
-                                 class="w-100 opacity-25"
-                                 style="height: 280px; object-fit: contain; filter: grayscale(100%);">
-                            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white p-3">
-                                <h4 class="mb-0">{{ saint|format_saint_name }}</h4>
-                            </div>
-                        </div>
+                        <img src="{{ asset('/images/relic.png') }}"
+                             alt="{{ 'saint.no_image_available'|trans({}, 'saint') }}"
+                             class="saint-main-image"
+                             style="opacity: 0.3; max-width: 200px;">
                     {% endif %}
                 </div>
 
-                <div class="card-body p-4">
-                    <div class="row mb-4">
-                        <div class="col-md-6 mb-3">
-                            {% if saint.canonicalStatus %}
-                            <div class="mb-3">
-                                <strong>{{ 'saint.table.canonical_status'|trans({}, 'saint') }}:</strong><br>
-                                <span class="text-muted">{{ saint.canonicalStatus.getLabel() }} ({{ saint.canonicalStatus.getTitleTransKey()|trans({}, 'saint') }})</span>
-                            </div>
-                            {% endif %}
+                <!-- Details Section -->
+                <div class="saint-details-section">
+                    <!-- Main Info Section -->
+                    <div class="saint-section">
+                        <h2 class="section-heading">{{ saint|format_saint_name }}</h2>
 
-                            {% if saint.feastDate %}
-                            <div class="mb-3">
-                                <strong>{{ 'saint.table.feast_date'|trans({}, 'saint') }}:</strong><br>
-                                <span class="text-muted fw-bold">{{ saint.feastDate|format_date('medium', pattern=('common.date_formats.feast_date'|trans({}, 'common'))) }}</span>
+                        {% if saint.canonicalStatus %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'saint.table.canonical_status'|trans({}, 'saint') }}:</span>
+                                <span class="detail-value">{{ saint.canonicalStatus.getLabel() }} ({{ saint.canonicalStatus.getTitleTransKey()|trans({}, 'saint') }})</span>
                             </div>
-                            {% endif %}
+                        {% endif %}
 
-                            {% if saint.canonizationDate %}
-                            <div class="mb-3">
-                                <strong>{{ 'saint.table.canonization_date'|trans({}, 'saint') }}:</strong><br>
-                                <span class="text-muted">{{ saint.canonizationDate|date('Y-m-d') }}</span>
+                        {% if saint.feastDate %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'saint.table.feast_date'|trans({}, 'saint') }}:</span>
+                                <span class="detail-value">{{ saint.feastDate|format_date('medium', pattern=('common.date_formats.feast_date'|trans({}, 'common'))) }}</span>
                             </div>
-                            {% endif %}
-                        </div>
+                        {% endif %}
 
-                        <div class="col-md-6">
-                            {% if saint.url %}
-                            <div class="mb-3">
-                                <strong>{{ 'saint.table.url'|trans({}, 'saint') }}:</strong><br>
-                                <span class="text-muted">
-                                    <a href="{{ saint.url }}" target="_blank" class="text-decoration-none">{{ saint.url }}</a>
+                        {% if saint.canonizationDate %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'saint.table.canonization_date'|trans({}, 'saint') }}:</span>
+                                <span class="detail-value">{{ saint.canonizationDate|date('Y-m-d') }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if saint.url %}
+                            <div class="detail-item">
+                                <span class="detail-label">{{ 'saint.table.url'|trans({}, 'saint') }}:</span>
+                                <span class="detail-value">
+                                    <a href="{{ saint.url }}" target="_blank" rel="noopener noreferrer">{{ saint.url }}</a>
                                 </span>
                             </div>
-                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
-                            {% if saint.saintPhrase %}
-                            <div class="mb-3">
-                                <strong>{{ 'saint.table.saint_phrase'|trans({}, 'saint') }}:</strong><br>
-                                <span class="text-muted fst-italic">
-                                    "{{ saint.getTranslatedPhrase(app.request.locale) }}"
-                                </span>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
+            <!-- Saint Phrase Quote -->
+            {% if saint.saintPhrase %}
+                <div class="saint-quote">
+                    <p class="quote-text">
+                        "{{ saint.getTranslatedPhrase(app.request.locale) }}"
+                    </p>
+                </div>
+            {% endif %}
 
-                    {% if saint.images is defined and saint.images|length > 1 %}
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h5 class="border-bottom pb-2 mb-3">{{ 'saint.table.images'|default('Images') }}</h5>
-                            <div class="row">
-                                {% for image in saint.images %}
-                                    <div class="col-md-4 mb-3">
-                                        <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
-                                             alt="Image of {{ saint|format_saint_name }}" 
-                                             class="img-fluid rounded">
-                                    </div>
-                                {% endfor %}
+            <!-- Thumbnail Gallery -->
+            {% if saint.images is defined and saint.images|length > 1 %}
+                <div class="thumbnail-gallery">
+                    {% for image in saint.images %}
+                        <div class="thumbnail-item" data-controller="link"
+                             data-link-url-value="{{ image_url(image.filename) }}" data-action="click->link#click">
+                            <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
+                                 alt="{{ 'saint.table.images'|trans({'default': 'Image'}, 'saint') }} {{ loop.index }}"
+                                 class="thumbnail-image">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Relics Section -->
+            {% if saint.relics is defined and saint.relics|length > 0 %}
+                <div class="relics-section">
+                    <h2 class="section-heading">{{ 'saint.table.relics'|trans({}, 'saint') }}</h2>
+                    <turbo-frame id="relics-list"
+                                data-controller="responsive-frame"
+                                data-responsive-frame-desktop-src-value="{{ path('app_saint_relics_desktop', {'saint': saint.id}) }}"
+                                data-responsive-frame-mobile-src-value="{{ path('app_saint_relics_mobile', {'saint': saint.id}) }}">
+                        <div class="loading-container">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">{{ 'common.ui.loading'|trans({}, 'common') }}</span>
                             </div>
                         </div>
-                    </div>
-                    {% endif %}
-                    
-                    {% if saint.relics is defined and saint.relics|length > 0 %}
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h5 class="border-bottom pb-2 mb-3">{{ 'saint.table.relics'|trans({}, 'saint') }}</h5>
-                            <!-- Single responsive turbo frame -->
-                            <turbo-frame id="relics-list"
-                                        data-controller="responsive-frame"
-                                        data-responsive-frame-desktop-src-value="{{ path('app_saint_relics_desktop', {'saint': saint.id}) }}"
-                                        data-responsive-frame-mobile-src-value="{{ path('app_saint_relics_mobile', {'saint': saint.id}) }}">
-                                <div class="d-flex justify-content-center">
-                                    <div class="spinner-border" role="status">
-                                        <span class="visually-hidden">{{ 'common.ui.loading'|trans({}, 'common') }}</span>
-                                    </div>
-                                </div>
-                            </turbo-frame>
-                        </div>
-                    </div>
-                    {% endif %}
+                    </turbo-frame>
+                </div>
+            {% endif %}
+
+            <!-- Action Buttons -->
+            <div class="saint-actions">
+                <div class="action-group">
+                    <!-- Empty left side for consistency with relic page -->
                 </div>
 
-                <div class="card-footer bg-light p-3">
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ path('app_saint_index') }}" class="btn btn-outline-secondary">
-                            <i class="fa fa-arrow-left"></i>
-                            {{ 'saint.actions.back'|trans({}, 'saint') }}
+                <div class="action-group">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_saint_edit', {'id': saint.id}) }}" class="btn-action btn-outline">
+                            <i class="fas fa-pencil"></i>
+                            {{ 'saint.actions.edit'|trans({}, 'saint') }}
                         </a>
-                        <div>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('app_saint_edit', {'id': saint.id}) }}" class="btn btn-outline-secondary me-2">
-                                    <i class="fas fa-pencil"></i>
-                                    {{ 'saint.actions.edit'|trans({}, 'saint') }}
-                                </a>
-                                {{ include('saint/_delete_form.html.twig', {'form_class': '', 'button_class': ''}) }}
-                            {% endif %}
-                        </div>
-                    </div>
+                        <form method="post" action="{{ path('app_saint_delete', {'id': saint.id}) }}"
+                              onsubmit="return confirm('{{ 'saint.confirm_delete'|trans({'default': 'Are you sure you want to delete this saint?'}, 'saint') }}');"
+                              style="display: inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ saint.id) }}">
+                            <button type="submit" class="btn-action btn-danger-action">
+                                <i class="fas fa-trash"></i>
+                                {{ 'saint.actions.delete'|trans({'default': 'Delete'}, 'saint') }}
+                            </button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

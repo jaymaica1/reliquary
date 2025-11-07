@@ -2,6 +2,7 @@
 # It will be populated with actual translations in the future
 saint:
   title: 'Santos'
+  subtitle: 'Descubra a vida dos santos e seu legado sagrado'
   my_saints: 'Meus Santos'
   description: 'Gerenciar os santos e suas informações'
   add_new: 'Adicionar Novo Santo'
@@ -65,4 +66,6 @@ saint:
     status: 'Filtrar por Status'
     allsaints: 'Todos os Santos'
     clear: 'Limpar'
+    search: 'Buscar'
+    placeholder: 'Buscar santos...'
 

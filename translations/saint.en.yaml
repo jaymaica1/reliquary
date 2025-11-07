@@ -1,5 +1,6 @@
 saint:
   title: 'Saints'
+  subtitle: 'Discover the lives of saints and their sacred legacy'
   my_saints: 'My Saints'
   description: 'Manage saints and their information'
   add_new: 'Add New Saint'
@@ -63,3 +64,5 @@ saint:
     status: 'Filter by Status'
     allsaints: 'All Saints'
     clear: 'Clear'
+    search: 'Search'
+    placeholder: 'Search saints...'

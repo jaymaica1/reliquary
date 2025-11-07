@@ -20,8 +20,15 @@ final class SaintController extends AbstractController
     public function index(Request $request, SaintRepository $saintRepository, PaginatorInterface $paginator): Response
     {
         $filter = $request->query->get('filter');
+        $searchTerm = $request->query->get('q');
+
+        $pagination = $paginator->paginate(
+            $saintRepository->findAllQuery($filter, $searchTerm),
+            $request->query->getInt('page', 1),
+        );
 
         return $this->render('saint/index.html.twig', [
+            'pagination' => $pagination,
             'filter' => $filter,
             'title' => isset($searchTerm) ? 'Search Results for "' . $searchTerm . '"' : null,
             'canonical_statuses' => \App\Enum\CanonicalStatus::cases(),
