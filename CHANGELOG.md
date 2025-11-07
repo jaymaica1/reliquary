@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/CesarScur/reliquary/compare/v2.14.0...v2.15.0) (2025-11-07)
+
+
+### Features
+
+* **saint:** redesign index and show pages for improved usability and style consistency ([d906876](https://github.com/CesarScur/reliquary/commit/d906876398c371da314fd82e0645666f886a44d3))
+
 # [2.14.0](https://github.com/CesarScur/reliquary/compare/v2.13.0...v2.14.0) (2025-10-04)
 
 
