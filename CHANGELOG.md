@@ -1,3 +1,10 @@
+# [2.16.0](https://github.com/CesarScur/reliquary/compare/v2.15.0...v2.16.0) (2025-11-08)
+
+
+### Features
+
+* **profile:** redesign profile edit and show pages with improved layout and styles ([3b0a8e9](https://github.com/CesarScur/reliquary/commit/3b0a8e9964d0d11277423c8286896cc4f75cc7a5))
+
 # [2.15.0](https://github.com/CesarScur/reliquary/compare/v2.14.0...v2.15.0) (2025-11-07)
 
 
