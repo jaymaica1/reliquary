@@ -63,6 +63,33 @@
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
 }
 
+.saint-badge--small {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.saint-badge--pending {
+    background: rgba(217, 119, 6, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    box-shadow: none;
+}
+
+.saint-badge--approved {
+    background: rgba(5, 150, 105, 0.2);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: none;
+}
+
+.saint-badge--rejected {
+    background: rgba(220, 38, 38, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    box-shadow: none;
+}
+
 /* Main Content Layout */
 .saint-content {
     display: grid;
@@ -306,15 +333,6 @@
     transform: translateY(-2px);
 }
 
-/* Status Badge */
-.status-badge {
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
 
 /* Loading Spinner */
 .loading-container {

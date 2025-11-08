@@ -1,29 +1,130 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'title'|trans({}, 'profile') }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/saint-show.css') }}">
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 5rem;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
+
+        .profile-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .profile-card {
+            background: rgba(254, 254, 254, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .profile-image-wrapper {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .profile-image-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .profile-username {
+            font-size: 1.3rem;
+            color: var(--sacred-white);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            color: rgba(254, 254, 254, 0.6);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-list-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+        }
+
+        .profile-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-list-label {
+            font-weight: 600;
+            color: var(--sacred-white);
+            margin-right: 0.5rem;
+        }
+
+        .profile-list-value {
+            color: rgba(254, 254, 254, 0.8);
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <div class="container mt-4">
-        <h1>{{ 'title'|trans({}, 'profile') }}</h1>
+    <div class="profile-container">
+        <h1 class="profile-title">{{ 'title'|trans({}, 'profile') }}</h1>
 
         <div class="row">
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
+                <div class="profile-card">
+                    <div class="profile-image-wrapper">
                         {% if user.profileImage %}
                             <img src="{{ image_url(user.profileImage.filename) }}"
                                  alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
-                                 class="img-fluid rounded-circle mb-3" 
-                                 style="width: 150px; height: 150px; object-fit: cover;">
+                                 class="profile-image">
                         {% else %}
-                            <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center mb-3" 
-                                 style="width: 150px; height: 150px;">
-                                <i class="fas fa-user" style="font-size: 4rem;"></i>
+                            <div class="profile-image-placeholder">
+                                <i class="fas fa-user" style="font-size: 4rem; color: var(--accent-gold); opacity: 0.6;"></i>
                             </div>
                         {% endif %}
-                        <h5 class="card-title">{{ user.username }}</h5>
-                        <p class="text-muted">{{ user.email }}</p>
-                        <a href="{{ path('app_profile_edit') }}" class="btn btn-primary">
+                    </div>
+                    <h5 class="profile-username text-center">{{ user.username }}</h5>
+                    <p class="profile-email text-center">{{ user.email }}</p>
+                    <div class="text-center">
+                        <a href="{{ path('app_profile_edit') }}" class="btn-action btn-primary-action">
+                            <i class="fas fa-pencil"></i>
                             {{ 'edit'|trans({}, 'profile') }}
                         </a>
                     </div>
@@ -31,32 +132,32 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ 'information'|trans({}, 'profile') }}</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <strong>{{ 'username'|trans({}, 'profile') }}:</strong> {{ user.username }}
-                            </li>
-                            <li class="list-group-item">
-                                <strong>{{ 'email'|trans({}, 'profile') }}:</strong> {{ user.email }}
-                            </li>
-                            <li class="list-group-item">
-                                <strong>{{ 'verified'|trans({}, 'profile') }}:</strong> 
-                                {% if user.isVerified %}
-                                    <span class="badge bg-success">{{ 'common.yes'|trans({}, 'common') }}</span>
-                                {% else %}
-                                    <span class="badge bg-danger">{{ 'common.no'|trans({}, 'common') }}</span>
-                                {% endif %}
-                            </li>
-                            <li class="list-group-item">
-                                <strong>{{ 'language'|trans({}, 'profile') }}:</strong>
-                                <div class="mt-2">
-                                    {% include '_locale_switcher.html.twig' %}
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="profile-card">
+                    <h5 class="profile-card-title">{{ 'information'|trans({}, 'profile') }}</h5>
+                    <ul class="profile-list">
+                        <li class="profile-list-item">
+                            <span class="profile-list-label">{{ 'username'|trans({}, 'profile') }}:</span>
+                            <span class="profile-list-value">{{ user.username }}</span>
+                        </li>
+                        <li class="profile-list-item">
+                            <span class="profile-list-label">{{ 'email'|trans({}, 'profile') }}:</span>
+                            <span class="profile-list-value">{{ user.email }}</span>
+                        </li>
+                        <li class="profile-list-item">
+                            <span class="profile-list-label">{{ 'verified'|trans({}, 'profile') }}:</span>
+                            {% if user.isVerified %}
+                                <span class="saint-badge saint-badge--small saint-badge--approved">{{ 'common.yes'|trans({}, 'common') }}</span>
+                            {% else %}
+                                <span class="saint-badge saint-badge--small saint-badge--pending">{{ 'common.no'|trans({}, 'common') }}</span>
+                            {% endif %}
+                        </li>
+                        <li class="profile-list-item">
+                            <span class="profile-list-label">{{ 'language'|trans({}, 'profile') }}:</span>
+                            <div class="mt-2">
+                                {% include '_locale_switcher.html.twig' %}
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

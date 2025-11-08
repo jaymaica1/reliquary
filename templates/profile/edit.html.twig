@@ -1,64 +1,176 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'edit_title'|trans({}, 'profile') }}{% endblock %}
 
-{% block body %}
-    <div class="container mt-4">
-        <h1>{{ 'edit_title'|trans({}, 'profile') }}</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/saint-show.css') }}">
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 5rem;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
 
-        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+        .profile-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .profile-card {
+            background: rgba(254, 254, 254, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .profile-image-wrapper {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .profile-image-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .profile-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-form-label {
+            font-weight: 600;
+            color: var(--sacred-white);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .profile-form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 10px;
+            background: rgba(254, 254, 254, 0.05);
+            color: var(--sacred-white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-form-control:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+            background: rgba(254, 254, 254, 0.08);
+        }
+
+        .profile-form-help {
+            color: rgba(254, 254, 254, 0.6);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        .profile-form-error {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        .profile-form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="profile-container">
+        <h1 class="profile-title">{{ 'edit_title'|trans({}, 'profile') }}</h1>
+
+        {{ form_start(form) }}
         <div class="row">
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
+                <div class="profile-card">
+                    <div class="profile-image-wrapper">
                         {% set user = form.vars.data %}
                         {% if user.profileImage %}
                             <img src="{{ image_url(user.profileImage.filename) }}"
                                  alt="{{ 'user.profile_image'|trans({}, 'user') }}" 
-                                 class="img-fluid rounded-circle mb-3" 
-                                 style="width: 150px; height: 150px; object-fit: cover;">
+                                 class="profile-image">
                         {% else %}
-                            <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center mb-3" 
-                                 style="width: 150px; height: 150px;">
-                                <i class="fas fa-user" style="font-size: 4rem;"></i>
+                            <div class="profile-image-placeholder">
+                                <i class="fas fa-user" style="font-size: 4rem; color: var(--accent-gold); opacity: 0.6;"></i>
                             </div>
                         {% endif %}
+                    </div>
 
-                        <div class="mb-3">
-                            {{ form_label(form.profileImage) }}
-                            {{ form_widget(form.profileImage) }}
-                            {{ form_help(form.profileImage) }}
-                            {{ form_errors(form.profileImage) }}
-                        </div>
+                    <div class="profile-form-group">
+                        {{ form_label(form.profileImage, null, {'label_attr': {'class': 'profile-form-label'}}) }}
+                        {{ form_widget(form.profileImage, {'attr': {'class': 'profile-form-control'}}) }}
+                        {% if form.profileImage.vars.help %}
+                            <div class="profile-form-help">{{ form.profileImage.vars.help }}</div>
+                        {% endif %}
+                        {{ form_errors(form.profileImage) }}
                     </div>
                 </div>
             </div>
 
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ 'information'|trans({}, 'profile') }}</h5>
+                <div class="profile-card">
+                    <h5 class="profile-card-title">{{ 'information'|trans({}, 'profile') }}</h5>
 
-                        <div class="mb-3">
-                            {{ form_label(form.username) }}
-                            {{ form_widget(form.username) }}
-                            {{ form_errors(form.username) }}
-                        </div>
+                    <div class="profile-form-group">
+                        {{ form_label(form.username, null, {'label_attr': {'class': 'profile-form-label'}}) }}
+                        {{ form_widget(form.username, {'attr': {'class': 'profile-form-control'}}) }}
+                        {{ form_errors(form.username) }}
+                    </div>
 
-                        <div class="mb-3">
-                            {{ form_label(form.email) }}
-                            {{ form_widget(form.email) }}
-                            {{ form_errors(form.email) }}
-                        </div>
+                    <div class="profile-form-group">
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'profile-form-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'profile-form-control'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ path('app_profile_show') }}" class="btn btn-secondary me-md-2">
-                                {{ 'cancel'|trans({}, 'profile') }}
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                {{ 'save'|trans({}, 'profile') }}
-                            </button>
-                        </div>
+                    <div class="profile-form-actions">
+                        <a href="{{ path('app_profile_show') }}" class="btn-action btn-outline">
+                            <i class="fas fa-times"></i>
+                            {{ 'cancel'|trans({}, 'profile') }}
+                        </a>
+                        <button type="submit" class="btn-action btn-primary-action">
+                            <i class="fas fa-save"></i>
+                            {{ 'save'|trans({}, 'profile') }}
+                        </button>
                     </div>
                 </div>
             </div>
