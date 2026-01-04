@@ -123,7 +123,8 @@ class RelicRepository extends ServiceEntityRepository
     public function findAllQuery(?string $degree = null, ?object $user = null, ?string $query = null, ?array $locationData = null): Query
     {
         $queryBuilder = $this->createQueryBuilder('r')
-            ->leftJoin('r.saint', 's');
+            ->leftJoin('r.saint', 's')
+            ->leftJoin('s.translations', 'st');
 
         if ($degree) {
             $queryBuilder
@@ -133,7 +134,7 @@ class RelicRepository extends ServiceEntityRepository
 
         if ($query) {
             $queryBuilder
-                ->andWhere('s.name LIKE :query OR r.location LIKE :query OR r.address LIKE :query OR r.description LIKE :query')
+                ->andWhere('LOWER(s.name) LIKE LOWER(:query) OR LOWER(st.name) LIKE LOWER(:query) OR LOWER(r.location) LIKE LOWER(:query) OR LOWER(r.address) LIKE LOWER(:query) OR LOWER(r.description) LIKE LOWER(:query)')
                 ->setParameter('query', '%' . $query . '%');
         }
 
@@ -175,6 +176,7 @@ class RelicRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->leftJoin('r.saint', 's')
+            ->leftJoin('s.translations', 'st')
             ->where('r.creator = :user')
             ->setParameter('user', $user);
 
@@ -186,7 +188,7 @@ class RelicRepository extends ServiceEntityRepository
 
         if ($query) {
             $queryBuilder
-                ->andWhere('s.name LIKE :query OR r.location LIKE :query OR r.address LIKE :query OR r.description LIKE :query')
+                ->andWhere('LOWER(s.name) LIKE LOWER(:query) OR LOWER(st.name) LIKE LOWER(:query) OR LOWER(r.location) LIKE LOWER(:query) OR LOWER(r.address) LIKE LOWER(:query) OR LOWER(r.description) LIKE LOWER(:query)')
                 ->setParameter('query', '%' . $query . '%');
         }
 
