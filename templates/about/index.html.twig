@@ -1,108 +1,78 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/landing.css') }}">
+{% endblock %}
+
 {% block body %}
-<div class="container py-4">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1 class="display-5 fw-bold">{{ 'about.title'|trans({}, 'about') }}</h1>
-            <p class="text-muted">{{ 'about.subtitle'|trans({}, 'about') }}</p>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4 shadow border-0 rounded-3">
-                <div class="card-body p-4">
-                    <div class="d-flex float-lg-start">
-                        <img src="{{ asset('/images/relic.png') }}" alt="{{ 'common.logo'|trans({}, 'common') }}" class="img-fluid" style="max-width: 150px;">
-                    </div>
-                    <h2 class="card-title fw-bold mb-3">{{ 'about.what_is_reliquary.title'|trans({}, 'about') }}</h2>
-                    <p class="card-text lead">
-                        {{ 'about.what_is_reliquary.description'|trans({}, 'about') }}
-                    </p>
-                </div>
-            </div>
+<section class="relic-classes" style="padding-top: 120px;">
+    <div class="contact-container">
+        <h2 class="section-title">{{ 'about.title'|trans({}, 'about') }}</h2>
+        <p class="section-subtitle">{{ 'about.subtitle'|trans({}, 'about') }}</p>
 
-            <div class="card mb-4 shadow border-0 rounded-3">
-                <div class="card-body p-4">
-                    <h2 class="card-title fw-bold mb-3">{{ 'about.features.title'|trans({}, 'about') }}</h2>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-database text-primary"></i>
-                                </div>
-                                <div>
-                                    <h5 class="mb-1">{{ 'about.features.comprehensive_database.title'|trans({}, 'about') }}</h5>
-                                    <p class="mb-0 text-muted">{{ 'about.features.comprehensive_database.description'|trans({}, 'about') }}</p>
-                                </div>
-                            </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="relic-card text-start mb-5" style="background: rgba(254, 254, 254, 0.05); cursor: default;">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 text-center mb-4 mb-md-0">
+                            <img src="{{ asset('/images/relic.png') }}" alt="{{ 'common.logo'|trans({}, 'common') }}" class="img-fluid" style="max-width: 150px; filter: sepia(100%) saturate(300%) brightness(95%) hue-rotate(345deg);">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-user-friends text-primary"></i>
-                                </div>
-                                <div>
-                                    <h5 class="mb-1">{{ 'about.features.saint_information.title'|trans({}, 'about') }}</h5>
-                                    <p class="mb-0 text-muted">{{ 'about.features.saint_information.description'|trans({}, 'about') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-map-marker-alt text-primary"></i>
-                                </div>
-                                <div>
-                                    <h5 class="mb-1">{{ 'about.features.geolocation_search.title'|trans({}, 'about') }}</h5>
-                                    <p class="mb-0 text-muted">{{ 'about.features.geolocation_search.description'|trans({}, 'about') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-users text-primary"></i>
-                                </div>
-                                <div>
-                                    <h5 class="mb-1">{{ 'about.features.user_contributions.title'|trans({}, 'about') }}</h5>
-                                    <p class="mb-0 text-muted">{{ 'about.features.user_contributions.description'|trans({}, 'about') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-language text-primary"></i>
-                                </div>
-                                <div>
-                                    <h5 class="mb-1">{{ 'about.features.multilingual_support.title'|trans({}, 'about') }}</h5>
-                                    <p class="mb-0 text-muted">{{ 'about.features.multilingual_support.description'|trans({}, 'about') }}</p>
-                                </div>
-                            </div>
+                        <div class="col-md-9">
+                            <h3 class="relic-title" style="color: var(--accent-gold);">{{ 'about.what_is_reliquary.title'|trans({}, 'about') }}</h3>
+                            <p class="relic-description" style="font-size: 1.1rem; color: rgba(254, 254, 254, 0.9);">
+                                {{ 'about.what_is_reliquary.description'|trans({}, 'about') }}
+                            </p>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card shadow border-0 rounded-3">
-                <div class="card-body p-4">
-                    <h2 class="card-title fw-bold mb-3">{{ 'about.contact.title'|trans({}, 'about') }}</h2>
-                    <p class="card-text">
+                <h2 class="section-title mt-5 mb-4">{{ 'about.features.title'|trans({}, 'about') }}</h2>
+                <div class="classes-grid mt-4">
+                    <div class="relic-card" style="cursor: default;">
+                        <i class="fas fa-database relic-icon"></i>
+                        <h3 class="relic-title">{{ 'about.features.comprehensive_database.title'|trans({}, 'about') }}</h3>
+                        <p class="relic-description">{{ 'about.features.comprehensive_database.description'|trans({}, 'about') }}</p>
+                    </div>
+
+                    <div class="relic-card" style="cursor: default;">
+                        <i class="fas fa-user-friends relic-icon"></i>
+                        <h3 class="relic-title">{{ 'about.features.saint_information.title'|trans({}, 'about') }}</h3>
+                        <p class="relic-description">{{ 'about.features.saint_information.description'|trans({}, 'about') }}</p>
+                    </div>
+
+                    <div class="relic-card" style="cursor: default;">
+                        <i class="fas fa-map-marker-alt relic-icon"></i>
+                        <h3 class="relic-title">{{ 'about.features.geolocation_search.title'|trans({}, 'about') }}</h3>
+                        <p class="relic-description">{{ 'about.features.geolocation_search.description'|trans({}, 'about') }}</p>
+                    </div>
+
+                    <div class="relic-card" style="cursor: default;">
+                        <i class="fas fa-users relic-icon"></i>
+                        <h3 class="relic-title">{{ 'about.features.user_contributions.title'|trans({}, 'about') }}</h3>
+                        <p class="relic-description">{{ 'about.features.user_contributions.description'|trans({}, 'about') }}</p>
+                    </div>
+
+                    <div class="relic-card" style="cursor: default;">
+                        <i class="fas fa-language relic-icon"></i>
+                        <h3 class="relic-title">{{ 'about.features.multilingual_support.title'|trans({}, 'about') }}</h3>
+                        <p class="relic-description">{{ 'about.features.multilingual_support.description'|trans({}, 'about') }}</p>
+                    </div>
+                </div>
+
+                <div class="relic-card mt-5 text-center" style="background: rgba(245, 158, 11, 0.05); border-color: var(--accent-gold); cursor: default;">
+                    <h3 class="relic-title">{{ 'about.contact.title'|trans({}, 'about') }}</h3>
+                    <p class="relic-description mb-4">
                         {{ 'about.contact.description'|trans({}, 'about') }}
-                        <a href="https://github.com/CesarScur/reliquary" target="_blank" class="text-decoration-none">{{ 'about.contact.github_repository'|trans({}, 'about') }}</a>.
+                        <a href="https://github.com/CesarScur/reliquary" target="_blank" class="gold-link">{{ 'about.contact.github_repository'|trans({}, 'about') }}</a>.
                     </p>
-                    <div class="mt-3">
-                        <a href="https://github.com/CesarScur/reliquary" target="_blank" class="btn btn-outline-primary">
-                            <i class="fab fa-github me-2"></i>{{ 'common.footer.view_on_github'|trans({}, 'common') }}
-                        </a>
-                    </div>
+                    <a href="https://github.com/CesarScur/reliquary" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github me-2"></i>{{ 'common.footer.view_on_github'|trans({}, 'common') }}
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
