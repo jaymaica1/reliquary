@@ -69,6 +69,10 @@ contact:
     mission_text: 'We are dedicated to preserving and sharing sacred relics for the faithful worldwide. Your inquiries and contributions help us build this digital sanctuary.'
     response: 'Response Time:'
     response_text: 'We typically respond within 24-48 hours. For urgent matters regarding relic authentication, please mark your subject accordingly.'
+    technical_issues:
+      title: 'Technical Issues'
+      text: 'For technical issues or bug reports, please visit our GitHub project:'
+      link: 'GitHub Repository'
   form:
     title: 'Send us a Message'
     name: 'Full Name'

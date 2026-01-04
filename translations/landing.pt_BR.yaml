@@ -69,6 +69,10 @@ contact:
     mission_text: 'Somos dedicados a preservar e compartilhar relíquias sagradas para os fiéis ao redor do mundo. Suas perguntas e contribuições nos ajudam a construir este santuário digital.'
     response: 'Tempo de Resposta:'
     response_text: 'Normalmente respondemos em 24-48 horas. Para assuntos urgentes sobre autenticação de relíquias, por favor marque seu assunto adequadamente.'
+    technical_issues:
+      title: 'Problemas Técnicos'
+      text: 'Para problemas técnicos ou relatos de bugs, por favor visite nosso projeto no GitHub:'
+      link: 'Repositório GitHub'
   form:
     title: 'Envie-nos uma Mensagem'
     name: 'Nome Completo'
