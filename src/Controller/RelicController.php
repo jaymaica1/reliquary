@@ -51,8 +51,26 @@ final class RelicController extends AbstractController
             ];
         }
 
+        $queryBuilder = $relicRepository->findAllQuery($filter, $user, $query, $locationData);
+        $relicsForMap = [];
+        if ($locationData) {
+            $allRelics = $queryBuilder->getResult();
+            foreach ($allRelics as $relic) {
+                if ($relic->getLatitude() && $relic->getLongitude()) {
+                    $relicsForMap[] = [
+                        'id' => $relic->getId(),
+                        'latitude' => $relic->getLatitude(),
+                        'longitude' => $relic->getLongitude(),
+                        'saint' => $relic->getSaint() ? (string) $relic->getSaint() : 'Unknown Saint',
+                        'address' => $relic->getAddress(),
+                        'location' => $relic->getLocation(),
+                    ];
+                }
+            }
+        }
+
         $pagination = $paginator->paginate(
-            $relicRepository->findAllQuery($filter, $user, $query, $locationData),
+            $queryBuilder,
             $request->query->getInt('page', 1),
         );
 
@@ -63,6 +81,8 @@ final class RelicController extends AbstractController
             'location' => $location,
             'distance' => $distance,
             'relic_degrees' => RelicDegree::cases(),
+            'relics_for_map' => $relicsForMap,
+            'location_data' => $locationData,
         ]);
     }
 
@@ -89,8 +109,26 @@ final class RelicController extends AbstractController
             ];
         }
 
+        $queryBuilder = $relicRepository->findByCreatorQuery($user, $filter, $query, $locationData);
+        $relicsForMap = [];
+        if ($locationData) {
+            $allRelics = $queryBuilder->getResult();
+            foreach ($allRelics as $relic) {
+                if ($relic->getLatitude() && $relic->getLongitude()) {
+                    $relicsForMap[] = [
+                        'id' => $relic->getId(),
+                        'latitude' => $relic->getLatitude(),
+                        'longitude' => $relic->getLongitude(),
+                        'saint' => $relic->getSaint() ? (string) $relic->getSaint() : 'Unknown Saint',
+                        'address' => $relic->getAddress(),
+                        'location' => $relic->getLocation(),
+                    ];
+                }
+            }
+        }
+
         $pagination = $paginator->paginate(
-            $relicRepository->findByCreatorQuery($user, $filter, $query, $locationData),
+            $queryBuilder,
             $request->query->getInt('page', 1),
         );
 
@@ -101,7 +139,9 @@ final class RelicController extends AbstractController
             'location' => $location,
             'distance' => $distance,
             'relic_degrees' => RelicDegree::cases(),
-            'title' => 'My Relics'
+            'title' => 'My Relics',
+            'relics_for_map' => $relicsForMap,
+            'location_data' => $locationData,
         ]);
     }
 

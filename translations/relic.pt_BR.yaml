@@ -84,6 +84,7 @@ relic:
     back: 'Voltar à lista'
     back_to_relics: 'Voltar às Relíquias'
     clear: 'Limpar'
+    relics_around_me: 'Relíquias Próximas'
     get_current_location: 'Obter localização atual'
     confirm_delete: 'Tem certeza de que deseja deletar esta relíquia?'
     approve: 'Aprovar'

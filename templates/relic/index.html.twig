@@ -4,13 +4,13 @@
 
 {% block body %}
     <section class="list">
-        <h2 class="section-title">{{ title ?? 'relic.title'|trans({}, 'relic') }}</h2>
+        <h1 class="section-title">{{ title ?? 'relic.title'|trans({}, 'relic') }}</h1>
         <p class="section-subtitle">{{ 'relic.subtitle'|trans({}, 'relic') }}</p>
 
         <div class="filter-section" data-controller="filter-toggle">
             {{ include('relic/_header.html.twig') }}
 
-            <div class="filter-bar d-none" data-filter-toggle-target="filter">
+            <div class="filter-bar {% if not (filter or query or location or (distance and distance != 50)) %}d-none{% endif %}" data-filter-toggle-target="filter">
                 <form method="get" class="filter-form" style="width: 100%; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
                     <div class="search-box position-relative">
                         <input type="text" name="q" value="{{ query }}" placeholder="{{ 'relic.search.placeholder'|trans({}, 'relic')|default('Search relics...') }}" id="relicSearch" style="padding-right: 3rem;" />
@@ -48,6 +48,19 @@
                 </form>
             </div>
         </div>
+
+        {% if location_data and relics_for_map|length > 0 %}
+            <div class="map-container-wrapper mb-4" 
+                 data-controller="map" 
+                 data-map-relics-value="{{ relics_for_map|json_encode }}"
+                 data-map-radius-value="{{ distance }}"
+                 {% if location_data %}
+                 data-map-user-location-value="{{ {latitude: location_data.lat, longitude: location_data.lng}|json_encode }}"
+                 {% endif %}
+            >
+                <div id="map" style="height: 400px; width: 100%; border-radius: 12px; border: 1px solid var(--accent-gold);" data-map-target="container"></div>
+            </div>
+        {% endif %}
 
         {% if pagination.items|length > 0 %}
             <div class="relics-grid">

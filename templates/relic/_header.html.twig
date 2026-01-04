@@ -5,6 +5,15 @@
             <i class="fas fa-eye" data-filter-toggle-target="icon"></i>
             {{ 'relic.filter.button'|trans({}, 'relic') }}
         </button>
+        <button type="button" class="btn btn-outline-primary" data-controller="address-autocomplete" data-action="address-autocomplete#getCurrentLocation">
+            <i class="fas fa-location-crosshairs me-2"></i>
+            {{ 'relic.actions.relics_around_me'|trans({}, 'relic') }}
+            <form method="get" class="d-none">
+                <input type="hidden" name="lat" data-address-autocomplete-target="lat">
+                <input type="hidden" name="lng" data-address-autocomplete-target="lng">
+                <input type="hidden" name="location" data-address-autocomplete-target="input">
+            </form>
+        </button>
         {% endif %}
         {% if is_granted('ROLE_USER') %}
         <a href="{{ path('app_relic_new') }}" class="btn btn-primary">
