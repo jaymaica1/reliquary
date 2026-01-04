@@ -12,8 +12,24 @@
 
             <div class="filter-bar d-none" data-filter-toggle-target="filter">
                 <form method="get" class="filter-form" style="width: 100%; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                    <div class="search-box">
-                        <input type="text" placeholder="{{ 'relic.search.placeholder'|trans({}, 'relic')|default('Search relics...') }}" id="relicSearch" />
+                    <div class="search-box position-relative">
+                        <input type="text" name="q" value="{{ query }}" placeholder="{{ 'relic.search.placeholder'|trans({}, 'relic')|default('Search relics...') }}" id="relicSearch" style="padding-right: 3rem;" />
+                        <button type="submit" class="search-clear-btn" style="border: none; background: none; outline: none;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="search-box position-relative" data-controller="address-autocomplete">
+                        <input type="text" name="location" value="{{ location }}" placeholder="{{ 'relic.form.address_placeholder'|trans({}, 'relic') }}" id="relicLocation" data-address-autocomplete-target="input" data-action="input->address-autocomplete#onInput" autocomplete="off" style="padding-right: 3rem;" />
+                        <input type="hidden" name="lat" value="{{ app.request.query.get('lat') }}" data-address-autocomplete-target="lat" />
+                        <input type="hidden" name="lng" value="{{ app.request.query.get('lng') }}" data-address-autocomplete-target="lng" />
+                        <div class="autocomplete-results d-none" data-address-autocomplete-target="results"></div>
+                        <button type="button" class="search-clear-btn" data-action="address-autocomplete#getCurrentLocation" title="{{ 'relic.actions.get_current_location'|trans({}, 'relic')|default('Get current location') }}">
+                            <i class="fas fa-location-crosshairs"></i>
+                        </button>
+                    </div>
+                    <div class="distance-slider-wrapper" style="display: flex; align-items: center; gap: 0.5rem; color: var(--sacred-white); min-width: 200px;">
+                        <label for="distanceRange" class="form-label mb-0" style="white-space: nowrap;">{{ 'relic.filter.distance'|trans({}, 'relic')|default('Distance') }}: <span id="distanceValue">{{ distance }}</span>km</label>
+                        <input type="range" class="form-range" name="distance" min="1" max="500" step="1" id="distanceRange" value="{{ distance }}" oninput="document.getElementById('distanceValue').innerText = this.value" onchange="this.form.submit()">
                     </div>
                     <select class="filter-select" id="filter" name="filter" onchange="this.form.submit()">
                         <option value="">{{ 'relic.filter.all_relics'|trans({}, 'relic') }}</option>
@@ -23,7 +39,7 @@
                             </option>
                         {% endfor %}
                     </select>
-                    {% if filter %}
+                    {% if filter or query or location or distance != 50 %}
                         <a href="{{ app.request.get('_route') == 'app_my_relics' ? path('app_my_relics') : path('app_relic_index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-circle-xmark"></i>
                             {{ 'relic.actions.clear'|trans({}, 'relic') }}

@@ -112,20 +112,49 @@ class RelicRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find all relics query with optional degree filter and visibility restrictions
+     * Find all relics query with optional degree filter, search query, and location filtering
      *
      * @param string|null $degree The degree to filter by
      * @param object|null $user The current user
+     * @param string|null $query Search query
+     * @param array|null $locationData ['lat' => float, 'lng' => float, 'radius' => float]
      * @return Query The query object
      */
-    public function findAllQuery(?string $degree = null, ?object $user = null): Query
+    public function findAllQuery(?string $degree = null, ?object $user = null, ?string $query = null, ?array $locationData = null): Query
     {
-        $queryBuilder = $this->createQueryBuilder('r');
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->leftJoin('r.saint', 's');
 
         if ($degree) {
             $queryBuilder
                 ->andWhere('r.degree = :degree')
                 ->setParameter('degree', $degree);
+        }
+
+        if ($query) {
+            $queryBuilder
+                ->andWhere('s.name LIKE :query OR r.location LIKE :query OR r.address LIKE :query OR r.description LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($locationData && isset($locationData['lat'], $locationData['lng'], $locationData['radius'])) {
+            $latitude = $locationData['lat'];
+            $longitude = $locationData['lng'];
+            $radiusKm = $locationData['radius'];
+
+            $kmPerLatDegree = 111.0;
+            $kmPerLngDegree = 111.0 * cos(deg2rad($latitude));
+
+            $latRange = $radiusKm / $kmPerLatDegree;
+            $lngRange = $radiusKm / $kmPerLngDegree;
+
+            $queryBuilder
+                ->andWhere('r.latitude BETWEEN :minLat AND :maxLat')
+                ->andWhere('r.longitude BETWEEN :minLng AND :maxLng')
+                ->setParameter('minLat', $latitude - $latRange)
+                ->setParameter('maxLat', $latitude + $latRange)
+                ->setParameter('minLng', $longitude - $lngRange)
+                ->setParameter('maxLng', $longitude + $lngRange);
         }
 
         $this->applyVisibilityRestrictions($user, $queryBuilder);
@@ -134,15 +163,18 @@ class RelicRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find relics created by a specific user with optional degree filter
+     * Find relics created by a specific user with optional degree filter and location filtering
      *
      * @param object $user The user who created the relics
      * @param string|null $degree The degree to filter by
+     * @param string|null $query Search query
+     * @param array|null $locationData ['lat' => float, 'lng' => float, 'radius' => float]
      * @return Query The query object
      */
-    public function findByCreatorQuery($user, ?string $degree = null): Query
+    public function findByCreatorQuery($user, ?string $degree = null, ?string $query = null, ?array $locationData = null): Query
     {
         $queryBuilder = $this->createQueryBuilder('r')
+            ->leftJoin('r.saint', 's')
             ->where('r.creator = :user')
             ->setParameter('user', $user);
 
@@ -150,6 +182,32 @@ class RelicRepository extends ServiceEntityRepository
             $queryBuilder
                 ->andWhere('r.degree = :degree')
                 ->setParameter('degree', $degree);
+        }
+
+        if ($query) {
+            $queryBuilder
+                ->andWhere('s.name LIKE :query OR r.location LIKE :query OR r.address LIKE :query OR r.description LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($locationData && isset($locationData['lat'], $locationData['lng'], $locationData['radius'])) {
+            $latitude = $locationData['lat'];
+            $longitude = $locationData['lng'];
+            $radiusKm = $locationData['radius'];
+
+            $kmPerLatDegree = 111.0;
+            $kmPerLngDegree = 111.0 * cos(deg2rad($latitude));
+
+            $latRange = $radiusKm / $kmPerLatDegree;
+            $lngRange = $radiusKm / $kmPerLngDegree;
+
+            $queryBuilder
+                ->andWhere('r.latitude BETWEEN :minLat AND :maxLat')
+                ->andWhere('r.longitude BETWEEN :minLng AND :maxLng')
+                ->setParameter('minLat', $latitude - $latRange)
+                ->setParameter('maxLat', $latitude + $latRange)
+                ->setParameter('minLng', $longitude - $lngRange)
+                ->setParameter('maxLng', $longitude + $lngRange);
         }
 
         return $queryBuilder->getQuery();
