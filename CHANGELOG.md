@@ -1,3 +1,11 @@
+# [2.17.0](https://github.com/CesarScur/reliquary/compare/v2.16.0...v2.17.0) (2026-01-04)
+
+
+### Features
+
+* **contact:** implement contact form and admin message management ([acc1435](https://github.com/CesarScur/reliquary/commit/acc14354f406d31d2ff751931dba6515b7057f82))
+* **translations:** add "email" label to reset password sections ([820e028](https://github.com/CesarScur/reliquary/commit/820e028baccdbace9640ff5961d4363c976a15eb))
+
 # [2.16.0](https://github.com/CesarScur/reliquary/compare/v2.15.0...v2.16.0) (2025-11-08)
 
 
