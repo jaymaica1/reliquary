@@ -126,8 +126,8 @@
                                                 </button>
                                             {% endif %}
                                         </form>
-                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id}) }}" style="display: inline;">
-                                            <button type="submit" class="btn btn-sm btn-outline-warning" onclick="return confirm('{{ 'admin.saints.tools.confirm_generate_image'|trans({}, 'admin') }}')" title="{{ 'admin.saints.tools.generate_image'|trans({}, 'admin') }}">
+                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id}) }}" style="display: inline;" class="generate-image-form">
+                                            <button type="submit" class="btn btn-sm btn-outline-warning generate-image-btn" onclick="return confirm('{{ 'admin.saints.tools.confirm_generate_image'|trans({}, 'admin') }}')" title="{{ 'admin.saints.tools.generate_image'|trans({}, 'admin') }}">
                                                 <i class="fas fa-wand-magic-sparkles"></i>
                                             </button>
                                         </form>
@@ -204,6 +204,10 @@
             }
             
             if (confirm('{{ 'admin.saints.tools.confirm_bulk_generate_image'|trans({}, 'admin') }}'.replace('%count%', checkedBoxes.length))) {
+                const btn = document.querySelector('button[onclick="submitBulkImageGeneration()"]');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {{ 'common.ui.loading'|trans({}, 'common') }}';
+
                 const form = document.getElementById('bulk-image-form');
                 form.innerHTML = ''; // clear previous
                 
@@ -218,5 +222,14 @@
                 form.submit();
             }
         }
+
+        // Add loading state to single image generation
+        document.querySelectorAll('.generate-image-form').forEach(form => {
+            form.addEventListener('submit', function() {
+                const btn = this.querySelector('.generate-image-btn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            });
+        });
     </script>
 {% endblock %}

@@ -22,7 +22,12 @@ admin:
       confirm_bulk_generate_image: 'Tem certeza de que deseja gerar imagens para %count% santo(s)?'
       flash:
         image_generation_queued: 'A geração de imagem para o santo "%name%" foi colocada na fila.'
+        image_generated: 'A imagem para o santo "%name%" foi gerada com sucesso.'
+        image_generation_failed: 'Falha ao gerar imagem para o santo "%name%".'
+        image_save_failed: 'Falha ao salvar a imagem gerada: %error%'
         bulk_image_generation_queued: 'A geração de imagem para %count% santo(s) foi colocada na fila.'
+        bulk_image_generated: '%count% imagem(ns) foram gerada(s) com sucesso.'
+        bulk_image_failed: 'Falha ao gerar %count% imagem(ns).'
         bulk_error: 'Ação em lote inválida ou nenhum santo selecionado.'
         no_changes: 'Nenhuma alteração foi feita.'
     featured:

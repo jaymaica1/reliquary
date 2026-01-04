@@ -94,6 +94,38 @@ class ImageService
         return $image;
     }
 
+    public function createSaintImageFromUrl(string $url, Saint $saint, User $uploader = null): SaintImage
+    {
+        $image = new SaintImage();
+        $image->setOriginalFilename(basename($url));
+        $image->setSaint($saint);
+
+        if ($uploader) {
+            $image->setUploader($uploader);
+        }
+
+        // Download the file to a temporary location
+        $tempFile = tempnam(sys_get_temp_dir(), 'ai_image_');
+        file_put_contents($tempFile, file_get_contents($url));
+
+        // Get file info
+        $mimeType = mime_content_type($tempFile) ?: 'image/png';
+        $size = filesize($tempFile);
+
+        $image->setMimeType($mimeType);
+        $image->setSize($size);
+
+        $fileData = $this->processFileData($tempFile, $image->getOriginalFilename(), 'png');
+
+        $image->setFilename($fileData['filename']);
+        $image->setThumbnailFilename($fileData['thumbnailFilename']);
+
+        // Clean up temporary file
+        unlink($tempFile);
+
+        return $image;
+    }
+
     public function deleteImage(AbstractImage $image): void
     {
         // Delete original file
@@ -136,22 +168,26 @@ class ImageService
 
     private function processUploadedFile(UploadedFile $file): array
     {
-        $originalFilename = $file->getClientOriginalName();
+        return $this->processFileData($file->getPathname(), $file->getClientOriginalName(), $file->guessExtension());
+    }
+
+    private function processFileData(string $pathname, string $originalFilename, ?string $extension): array
+    {
         $safeFilename = $this->slugger->slug(pathinfo($originalFilename, PATHINFO_FILENAME));
-        $newFilename = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+        $newFilename = $safeFilename . '-' . uniqid() . '.' . ($extension ?: 'png');
         $thumbnailFilename = 'thumb_' . $newFilename;
 
-        $subDir = $this->getUploadPath($file);
+        $subDir = $this->getUploadPathFromFilename($originalFilename);
         $filePath = $subDir . '/' . $newFilename;
         $thumbnailPath = $subDir . '/' . $thumbnailFilename;
 
         // Upload original file to S3
-        $fileStream = fopen($file->getPathname(), 'r');
+        $fileStream = fopen($pathname, 'r');
         $this->filesystem->writeStream($filePath, $fileStream);
         fclose($fileStream);
         
         // Generate and upload thumbnail
-        $this->generateAndUploadThumbnail($file->getPathname(), $thumbnailPath);
+        $this->generateAndUploadThumbnail($pathname, $thumbnailPath);
 
         return [
             'filename' => $filePath,
@@ -161,8 +197,12 @@ class ImageService
 
     private function getUploadPath(UploadedFile $file): string
     {
-        $originalFilename = $file->getClientOriginalName();
-        $hash = substr(md5($originalFilename . time()), 0, 2);
+        return $this->getUploadPathFromFilename($file->getClientOriginalName());
+    }
+
+    private function getUploadPathFromFilename(string $filename): string
+    {
+        $hash = substr(md5($filename . time()), 0, 2);
         $subDir = $hash[0] . '/' . $hash[1];
 
         return $subDir;

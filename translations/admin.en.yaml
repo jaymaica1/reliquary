@@ -22,7 +22,12 @@ admin:
       confirm_bulk_generate_image: 'Are you sure you want to generate images for %count% saint(s)?'
       flash:
         image_generation_queued: 'Image generation for saint "%name%" has been queued.'
+        image_generated: 'Image for saint "%name%" has been generated successfully.'
+        image_generation_failed: 'Failed to generate image for saint "%name%".'
+        image_save_failed: 'Failed to save generated image: %error%'
         bulk_image_generation_queued: 'Image generation for %count% saint(s) has been queued.'
+        bulk_image_generated: '%count% image(s) have been generated successfully.'
+        bulk_image_failed: 'Failed to generate %count% image(s).'
         bulk_error: 'Invalid bulk action or no saints selected.'
         no_changes: 'No changes were made.'
     featured:

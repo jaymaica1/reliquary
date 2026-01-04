@@ -10,6 +10,8 @@ parameters:
     image_upload_directory: '%kernel.project_dir%/public/uploads/images'
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
+    ai_base_url_default: 'https://api.openai.com/v1'
+    ai_model_default: 'dall-e-3'
     
     # Access Log PII Protection Configuration
     access_log_pii_protection_default: 'partial'
@@ -84,6 +86,12 @@ services:
         arguments:
             $defaultStorage: '@default.storage'
             
+    App\Service\AiImageService:
+        arguments:
+            $aiApiKey: '%env(AI_API_KEY)%'
+            $aiBaseUrl: '%env(default:ai_base_url_default:AI_BASE_URL)%'
+            $aiModel: '%env(default:ai_model_default:AI_MODEL)%'
+
     App\Service\TranslationAnalyzerService:
         arguments:
             $projectDir: '%kernel.project_dir%'

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Saint;
 use App\Repository\SaintRepository;
+use App\Service\AiImageService;
+use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,33 +70,94 @@ class AdminSaintsToolsController extends AbstractController
     #[Route('/tools/{id}/generate-image', name: 'app_admin_saints_generate_image', methods: ['POST'])]
     public function generateImage(
         Saint $saint,
-        EntityManagerInterface $entityManager
+        AiImageService $aiImageService,
+        ImageService $imageService,
+        EntityManagerInterface $entityManager,
+        Request $request
     ): Response {
-        // TODO: Implement the service that will take care of generating the images
-        $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.image_generation_queued', ['%name%' => $saint->getName()], 'admin'));
-        
+        $prompt = $request->request->get('prompt');
+        if (!$prompt) {
+            $prompt = sprintf(
+                "A realistic and artistic oil painting portrait of Saint %s, %s. %s",
+                $saint->getName(),
+                $saint->getAbstract() ?? '',
+                $saint->getBiography() ? 'Inspiration: ' . substr(strip_tags($saint->getBiography()), 0, 500) : ''
+            );
+        }
+
+        $imageUrl = $aiImageService->generatePortrait($prompt);
+
+        if (!$imageUrl) {
+            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_generation_failed', ['%name%' => $saint->getName()], 'admin'));
+            return $this->redirectToRoute('app_admin_saints_tools');
+        }
+
+        try {
+            $saintImage = $imageService->createSaintImageFromUrl($imageUrl, $saint, $this->getUser());
+            $entityManager->persist($saintImage);
+            $entityManager->flush();
+            $this->addFlash('success', $this->translator->trans('admin.saints.tools.flash.image_generated', ['%name%' => $saint->getName()], 'admin'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_save_failed', ['%error%' => $e->getMessage()], 'admin'));
+        }
+
         return $this->redirectToRoute('app_admin_saints_tools');
     }
-    
+
     /**
      * Bulk generate images for saints
      */
     #[Route('/tools/bulk-generate-images', name: 'app_admin_saints_bulk_generate_images', methods: ['POST'])]
     public function bulkGenerateImages(
         Request $request,
-        SaintRepository $saintRepository
+        SaintRepository $saintRepository,
+        AiImageService $aiImageService,
+        ImageService $imageService,
+        EntityManagerInterface $entityManager
     ): Response {
         $saintIds = $request->request->all('saint_ids');
-        
+
         if (empty($saintIds)) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
             return $this->redirectToRoute('app_admin_saints_tools');
         }
-        
-        // TODO: Implement the service that will take care of generating the images in bulk
-        $count = count($saintIds);
-        $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.bulk_image_generation_queued', ['%count%' => $count], 'admin'));
-        
+
+        $saints = $saintRepository->findBy(['id' => $saintIds]);
+        $successCount = 0;
+        $failCount = 0;
+
+        foreach ($saints as $saint) {
+            $prompt = sprintf(
+                "A realistic and artistic oil painting portrait of Saint %s, %s. %s",
+                $saint->getName(),
+                $saint->getAbstract() ?? '',
+                $saint->getBiography() ? 'Inspiration: ' . substr(strip_tags($saint->getBiography()), 0, 500) : ''
+            );
+
+            $imageUrl = $aiImageService->generatePortrait($prompt);
+
+            if ($imageUrl) {
+                try {
+                    $saintImage = $imageService->createSaintImageFromUrl($imageUrl, $saint, $this->getUser());
+                    $entityManager->persist($saintImage);
+                    $successCount++;
+                } catch (\Exception $e) {
+                    $failCount++;
+                }
+            } else {
+                $failCount++;
+            }
+        }
+
+        if ($successCount > 0) {
+            $entityManager->flush();
+            $this->addFlash('success', $this->translator->trans('admin.saints.tools.flash.bulk_image_generated', ['%count%' => $successCount], 'admin'));
+        }
+
+        if ($failCount > 0) {
+            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_image_failed', ['%count%' => $failCount], 'admin'));
+        }
+
         return $this->redirectToRoute('app_admin_saints_tools');
     }
     
