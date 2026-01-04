@@ -337,3 +337,44 @@ body {
     border-color: var(--accent-gold);
     color: var(--primary-blue);
 }
+
+/* Flash Alerts */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.alert-success {
+    background-color: #d1fae5;
+    color: var(--success-green);
+    border-left: 4px solid var(--success-green);
+}
+
+.alert-danger, .alert-error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-left: 4px solid #dc2626;
+}
+
+.alert-warning {
+    background-color: var(--light-gold);
+    color: var(--warning-amber);
+    border-left: 4px solid var(--warning-amber);
+}
+
+.alert-info {
+    background-color: #e0f2fe;
+    color: var(--secondary-blue);
+    border-left: 4px solid var(--secondary-blue);
+}
+
+.alert .btn-close {
+    padding: 1.25rem;
+    box-shadow: none;
+}
