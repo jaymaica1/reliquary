@@ -62,6 +62,13 @@
                 <i class="fas fa-users"></i>
                 {{ 'common.admin.user_management'|trans({}, 'common') }}
             </a>
+            <a href="{{ path('admin_contact_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_contact' ? 'active' : '' }}">
+                <i class="fas fa-envelope"></i>
+                {{ 'common.admin.contact_messages'|trans({}, 'common') }}
+                {% if notifications is defined and notifications.newContacts > 0 %}
+                    <span class="badge badge-notification ms-auto">{{ notifications.newContacts }}</span>
+                {% endif %}
+            </a>
             <button type="button" class="nav-link">
                 <i class="fas fa-chart-line"></i>
                 {{ 'common.admin.community_activity'|trans({}, 'common') }}

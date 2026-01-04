@@ -82,6 +82,16 @@ contact:
       partnership: 'Oportunidade de Parceria'
     message: 'Mensagem'
     send: 'Enviar Mensagem'
+    success: 'Obrigado pela sua mensagem. Entraremos em contato em breve.'
+    error: 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.'
+  confirmation:
+    subject: 'Confirmação de sua mensagem - Relicário'
+    title: 'Recebemos sua mensagem!'
+    greeting: 'Olá %name%,'
+    message: 'Obrigado por entrar em contato com o Santas Reliquias. Recebemos sua mensagem e nossa equipe irá revisá-la em breve.'
+    response_time: 'Tentaremos responder em 24-48 horas.'
+    signature: 'Atenciosamente,'
+    footer: 'Esta é uma mensagem automática. Por favor, não responda diretamente a este e-mail.'
 
 footer:
   privacy: 'Política de Privacidade'

@@ -110,3 +110,8 @@ services:
     App\EventSubscriber\RelicWorkflowSubscriber:
         arguments:
             $fromAddress: '%env(MAILER_FROM)%'
+
+    App\Controller\ContactController:
+        arguments:
+            $adminEmail: 'contact@santasreliquias.com.br'
+            $noReplyEmail: 'no-reply@santasreliquias.com.br'

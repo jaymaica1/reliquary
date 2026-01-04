@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Enum\RelicStatus;
+use App\Repository\ContactRepository;
 use App\Repository\RelicRepository;
 use App\Repository\SaintRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -13,6 +14,7 @@ class NotificationService
     public function __construct(
         private SaintRepository $saintRepository,
         private RelicRepository $relicRepository,
+        private ContactRepository $contactRepository,
         private ParameterBagInterface $parameterBag
     ) {}
 
@@ -24,6 +26,11 @@ class NotificationService
     public function getPendingRelicsCount(): int
     {
         return $this->relicRepository->countByStatus(RelicStatus::PENDING);
+    }
+
+    public function getNewContactsCount(): int
+    {
+        return $this->contactRepository->countUnread();
     }
 
     public function getErrorLogsCount(): int
@@ -53,6 +60,7 @@ class NotificationService
             'incompleteSaints' => $this->getIncompleteSaintsCount(),
             'pendingRelics' => $this->getPendingRelicsCount(),
             'errorLogs' => $this->getErrorLogsCount(),
+            'newContacts' => $this->getNewContactsCount(),
         ];
     }
 }

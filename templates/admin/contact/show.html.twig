@@ -1,0 +1,129 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Contact Message #{{ contact.id }} - Admin{% endblock %}
+{% block pageTitle %}Contact Message #{{ contact.id }}{% endblock %}
+
+{% block body %}
+    <div class="mb-4">
+        <a href="{{ path('admin_contact_index') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="content-section mb-4">
+                <div class="section-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-envelope me-2 text-primary"></i>Message Details
+                    </h5>
+                    <span class="badge bg-{{ contact.status == 'new' ? 'primary' : (contact.status == 'read' ? 'info' : 'success') }}">
+                        {{ contact.status|upper }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 150px;">Name:</th>
+                                    <td>{{ contact.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Subject:</th>
+                                    <td>{{ contact.subject|replace({'_': ' '})|title }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Submitted:</th>
+                                    <td>{{ contact.createdAt|date('F j, Y \\a\\t g:i A') }}</td>
+                                </tr>
+                                {% if contact.readAt %}
+                                <tr>
+                                    <th>Read At:</th>
+                                    <td>{{ contact.readAt|date('F j, Y \\a\\t g:i A') }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if contact.ipAddress %}
+                                <tr>
+                                    <th>IP Address:</th>
+                                    <td><code>{{ contact.ipAddress }}</code></td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="message-content mt-4">
+                        <h6 class="border-bottom pb-2 mb-3">Message:</h6>
+                        <div class="p-3 bg-light rounded border">
+                            {{ contact.message|nl2br }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-sticky-note me-2 text-warning"></i>Admin Notes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{ path('admin_contact_notes', {id: contact.id}) }}">
+                        <div class="mb-3">
+                            <textarea name="notes" class="form-control" rows="6" placeholder="Add internal notes about this contact message...">{{ contact.adminNotes }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Save Notes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="content-section mb-3">
+                <div class="section-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cog me-2 text-secondary"></i>Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{ path('admin_contact_status', {id: contact.id}) }}" class="mb-4">
+                        <div class="mb-2">
+                            <label class="form-label small text-muted">Update Status:</label>
+                            <select name="status" class="form-select">
+                                <option value="new" {{ contact.status == 'new' ? 'selected' : '' }}>New</option>
+                                <option value="read" {{ contact.status == 'read' ? 'selected' : '' }}>Read</option>
+                                <option value="resolved" {{ contact.status == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            Update Status
+                        </button>
+                    </form>
+
+                    <div class="d-grid gap-2">
+                        <a href="mailto:{{ contact.email }}?subject=Re: {{ contact.subject|url_encode }}" class="btn btn-info text-white">
+                            <i class="fas fa-reply me-1"></i> Reply via Email
+                        </a>
+
+                        <hr class="my-3">
+
+                        <form method="post" action="{{ path('admin_contact_delete', {id: contact.id}) }}" onsubmit="return confirm('Are you sure you want to delete this contact message?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+                            <button type="submit" class="btn btn-outline-danger w-100">
+                                <i class="fas fa-trash me-1"></i> Delete Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
