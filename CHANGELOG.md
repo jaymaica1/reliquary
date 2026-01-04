@@ -1,3 +1,11 @@
+# [2.18.0](https://github.com/CesarScur/reliquary/compare/v2.17.0...v2.18.0) (2026-01-04)
+
+
+### Features
+
+* **admin-navbar:** implement collapsible sidebar with improved responsiveness and styling ([36185cd](https://github.com/CesarScur/reliquary/commit/36185cd99032dc5a579bb4603caa90cc8f74f05e))
+* **reset-password:** update email sent page with new layout and styling ([7fe145e](https://github.com/CesarScur/reliquary/commit/7fe145e0da4ef9e84161c519ff81afb5be0acf5c))
+
 # [2.17.0](https://github.com/CesarScur/reliquary/compare/v2.16.0...v2.17.0) (2026-01-04)
 
 
