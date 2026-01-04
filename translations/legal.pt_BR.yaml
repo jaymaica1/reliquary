@@ -1,0 +1,52 @@
+privacy:
+  title: 'Política de Privacidade'
+  ai_disclaimer: 'Aviso: Este documento é um rascunho gerado por IA apenas para fins informativos. Não constitui aconselhamento jurídico e deve ser revisado por um profissional jurídico.'
+  last_updated: 'Última atualização: 4 de janeiro de 2026'
+  introduction:
+    title: '1. Introdução'
+    content: 'Bem-vindo ao Reliquary. Respeitamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais. Esta política de privacidade irá informá-lo sobre como cuidamos dos seus dados pessoais quando visita o nosso website e informá-lo-á sobre os seus direitos de privacidade e como a lei o protege.'
+  data_collection:
+    title: '2. Os Dados que Coletamos'
+    content: 'Podemos coletar, usar, armazenar e transferir diferentes tipos de dados pessoais sobre si, que agrupamos da seguinte forma:'
+    items:
+      identity: 'Dados de Identidade: inclui nome de usuário ou identificador semelhante.'
+      contact: 'Dados de Contato: inclui endereço de e-mail.'
+      technical: 'Dados Técnicos: inclui endereço de protocolo de internet (IP), os seus dados de login, tipo e versão do navegador, configuração de fuso horário e localização.'
+      usage: 'Dados de Utilização: inclui informações sobre como utiliza o nosso website e serviços.'
+  how_we_use_data:
+    title: '3. Como Usamos os Seus Dados Pessoais'
+    content: 'Apenas utilizaremos os seus dados pessoais quando a lei nos permitir. Mais comumente, utilizaremos os seus dados pessoais nas seguintes circunstâncias:'
+    items:
+      registration: 'Para registá-lo como um novo usuário.'
+      service: 'Para fornecer e gerir o seu acesso aos nossos serviços.'
+      improvement: 'Para melhorar o nosso website, serviços e experiência do usuário.'
+      communication: 'Para comunicar consigo relativamente à sua conta ou consultas.'
+  data_security:
+    title: '4. Segurança de Dados'
+    content: 'Implementamos medidas de segurança adequadas para evitar que os seus dados pessoais sejam acidentalmente perdidos, utilizados ou acessados de forma não autorizada, alterados ou divulgados.'
+  your_rights:
+    title: '5. Os Seus Direitos Legais'
+    content: 'Em certas circunstâncias, tem direitos ao abrigo das leis de proteção de dados em relação aos seus dados pessoais, incluindo o direito de solicitar acesso, correção, eliminação, restrição, transferência ou oposição ao processamento.'
+
+terms:
+  title: 'Termos de Uso'
+  ai_disclaimer: 'Aviso: Este documento é um rascunho gerado por IA apenas para fins informativos. Não constitui aconselhamento jurídico e deve ser revisado por um profissional jurídico.'
+  last_updated: 'Última atualização: 4 de janeiro de 2026'
+  acceptance:
+    title: '1. Aceitação dos Termos'
+    content: 'Ao acessar e utilizar o Reliquary, aceita e concorda em ficar vinculado aos termos e disposições deste acordo.'
+  user_conduct:
+    title: '2. Conduta do Usuário'
+    content: 'Concorda em utilizar o website apenas para fins lícitos e de uma forma que não infrinja os direitos de, restrinja ou iniba a utilização e o usufruto do website por parte de terceiros. O comportamento proibido inclui assediar ou causar angústia ou inconveniência a qualquer outro usuário, transmitir conteúdo obsceno ou ofensivo ou interromper o fluxo normal de diálogo dentro do website.'
+  content_submission:
+    title: '3. Submissão de Conteúdo'
+    content: 'Ao submeter conteúdo (incluindo, entre outros, informações sobre relíquias, imagens e descrições) ao Reliquary, concede-nos uma licença não exclusiva, mundial e isenta de royalties para utilizar, reproduzir, modificar e publicar esse conteúdo para os fins do projeto.'
+  intellectual_property:
+    title: '4. Propriedade Intelectual'
+    content: 'O nome Reliquary, o logotipo e todos os nomes, logotipos, nomes de produtos e serviços, designs e slogans relacionados são marcas comerciais do Projeto Reliquary. Não deve utilizar tais marcas sem a permissão prévia por escrito.'
+  disclaimer:
+    title: '5. Isenção de Garantias'
+    content: 'O website é fornecido "COMO ESTÁ" e "CONFORME DISPONÍVEL", sem qualquer representação ou endosso e sem garantia de qualquer tipo, expressa ou implícita.'
+  limitation_liability:
+    title: '6. Limitação de Responsabilidade'
+    content: 'O Reliquary não será responsável por qualquer perda ou dano indireto ou consequente decorrente de ou em conexão com o uso do website.'

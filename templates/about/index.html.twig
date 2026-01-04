@@ -4,17 +4,31 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/landing.css') }}">
+    <style>
+        .legal-card {
+            background: rgba(254, 254, 254, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 15px;
+            padding: 3rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .legal-card:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-<section class="relic-classes" style="padding-top: 120px;">
+<section class="relic-classes" style="padding-top: 120px; padding-bottom: 80px;">
     <div class="contact-container">
         <h2 class="section-title">{{ 'about.title'|trans({}, 'about') }}</h2>
         <p class="section-subtitle">{{ 'about.subtitle'|trans({}, 'about') }}</p>
 
         <div class="row mt-5">
             <div class="col-12">
-                <div class="relic-card text-start mb-5" style="background: rgba(254, 254, 254, 0.05); cursor: default;">
+                <div class="legal-card text-start mb-5">
                     <div class="row align-items-center">
                         <div class="col-md-3 text-center mb-4 mb-md-0">
                             <img src="{{ asset('/images/relic.png') }}" alt="{{ 'common.logo'|trans({}, 'common') }}" class="img-fluid" style="max-width: 150px; filter: sepia(100%) saturate(300%) brightness(95%) hue-rotate(345deg);">
@@ -61,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="relic-card mt-5 text-center" style="background: rgba(245, 158, 11, 0.05); border-color: var(--accent-gold); cursor: default;">
+                <div class="legal-card mt-5 text-center" style="background: rgba(245, 158, 11, 0.05); border-color: var(--accent-gold);">
                     <h3 class="relic-title">{{ 'about.contact.title'|trans({}, 'about') }}</h3>
                     <p class="relic-description mb-4">
                         {{ 'about.contact.description'|trans({}, 'about') }}

@@ -86,8 +86,8 @@
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#privacy">{{ 'footer.privacy'|trans({}, 'landing') }}</a>
-                <a href="#terms">{{ 'footer.terms'|trans({}, 'landing') }}</a>
+                <a href="{{ path('app_privacy_policy') }}">{{ 'footer.privacy'|trans({}, 'landing') }}</a>
+                <a href="{{ path('app_terms_of_use') }}">{{ 'footer.terms'|trans({}, 'landing') }}</a>
                 <a href="#guidelines">{{ 'footer.guidelines'|trans({}, 'landing') }}</a>
                 <a href="#authentication">{{ 'footer.authentication'|trans({}, 'landing') }}</a>
                 <a href="{{ path('app_contact') }}">{{ 'footer.support'|trans({}, 'landing') }}</a>

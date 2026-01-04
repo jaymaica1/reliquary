@@ -1,0 +1,128 @@
+{% extends 'landing_base.html.twig' %}
+
+{% block title %}{{ 'privacy.title'|trans({}, 'legal') }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/landing.css') }}">
+    <style>
+        .legal-content {
+            color: rgba(254, 254, 254, 0.9);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        .legal-section {
+            margin-bottom: 2.5rem;
+        }
+        .legal-section h3 {
+            color: var(--accent-gold);
+            font-family: 'Cinzel', serif;
+            margin-bottom: 1rem;
+        }
+        .legal-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .legal-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .legal-list li::before {
+            content: "•";
+            color: var(--accent-gold);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: 0;
+        }
+        .last-updated {
+            font-style: italic;
+            color: rgba(254, 254, 254, 0.6);
+            margin-bottom: 0.5rem;
+        }
+        .ai-disclaimer {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .legal-card {
+            background: rgba(254, 254, 254, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 15px;
+            padding: 3rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .legal-card:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="relic-classes" style="padding-top: 120px; padding-bottom: 80px;">
+    <div class="contact-container">
+        <h2 class="section-title">{{ 'privacy.title'|trans({}, 'legal') }}</h2>
+        <p class="last-updated text-center">{{ 'privacy.last_updated'|trans({}, 'legal') }}</p>
+        <p class="ai-disclaimer text-center">
+            <i class="fas fa-robot me-1"></i> {{ 'privacy.ai_disclaimer'|trans({}, 'legal') }}
+        </p>
+
+        <div class="row mt-5 justify-content-center">
+            <div class="col-lg-10">
+                <div class="legal-card text-start mb-5">
+                    <div class="legal-content">
+                        <div class="legal-section">
+                            <h3>{{ 'privacy.introduction.title'|trans({}, 'legal') }}</h3>
+                            <p>{{ 'privacy.introduction.content'|trans({}, 'legal') }}</p>
+                        </div>
+
+                        <div class="legal-section">
+                            <h3>{{ 'privacy.data_collection.title'|trans({}, 'legal') }}</h3>
+                            <p>{{ 'privacy.data_collection.content'|trans({}, 'legal') }}</p>
+                            <ul class="legal-list">
+                                <li>{{ 'privacy.data_collection.items.identity'|trans({}, 'legal') }}</li>
+                                <li>{{ 'privacy.data_collection.items.contact'|trans({}, 'legal') }}</li>
+                                <li>{{ 'privacy.data_collection.items.technical'|trans({}, 'legal') }}</li>
+                                <li>{{ 'privacy.data_collection.items.usage'|trans({}, 'legal') }}</li>
+                            </ul>
+                        </div>
+
+                        <div class="legal-section">
+                            <h3>{{ 'privacy.how_we_use_data.title'|trans({}, 'legal') }}</h3>
+                            <p>{{ 'privacy.how_we_use_data.content'|trans({}, 'legal') }}</p>
+                            <ul class="legal-list">
+                                <li>{{ 'privacy.how_we_use_data.items.registration'|trans({}, 'legal') }}</li>
+                                <li>{{ 'privacy.how_we_use_data.items.service'|trans({}, 'legal') }}</li>
+                                <li>{{ 'privacy.how_we_use_data.items.improvement'|trans({}, 'legal') }}</li>
+                                <li>{{ 'privacy.how_we_use_data.items.communication'|trans({}, 'legal') }}</li>
+                            </ul>
+                        </div>
+
+                        <div class="legal-section">
+                            <h3>{{ 'privacy.data_security.title'|trans({}, 'legal') }}</h3>
+                            <p>{{ 'privacy.data_security.content'|trans({}, 'legal') }}</p>
+                        </div>
+
+                        <div class="legal-section">
+                            <h3>{{ 'privacy.your_rights.title'|trans({}, 'legal') }}</h3>
+                            <p>{{ 'privacy.your_rights.content'|trans({}, 'legal') }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ path('app_landing') }}" class="gold-link">
+                        <i class="fas fa-arrow-left me-2"></i>{{ 'common.navigation.main_site'|trans({}, 'common') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
