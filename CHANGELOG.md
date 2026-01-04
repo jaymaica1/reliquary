@@ -1,3 +1,19 @@
+# [2.20.0](https://github.com/CesarScur/reliquary/compare/v2.19.0...v2.20.0) (2026-01-04)
+
+
+### Features
+
+* **admin:** consolidate admin saints tools and enhance functionality ([c771868](https://github.com/CesarScur/reliquary/commit/c7718682ca8d2f3e4a631909ea75ddeaa613da3c))
+* **admin:** integrate AI image generation for saints ([912f2cd](https://github.com/CesarScur/reliquary/commit/912f2cd3594b69b24b560e02a2fd6ead8a6a69b4))
+* **autocomplete:** add address autocomplete functionality ([1f0a0ad](https://github.com/CesarScur/reliquary/commit/1f0a0ad0dae7985e3922ebaabae3e8d996178130))
+* **contact:** add GitHub link for technical issues and update footer support link ([b325f26](https://github.com/CesarScur/reliquary/commit/b325f2670987c7aa5f4cea7404f259212e30233f))
+* **legal:** add Privacy Policy and Terms of Use pages with translations ([bb41ec5](https://github.com/CesarScur/reliquary/commit/bb41ec571829f231a479937c542e85d5c0b36c1d))
+* **legal:** add submission guidelines page with translations and links ([4b90112](https://github.com/CesarScur/reliquary/commit/4b90112a594726aa1b2b0e9b435a0ded2acdb354))
+* **relic:** add "Relics Around Me" feature with map integration ([d46b3fa](https://github.com/CesarScur/reliquary/commit/d46b3fa1bbdafd72c6b6cb045721ac86f807331d))
+* **relic:** update provenance field to request verification contact information ([c8d3c95](https://github.com/CesarScur/reliquary/commit/c8d3c9598d30baeddb8a744f8755f0743f72af67))
+* **relic:** update provenance field to request verification contact information ([c3f4d55](https://github.com/CesarScur/reliquary/commit/c3f4d55c12b0ae6ad4a75dc03638769c7d5fa210))
+* **styles:** add flash alert styles for admin UI ([c4df42c](https://github.com/CesarScur/reliquary/commit/c4df42c69e9020cdb5eed0a6133dc74c425bc393))
+
 # [2.19.0](https://github.com/CesarScur/reliquary/compare/v2.18.0...v2.19.0) (2026-01-04)
 
 
