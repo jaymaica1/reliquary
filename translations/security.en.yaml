@@ -17,6 +17,7 @@ security:
     invalid_credentials: 'Invalid credentials'
   reset_password:
     title: 'Reset your password'
+    email: 'Email'
     email_sent_title: 'Password Reset Email Sent'
     email_title: 'Reset Your Password - Reliquary'
     request_title: 'Password Reset Request'

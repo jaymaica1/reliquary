@@ -19,6 +19,7 @@ security:
     invalid_credentials: 'Credenciais inválidas'
   reset_password:
     title: 'Redefinir sua senha'
+    email: 'E-mail'
     email_sent_title: 'Email de Redefinição de Senha Enviado'
     email_title: 'Redefinir Sua Senha - Reliquary'
     request_title: 'Solicitação de Redefinição de Senha'
