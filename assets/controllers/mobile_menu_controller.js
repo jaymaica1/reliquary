@@ -82,4 +82,16 @@ export default class extends Controller {
     // Close menu when a navigation link is clicked
     this.close()
   }
+
+  toggleDropdown(event) {
+    if (window.innerWidth <= 768) {
+      event.preventDefault()
+      const dropdownContent = event.currentTarget.nextElementSibling
+      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block'
+      dropdownContent.style.opacity = '1'
+      dropdownContent.style.visibility = 'visible'
+      dropdownContent.style.position = 'static'
+      dropdownContent.style.transform = 'none'
+    }
+  }
 }

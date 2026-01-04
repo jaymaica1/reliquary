@@ -53,8 +53,14 @@
                   {{ app.user.username }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                  <li><a class="dropdown-item" href="{{ path('app_profile_show') }}">{{ 'common.user.profile'|trans({}, 'common') }}</a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_my_relics') }}">{{ 'common.user.my_relics'|trans({}, 'common') }}</a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_profile_show') }}">
+                    <i class="fas fa-user-circle me-2"></i>
+                    {{ 'common.user.profile'|trans({}, 'common') }}
+                  </a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_my_relics') }}">
+                    <i class="fas fa-gem me-2"></i>
+                    {{ 'common.user.my_relics'|trans({}, 'common') }}
+                  </a></li>
                   {% if is_granted('ROLE_ADMIN') %}
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{{ path('app_admin_dashboard') }}">
@@ -63,7 +69,10 @@
                   </a></li>
                   {% endif %}
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{{ path('app_logout') }}">{{ 'common.user.logout'|trans({}, 'common') }}</a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_logout') }}">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    {{ 'common.user.logout'|trans({}, 'common') }}
+                  </a></li>
                 </ul>
               </div>
             {% else %}
