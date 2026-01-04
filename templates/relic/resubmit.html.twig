@@ -12,6 +12,12 @@
             <div class="alert alert-info">
                 <h5 class="alert-heading">{{ 'relic.rejection_reason'|trans({'default': 'Rejection Reason'}, 'relic') }}</h5>
                 <p class="mb-0">{{ relic.rejectionReason }}</p>
+                <hr>
+                <p class="mb-0">
+                    <a href="{{ path('app_guidelines') }}" class="alert-link" target="_blank">
+                        <i class="fas fa-info-circle"></i> {{ 'relic.form.view_guidelines'|trans({}, 'relic') }}
+                    </a>
+                </p>
             </div>
         </div>
     </div>

@@ -11,6 +11,11 @@
 <section class="list">
     <div class="relic-form-container">
         <h2 class="section-title">{{ 'relic.edit_title'|trans({}, 'relic') }}</h2>
+        <p class="section-subtitle">
+            <a href="{{ path('app_guidelines') }}" class="gold-link" target="_blank">
+                <i class="fas fa-info-circle"></i> {{ 'relic.form.view_guidelines'|trans({}, 'relic') }}
+            </a>
+        </p>
         
         {{ include('relic/_form.html.twig', {'button_label': 'relic.form.submit'|trans({}, 'relic')}) }}
 

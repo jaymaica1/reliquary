@@ -50,3 +50,29 @@ terms:
   limitation_liability:
     title: '6. Limitação de Responsabilidade'
     content: 'O Reliquary não será responsável por qualquer perda ou dano indireto ou consequente decorrente de ou em conexão com o uso do website.'
+
+guidelines:
+  title: 'Diretrizes de Submissão'
+  ai_disclaimer: 'Aviso: Este documento é um rascunho gerado por IA apenas para fins informativos. Não constitui aconselhamento jurídico e deve ser revisado por um profissional jurídico.'
+  last_updated: 'Última atualização: 4 de janeiro de 2026'
+  back_to_form: 'Voltar para o Formulário de Submissão'
+  introduction:
+    title: '1. Introdução'
+    content: 'Para manter a santidade e a precisão do projeto Reliquary, pedimos a todos os colaboradores que sigam estas diretrizes ao enviar informações sobre relíquias sagradas.'
+  images:
+    title: '2. Submissão de Imagens'
+    content: 'As imagens são cruciais para a documentação das relíquias. Certifique-se de que suas fotos atendam aos seguintes critérios:'
+    items:
+      quality: 'Fotografias nítidas e bem iluminadas, focando na relíquia e em seu relicário.'
+      privacy: 'Não inclua pessoas, rostos ou fundos pessoais identificáveis em suas fotos.'
+      ownership: 'Envie apenas fotos que você tenha o direito de compartilhar. Evite capturar materiais protegidos por direitos autorais ou documentos privados.'
+  pii:
+    title: '3. Informações de Identificação Pessoal (PII)'
+    content: 'Proteger a sua privacidade e a privacidade de terceiros é fundamental. Ao fornecer descrições ou detalhes de procedência:'
+    important_note: 'NUNCA inclua nomes completos, números de telefone, endereços residenciais privados ou informações financeiras nas descrições públicas das relíquias.'
+    items:
+      avoid: 'Evite mencionar indivíduos vivos pelo nome completo sem consentimento explícito.'
+      anonymity: 'Use termos gerais para localizações (ex: "Coleção particular em Roma") em vez de endereços privados específicos.'
+  legal:
+    title: '4. Responsabilidade Legal'
+    content: 'Ao enviar informações, você reconhece que é responsável pelo conteúdo fornecido e que ele está em conformidade com nossos Termos de Uso e Política de Privacidade. Todas as submissões são revisadas por nossa equipe antes de se tornarem públicas.'

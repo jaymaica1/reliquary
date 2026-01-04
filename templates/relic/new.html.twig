@@ -11,7 +11,13 @@
 <section class="list">
     <div class="relic-form-container">
         <h2 class="section-title">{{ 'relic.add_new'|trans({}, 'relic') }}</h2>
-        <p class="section-subtitle">{{ 'relic.add_subtitle'|trans({}, 'relic') }}</p>
+        <p class="section-subtitle">
+            {{ 'relic.add_subtitle'|trans({}, 'relic') }}
+            <br>
+            <a href="{{ path('app_guidelines') }}" class="gold-link" target="_blank">
+                <i class="fas fa-info-circle"></i> {{ 'relic.form.view_guidelines'|trans({}, 'relic') }}
+            </a>
+        </p>
         
         {{ include('relic/_form.html.twig') }}
     </div>

@@ -61,6 +61,7 @@ relic:
     provenance_help: 'Please provide the contact information to help us with the process of verifying and validating the relic. (E-mail, phone number, name of the person responsible, parish church, monastery, diocese, chapel, etc.)'
     sacred_details: 'Sacred Details'
     location_media: 'Location & Media'
+    view_guidelines: 'View Submission Guidelines'
     rejection_reason: 'Rejection Reason'
     rejection_reason_help: 'Provide a reason why this relic was rejected'
     submit: 'Save'

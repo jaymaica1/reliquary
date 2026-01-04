@@ -22,4 +22,10 @@ final class LegalController extends AbstractController
     {
         return $this->render('legal/terms.html.twig');
     }
+
+    #[Route('/guidelines', name: 'app_guidelines')]
+    public function guidelines(): Response
+    {
+        return $this->render('legal/guidelines.html.twig');
+    }
 }
