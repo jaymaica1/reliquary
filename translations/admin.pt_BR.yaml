@@ -12,6 +12,19 @@ admin:
       no_saints: 'Nenhum santo incompleto encontrado.'
       not_set: 'Não Definido'
       mark_complete: 'Marcar como Completo'
+    tools:
+      title: 'Ferramentas de Santos'
+      no_saints: 'Nenhum santo encontrado.'
+      no_results: 'Nenhum santo correspondente a "%search%" encontrado.'
+      generate_image: 'Gerar Imagem'
+      bulk_generate_image: 'Gerar Imagens Selecionadas'
+      confirm_generate_image: 'Tem certeza de que deseja gerar uma nova imagem para este santo?'
+      confirm_bulk_generate_image: 'Tem certeza de que deseja gerar imagens para %count% santo(s)?'
+      flash:
+        image_generation_queued: 'A geração de imagem para o santo "%name%" foi colocada na fila.'
+        bulk_image_generation_queued: 'A geração de imagem para %count% santo(s) foi colocada na fila.'
+        bulk_error: 'Ação em lote inválida ou nenhum santo selecionado.'
+        no_changes: 'Nenhuma alteração foi feita.'
     featured:
       title: 'Santos em Destaque'
       bulk_feature: 'Destacar Selecionados'

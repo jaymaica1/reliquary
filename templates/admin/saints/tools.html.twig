@@ -1,0 +1,222 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}{{ 'admin.saints.tools.title'|trans({}, 'admin') }}{% endblock %}
+{% block pageTitle %}{{ 'admin.saints.tools.title'|trans({}, 'admin') }}{% endblock %}
+
+{% block body %}
+    <div class="content-section">
+        <div class="card-body">
+            <div class="mb-4">
+                <form method="get" action="{{ path('app_admin_saints_tools') }}" class="row g-3">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="{{ 'common.search.placeholder'|trans({}, 'common') }}" value="{{ searchTerm }}">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i> {{ 'common.search.button'|trans({}, 'common') }}
+                            </button>
+                            {% if searchTerm %}
+                                <a href="{{ path('app_admin_saints_tools') }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times"></i> {{ 'common.search.clear'|trans({}, 'common') }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {% if pagination.items is not empty or searchTerm is not empty %}
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-success" onclick="submitBulkAction('feature')">
+                                <i class="fas fa-star"></i> {{ 'admin.saints.featured.bulk_feature'|trans({}, 'admin') }}
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="submitBulkAction('unfeature')">
+                                <i class="fas fa-star-o"></i> {{ 'admin.saints.featured.bulk_unfeature'|trans({}, 'admin') }}
+                            </button>
+                            <button type="button" class="btn btn-outline-warning" onclick="submitBulkImageGeneration()">
+                                <i class="fas fa-wand-magic-sparkles"></i> {{ 'admin.saints.tools.bulk_generate_image'|trans({}, 'admin') }}
+                            </button>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="select-all">
+                            <label class="form-check-label" for="select-all">
+                                {{ 'admin.saints.featured.select_all'|trans({}, 'admin') }}
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <form method="post" action="{{ path('app_admin_saints_bulk_featured') }}" id="bulk-form">
+                        <input type="hidden" name="action" id="bulk-action">
+                    </form>
+                    
+                    <form method="post" action="{{ path('app_admin_saints_bulk_generate_images') }}" id="bulk-image-form">
+                    </form>
+                </div>
+            {% endif %}
+
+            {% if pagination.items is empty %}
+                <div class="text-center py-4 text-muted border rounded">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    {% if searchTerm %}
+                        <p>{{ 'admin.saints.tools.no_results'|trans({'%search%': searchTerm}, 'admin') }}</p>
+                        <a href="{{ path('app_admin_saints_tools') }}" class="btn btn-sm btn-outline-secondary">
+                            {{ 'common.search.clear'|trans({}, 'common') }}
+                        </a>
+                    {% else %}
+                        <p>{{ 'admin.saints.tools.no_saints'|trans({}, 'admin') }}</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" width="40">
+                                    <input type="checkbox" id="select-all-header" class="form-check-input">
+                                </th>
+                                <th scope="col">ID</th>
+                                <th scope="col">{{ 'saint.table.name'|trans({}, 'saint') }}</th>
+                                <th scope="col">{{ 'admin.saints.featured.status'|trans({}, 'admin') }}</th>
+                                <th scope="col">{{ 'saint.table.canonical_status'|trans({}, 'saint') }}</th>
+                                <th scope="col">{{ 'saint.table.relics'|trans({}, 'saint') }}</th>
+                                <th scope="col">{{ 'saint.table.actions'|trans({}, 'saint') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for saint in pagination %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="saint_ids[]" value="{{ saint.id }}" class="form-check-input saint-checkbox" form="bulk-form">
+                                </td>
+                                <td>{{ saint.id }}</td>
+                                <td>{{ saint.name }}</td>
+                                <td>
+                                    {% if saint.featured %}
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-star"></i> {{ 'admin.saints.featured.featured'|trans({}, 'admin') }}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">
+                                            <i class="fas fa-star-o"></i> {{ 'admin.saints.featured.not_featured'|trans({}, 'admin') }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if saint.canonicalStatus %}
+                                        {{ saint.canonicalStatus.value }}
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">{{ 'admin.saints.incomplete.not_set'|trans({}, 'admin') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ saint.relics|length }}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ path('app_saint_edit', {'id': saint.id}) }}" class="btn btn-sm btn-outline-primary" title="{{ 'saint.actions.edit'|trans({}, 'saint') }}">
+                                            <i class="fas fa-pencil"></i>
+                                        </a>
+                                        <form method="post" action="{{ path('app_admin_saints_toggle_featured', {'id': saint.id}) }}" style="display: inline;">
+                                            {% if saint.featured %}
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="return confirm('{{ 'admin.saints.featured.confirm_unfeature'|trans({}, 'admin') }}')" title="{{ 'admin.saints.featured.unfeature'|trans({}, 'admin') }}">
+                                                    <i class="fas fa-star-o"></i>
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('{{ 'admin.saints.featured.confirm_feature'|trans({}, 'admin') }}')" title="{{ 'admin.saints.featured.feature'|trans({}, 'admin') }}">
+                                                    <i class="fas fa-star"></i>
+                                                </button>
+                                            {% endif %}
+                                        </form>
+                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id}) }}" style="display: inline;">
+                                            <button type="submit" class="btn btn-sm btn-outline-warning" onclick="return confirm('{{ 'admin.saints.tools.confirm_generate_image'|trans({}, 'admin') }}')" title="{{ 'admin.saints.tools.generate_image'|trans({}, 'admin') }}">
+                                                <i class="fas fa-wand-magic-sparkles"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4 px-2">
+                    <div class="text-muted small">
+                        {{ ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1) }}-{{ min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount) }} {{ 'common.pagination.of'|trans({}, 'common') }} {{ pagination.getTotalItemCount }} {{ 'common.pagination.items'|trans({}, 'common') }}
+                    </div>
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Handle select all checkboxes
+        function updateCheckboxes(checked) {
+            const checkboxes = document.querySelectorAll('.saint-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = checked;
+            });
+        }
+
+        document.getElementById('select-all').addEventListener('change', function() {
+            updateCheckboxes(this.checked);
+        });
+
+        document.getElementById('select-all-header').addEventListener('change', function() {
+            updateCheckboxes(this.checked);
+        });
+
+        // Submit bulk action
+        function submitBulkAction(action) {
+            const checkedBoxes = document.querySelectorAll('.saint-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('{{ 'admin.saints.featured.no_selection'|trans({}, 'admin') }}');
+                return;
+            }
+            
+            const actionText = action === 'feature' ? '{{ 'admin.saints.featured.feature'|trans({}, 'admin') }}' : '{{ 'admin.saints.featured.unfeature'|trans({}, 'admin') }}';
+            if (confirm('{{ 'admin.saints.featured.confirm_bulk'|trans({}, 'admin') }}'.replace('%action%', actionText).replace('%count%', checkedBoxes.length))) {
+                const bulkForm = document.getElementById('bulk-form');
+                
+                // Ensure all checked boxes are in this form
+                checkedBoxes.forEach(cb => {
+                    if (cb.getAttribute('form') !== 'bulk-form') {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'saint_ids[]';
+                        hiddenInput.value = cb.value;
+                        bulkForm.appendChild(hiddenInput);
+                    }
+                });
+                
+                document.getElementById('bulk-action').value = action;
+                bulkForm.submit();
+            }
+        }
+
+        function submitBulkImageGeneration() {
+            const checkedBoxes = document.querySelectorAll('.saint-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('{{ 'admin.saints.featured.no_selection'|trans({}, 'admin') }}');
+                return;
+            }
+            
+            if (confirm('{{ 'admin.saints.tools.confirm_bulk_generate_image'|trans({}, 'admin') }}'.replace('%count%', checkedBoxes.length))) {
+                const form = document.getElementById('bulk-image-form');
+                form.innerHTML = ''; // clear previous
+                
+                checkedBoxes.forEach(cb => {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'saint_ids[]';
+                    hiddenInput.value = cb.value;
+                    form.appendChild(hiddenInput);
+                });
+                
+                form.submit();
+            }
+        }
+    </script>
+{% endblock %}

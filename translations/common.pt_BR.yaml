@@ -44,7 +44,7 @@ common:
     translation_status: 'Status de Tradução'
     scan_untranslated: 'Listar strings não traduzidas'
     incomplete_saints: 'Santos Incompletos'
-    featured_saints: 'Santos em Destaque'
+    saints_tools: 'Ferramentas de Santos'
     pending_relics: 'Relíquias Pendentes'
     import_saints: 'Importar Santos'
     import_translations: 'Importar Traduções'
@@ -65,4 +65,8 @@ common:
     of: 'de'
     items: 'itens'
   reliquary: 'Santas Relíquias'
+  search:
+    placeholder: 'Buscar...'
+    button: 'Buscar'
+    clear: 'Limpar'
   find_relics: 'Encontre Relíquias'

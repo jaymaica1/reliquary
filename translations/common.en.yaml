@@ -42,7 +42,7 @@ common:
     translation_status: 'Translation Status'
     scan_untranslated: 'Scan Untranslated strings'
     incomplete_saints: 'Incomplete Saints'
-    featured_saints: 'Featured Saints'
+    saints_tools: 'Saints Tools'
     pending_relics: 'Pending Relics'
     import_saints: 'Import Saints'
     import_translations: 'Import Translations'
@@ -60,6 +60,10 @@ common:
     feast_date: 'MMM d'
     canonization_date: 'MMM d, y'
   reliquary: 'Holy Relics'
+  search:
+    placeholder: 'Search...'
+    button: 'Search'
+    clear: 'Clear'
   pagination:
     of: 'of'
     items: 'items'

@@ -12,6 +12,19 @@ admin:
       no_saints: 'No incomplete saints found.'
       not_set: 'Not Set'
       mark_complete: 'Mark Complete'
+    tools:
+      title: 'Saints Tools'
+      no_saints: 'No saints found.'
+      no_results: 'No saints matching "%search%" found.'
+      generate_image: 'Generate Image'
+      bulk_generate_image: 'Generate Selected Images'
+      confirm_generate_image: 'Are you sure you want to generate a new image for this saint?'
+      confirm_bulk_generate_image: 'Are you sure you want to generate images for %count% saint(s)?'
+      flash:
+        image_generation_queued: 'Image generation for saint "%name%" has been queued.'
+        bulk_image_generation_queued: 'Image generation for %count% saint(s) has been queued.'
+        bulk_error: 'Invalid bulk action or no saints selected.'
+        no_changes: 'No changes were made.'
     featured:
       title: 'Featured Saints'
       bulk_feature: 'Feature Selected'

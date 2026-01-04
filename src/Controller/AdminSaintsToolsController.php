@@ -14,11 +14,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Controller for managing featured saints in the admin area
+ * Controller for managing saints tools in the admin area (featured status, image generation, etc.)
  */
 #[Route('/admin/saints')]
 #[IsGranted('ROLE_ADMIN')]
-class AdminFeaturedSaintsController extends AbstractController
+class AdminSaintsToolsController extends AbstractController
 {
     public function __construct(
         private TranslatorInterface $translator
@@ -26,16 +26,28 @@ class AdminFeaturedSaintsController extends AbstractController
     }
 
     /**
-     * Lists all saints with their featured status
+     * Lists all saints with tools (featured status and image generation)
      */
-    #[Route('/featured', name: 'app_admin_saints_featured')]
-    public function featuredSaints(
+    #[Route('/tools', name: 'app_admin_saints_tools')]
+    public function saintsTools(
         Request $request,
         SaintRepository $saintRepository,
         PaginatorInterface $paginator
     ): Response {
-        $query = $saintRepository->createQueryBuilder('s')
+        $searchTerm = $request->query->get('q');
+        
+        $queryBuilder = $saintRepository->createQueryBuilder('s');
+        
+        if ($searchTerm) {
+            $queryBuilder
+                ->leftJoin('s.translations', 't')
+                ->andWhere('LOWER(s.name) LIKE LOWER(:searchTerm) OR LOWER(t.name) LIKE LOWER(:searchTerm)')
+                ->setParameter('searchTerm', '%' . $searchTerm . '%');
+        }
+            
+        $query = $queryBuilder
             ->orderBy('s.featured', 'DESC')
+            ->addOrderBy('s.name', 'ASC')
             ->getQuery();
         
         $pagination = $paginator->paginate(
@@ -44,9 +56,46 @@ class AdminFeaturedSaintsController extends AbstractController
             200
         );
         
-        return $this->render('admin/saints/featured.html.twig', [
+        return $this->render('admin/saints/tools.html.twig', [
             'pagination' => $pagination,
+            'searchTerm' => $searchTerm,
         ]);
+    }
+    
+    /**
+     * Generate image for a saint
+     */
+    #[Route('/tools/{id}/generate-image', name: 'app_admin_saints_generate_image', methods: ['POST'])]
+    public function generateImage(
+        Saint $saint,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // TODO: Implement the service that will take care of generating the images
+        $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.image_generation_queued', ['%name%' => $saint->getName()], 'admin'));
+        
+        return $this->redirectToRoute('app_admin_saints_tools');
+    }
+    
+    /**
+     * Bulk generate images for saints
+     */
+    #[Route('/tools/bulk-generate-images', name: 'app_admin_saints_bulk_generate_images', methods: ['POST'])]
+    public function bulkGenerateImages(
+        Request $request,
+        SaintRepository $saintRepository
+    ): Response {
+        $saintIds = $request->request->all('saint_ids');
+        
+        if (empty($saintIds)) {
+            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
+            return $this->redirectToRoute('app_admin_saints_tools');
+        }
+        
+        // TODO: Implement the service that will take care of generating the images in bulk
+        $count = count($saintIds);
+        $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.bulk_image_generation_queued', ['%count%' => $count], 'admin'));
+        
+        return $this->redirectToRoute('app_admin_saints_tools');
     }
     
     /**
@@ -66,7 +115,7 @@ class AdminFeaturedSaintsController extends AbstractController
             $this->addFlash('success', $this->translator->trans('admin.saints.featured.flash.saint_unfeatured', ['%name%' => $saint->getName()], 'admin'));
         }
         
-        return $this->redirectToRoute('app_admin_saints_featured');
+        return $this->redirectToRoute('app_admin_saints_tools');
     }
     
     /**
@@ -82,8 +131,8 @@ class AdminFeaturedSaintsController extends AbstractController
         $action = $request->request->get('action');
         
         if (empty($saintIds) || !in_array($action, ['feature', 'unfeature'])) {
-            $this->addFlash('error', $this->translator->trans('admin.saints.featured.flash.bulk_error', [], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_featured');
+            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
+            return $this->redirectToRoute('app_admin_saints_tools');
         }
         
         $saints = $saintRepository->findBy(['id' => $saintIds]);
@@ -105,9 +154,9 @@ class AdminFeaturedSaintsController extends AbstractController
                 $this->addFlash('success', $this->translator->trans('admin.saints.featured.flash.bulk_unfeatured', ['%count%' => $count], 'admin'));
             }
         } else {
-            $this->addFlash('info', $this->translator->trans('admin.saints.featured.flash.no_changes', [], 'admin'));
+            $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.no_changes', [], 'admin'));
         }
         
-        return $this->redirectToRoute('app_admin_saints_featured');
+        return $this->redirectToRoute('app_admin_saints_tools');
     }
 }

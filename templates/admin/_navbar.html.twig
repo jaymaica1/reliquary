@@ -26,9 +26,9 @@
                     <span class="badge badge-notification ms-auto">{{ notifications.incompleteSaints }}</span>
                 {% endif %}
             </a>
-            <a href="{{ path('app_admin_saints_featured') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_featured' ? 'active' : '' }}">
-                <i class="fas fa-star"></i>
-                <span>{{ 'common.admin.featured_saints'|trans({}, 'common') }}</span>
+            <a href="{{ path('app_admin_saints_tools') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_saints_tools' ? 'active' : '' }}">
+                <i class="fas fa-tools"></i>
+                <span>{{ 'common.admin.saints_tools'|trans({}, 'common') }}</span>
             </a>
             <a href="{{ path('app_pending_relics') }}" class="nav-link {{ app.request.get('_route') == 'app_pending_relics' ? 'active' : '' }}">
                 <i class="fas fa-gem"></i>
