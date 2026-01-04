@@ -93,13 +93,23 @@
                 </div>
             </div>
         {% else %}
-            <div class="saint-card">
-                <div class="saint-image">
-                    <img src="{{ asset('/images/relic.png') }}" alt="{{ 'relic.no_relics'|trans({}, 'relic') }}" class="opacity-25" style="filter: grayscale(100%);" />
-                </div>
-                <div class="saint-info">
-                    <h3 class="saint-name">{{ 'relic.no_relics'|trans({}, 'relic') }}</h3>
-                    <p class="saint-bio">{{ 'relic.no_relics_description'|trans({}, 'relic') }}</p>
+            <div class="no-relics-container fade-in">
+                <div class="no-relics-content">
+                    <div class="no-relics-icon">
+                        <img src="{{ asset('/images/relic.png') }}" alt="{{ 'relic.no_relics'|trans({}, 'relic') }}" />
+                    </div>
+                    <h3 class="no-relics-title">{{ 'relic.no_relics'|trans({}, 'relic') }}</h3>
+                    <p class="no-relics-text">{{ 'relic.no_relics_description'|trans({}, 'relic') }}</p>
+                    {% if app.user %}
+                        <a href="{{ path('app_relic_new') }}" class="btn btn-primary no-relics-btn">
+                            <i class="fas fa-plus-circle me-2"></i>
+                            {{ 'relic.add_new'|trans({}, 'relic') }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-primary no-relics-btn">
+                            {{ 'cta.login_to_submit'|trans({}, 'landing')|default('Login to Submit Relic') }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
