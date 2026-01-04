@@ -1,3 +1,16 @@
+# [2.19.0](https://github.com/CesarScur/reliquary/compare/v2.18.0...v2.19.0) (2026-01-04)
+
+
+### Features
+
+* **about:** redesign about page with updated layout and styles ([3b3784a](https://github.com/CesarScur/reliquary/commit/3b3784a5991ae8300df44b67e47f0a3747844847))
+* **navbar:** improve user menu with dropdown and avatars ([ee009ba](https://github.com/CesarScur/reliquary/commit/ee009badd4a74c6ce1167d42c4972a8eeae0d793))
+* **relic:** add search, location, and distance filtering to relics ([1689e91](https://github.com/CesarScur/reliquary/commit/1689e917f09f62fee3cf5336d155e05df2ae5856))
+* **relic:** enhance empty state UI and improve translations ([5d374fb](https://github.com/CesarScur/reliquary/commit/5d374fb38e3ffd1789478be1d34136c3bf722c5b))
+* **relic:** enhance queries to support translated saint names in search ([c4a967b](https://github.com/CesarScur/reliquary/commit/c4a967b7bce5165c59b870181daab2cd4051adc0))
+* **relic:** update relic form layout and add new sections ([5154ae4](https://github.com/CesarScur/reliquary/commit/5154ae4ad3b8c21dd53ca3fd0358cbe98dde8c42))
+* **translations:** add search placeholder to relics translations ([74e3772](https://github.com/CesarScur/reliquary/commit/74e377219fc3179d667621d5a62d62ab41c08655))
+
 # [2.18.0](https://github.com/CesarScur/reliquary/compare/v2.17.0...v2.18.0) (2026-01-04)
 
 
