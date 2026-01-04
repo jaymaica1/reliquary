@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LogController extends AbstractController
 {
@@ -92,6 +95,34 @@ class LogController extends AbstractController
             'selectedLog' => $selectedLog,
             'logContent' => $logContent,
         ]);
+    }
+
+    #[Route('/admin/logs/delete/{filename}', name: 'app_admin_logs_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function delete(string $filename, CsrfTokenManagerInterface $csrfTokenManager, Request $request): Response
+    {
+        $token = $request->request->get('_token');
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('delete' . $filename, $token))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
+        $logDir = $this->getParameter('kernel.logs_dir');
+        $logPath = $logDir . '/' . $filename;
+
+        // Security check - make sure the file is within the logs directory
+        if (!file_exists($logPath) || !str_starts_with(realpath($logPath), realpath($logDir))) {
+            $this->addFlash('error', 'Log file not found.');
+            return $this->redirectToRoute('app_admin_logs');
+        }
+
+        try {
+            unlink($logPath);
+            $this->addFlash('success', sprintf('Log file "%s" has been deleted.', $filename));
+        } catch (\Exception $e) {
+            $this->addFlash('error', sprintf('Could not delete log file: %s', $e->getMessage()));
+        }
+
+        return $this->redirectToRoute('app_admin_logs');
     }
 
     private function getLogContent(string $path): string

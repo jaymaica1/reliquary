@@ -17,6 +17,14 @@ class LogFormatterExtension extends AbstractExtension
     public function formatLog(string $logContent): string
     {
         $lines = explode("\n", $logContent);
+        // Remove the last empty line if it exists (usually due to the final newline in the file)
+        if (!empty($lines) && empty(trim(end($lines)))) {
+            array_pop($lines);
+        }
+        
+        // Reverse lines to show last first
+        $lines = array_reverse($lines);
+        
         $formattedLines = [];
 
         foreach ($lines as $line) {
