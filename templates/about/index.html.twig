@@ -43,7 +43,7 @@
                 </div>
 
                 <h2 class="section-title mt-5 mb-4">{{ 'about.features.title'|trans({}, 'about') }}</h2>
-                <div class="classes-grid mt-4">
+                <div class="classes-grid mt-4" id="guidelines">
                     <div class="relic-card" style="cursor: default;">
                         <i class="fas fa-database relic-icon"></i>
                         <h3 class="relic-title">{{ 'about.features.comprehensive_database.title'|trans({}, 'about') }}</h3>
@@ -72,6 +72,29 @@
                         <i class="fas fa-language relic-icon"></i>
                         <h3 class="relic-title">{{ 'about.features.multilingual_support.title'|trans({}, 'about') }}</h3>
                         <p class="relic-description">{{ 'about.features.multilingual_support.description'|trans({}, 'about') }}</p>
+                    </div>
+                </div>
+
+                <div id="authentication" class="legal-card mt-5 text-start">
+                    <h2 class="section-title mb-4">{{ 'about.authentication.title'|trans({}, 'about') }}</h2>
+                    <p class="relic-description mb-4" style="font-size: 1.1rem;">
+                        {{ 'about.authentication.description'|trans({}, 'about') }}
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="relic-card h-100" style="cursor: default; background: rgba(254, 254, 254, 0.03);">
+                                <i class="fas fa-id-card-alt relic-icon"></i>
+                                <h3 class="relic-title">{{ 'about.authentication.process.contact_custodian.title'|trans({}, 'about') }}</h3>
+                                <p class="relic-description">{{ 'about.authentication.process.contact_custodian.description'|trans({}, 'about') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="relic-card h-100" style="cursor: default; background: rgba(254, 254, 254, 0.03);">
+                                <i class="fas fa-history relic-icon"></i>
+                                <h3 class="relic-title">{{ 'about.authentication.process.verify_provenance.title'|trans({}, 'about') }}</h3>
+                                <p class="relic-description">{{ 'about.authentication.process.verify_provenance.description'|trans({}, 'about') }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

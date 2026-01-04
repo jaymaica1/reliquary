@@ -1,0 +1,142 @@
+/* Relic Form Styles */
+.relic-form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.relic-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.form-column-section {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.section-header i {
+    color: var(--accent-gold);
+    font-size: 1.4rem;
+}
+
+.section-header h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--accent-gold);
+    margin: 0;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--sacred-white);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-help-text {
+    font-size: 0.8rem;
+    color: rgba(254, 254, 254, 0.6);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.relic-form-footer {
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.relic-form-footer .btn-primary {
+    min-width: 250px;
+}
+
+/* Image Upload Styling */
+.image-upload-zone {
+    border: 2px dashed rgba(245, 158, 11, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.image-upload-zone:hover {
+    border-color: var(--accent-gold);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+/* Tom Select and other input overrides for the dark theme */
+.relic-form-grid .ts-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+    color: var(--sacred-white) !important;
+}
+
+.relic-form-grid input, 
+.relic-form-grid select, 
+.relic-form-grid textarea {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--sacred-white);
+    border-radius: 8px;
+    padding: 10px 14px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.relic-form-grid input::placeholder, 
+.relic-form-grid textarea::placeholder {
+    color: rgba(254, 254, 254, 0.5);
+}
+
+.relic-form-grid input:focus, 
+.relic-form-grid select:focus, 
+.relic-form-grid textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* Tom Select placeholder styling */
+.relic-form-grid .ts-wrapper .ts-control input::placeholder {
+    color: rgba(254, 254, 254, 0.5) !important;
+}
+
+.relic-form-grid .ts-wrapper.single .ts-control .item {
+    color: var(--sacred-white);
+}
+
+@media (max-width: 850px) {
+    .relic-form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .relic-form-container {
+        padding: 1rem;
+    }
+}

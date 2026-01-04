@@ -26,3 +26,13 @@ about:
     title: 'Contato'
     description: 'Para mais informações sobre o projeto Relicário, visite nosso'
     github_repository: 'repositório no GitHub'
+  authentication:
+    title: 'Processo de Autenticação'
+    description: 'A autenticação de uma relíquia em nosso banco de dados segue um processo rigoroso para garantir sua autenticidade e significância histórica.'
+    process:
+      contact_custodian:
+        title: 'Contato com o Custodio'
+        description: 'O processo envolve entrar em contato com o custodio da referida relíquia para verificar sua autenticidade.'
+      verify_provenance:
+        title: 'Verificar Proveniência'
+        description: 'Verificamos se há reconhecimento público de sua presença ou existência no local determinado (proveniência).'

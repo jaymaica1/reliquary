@@ -25,3 +25,13 @@ about:
     title: 'Contact'
     description: 'For more information about the Reliquary project, please visit our'
     github_repository: 'GitHub repository'
+  authentication:
+    title: 'Authentication Process'
+    description: 'The authentication of a relic in our database follows a rigorous process to ensure its authenticity and historical significance.'
+    process:
+      contact_custodian:
+        title: 'Contact Custodian'
+        description: 'The process involves contacting the custodian of the relic to verify its authenticity and obtain necessary documentation.'
+      verify_provenance:
+        title: 'Verify Provenance'
+        description: 'We verify if there is public recognition of its presence or existence at the given location, establishing a clear line of provenance.'

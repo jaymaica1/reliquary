@@ -94,12 +94,19 @@
 
 <footer class="footer mt-auto py-3 bg-dark text-white">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-      <span>&copy; {{ "now"|date("Y") }} Reliquary v{{ app_version }}</span>
-      <a href="https://github.com/CesarScur/reliquary" class="text-white" target="_blank">
-        <i class="fab fa-github me-2"></i>
-        {{ 'common.footer.view_on_github'|trans({}, 'common') }}
-      </a>
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+        <span>&copy; {{ "now"|date("Y") }} Reliquary v{{ app_version }}</span>
+      </div>
+      <div class="col-md-4 text-center mb-3 mb-md-0">
+        <a href="{{ path('app_about') }}#authentication" class="text-white text-decoration-none mx-2">{{ 'footer.authentication'|trans({}, 'landing') }}</a>
+      </div>
+      <div class="col-md-4 text-center text-md-end">
+        <a href="https://github.com/CesarScur/reliquary" class="text-white" target="_blank">
+          <i class="fab fa-github me-2"></i>
+          {{ 'common.footer.view_on_github'|trans({}, 'common') }}
+        </a>
+      </div>
     </div>
   </div>
 </footer>
