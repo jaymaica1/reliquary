@@ -59,6 +59,8 @@ relic:
     provenance: 'Provenance'
     provenance_placeholder: 'Enter the provenance of the relic'
     provenance_help: 'Describe the origin and history of the relic, including how it was acquired'
+    sacred_details: 'Sacred Details'
+    location_media: 'Location & Media'
     rejection_reason: 'Rejection Reason'
     rejection_reason_help: 'Provide a reason why this relic was rejected'
     submit: 'Save'

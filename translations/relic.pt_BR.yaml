@@ -62,6 +62,8 @@ relic:
     provenance: 'Procedência'
     provenance_placeholder: 'Informe a procedência da relíquia'
     provenance_help: 'Descreva a origem e história da relíquia, incluindo como ela foi adquirida'
+    sacred_details: 'Detalhes Sagrados'
+    location_media: 'Localização e Mídia'
     rejection_reason: 'Motivo da Rejeição'
     rejection_reason_help: 'Forneça um motivo pelo qual esta relíquia foi rejeitada'
     submit: 'Salvar'

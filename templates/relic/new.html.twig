@@ -2,17 +2,18 @@
 
 {% block title %}{{ 'relic.new_title'|trans({}, 'relic') }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/relic-form.css') }}">
+{% endblock %}
+
 {% block body %}
-<section class="contact-section">
-    <div class="contact-container">
+<section class="list">
+    <div class="relic-form-container">
         <h2 class="section-title">{{ 'relic.add_new'|trans({}, 'relic') }}</h2>
         <p class="section-subtitle">{{ 'relic.add_subtitle'|trans({}, 'relic') }}</p>
         
-        <div class="contact-content contact-content-single">
-            <div class="contact-form-section">
-                {{ include('relic/_form.html.twig') }}
-            </div>
-        </div>
+        {{ include('relic/_form.html.twig') }}
     </div>
 </section>
 {% endblock %}

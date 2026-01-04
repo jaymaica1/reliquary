@@ -1,93 +1,114 @@
-{{ form_start(form, {'attr': {'class': 'contact-form', 'novalidate': 'novalidate'}}) }}
+{{ form_start(form, {'attr': {'class': 'relic-main-form', 'novalidate': 'novalidate'}}) }}
 
-    <div class="form-group">
-        <label for="{{ form.address.vars.id }}">{{ 'relic.form.address'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.address_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.address, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.address) }}
+<div class="relic-form-grid">
+    <!-- Left Column: Sacred Details -->
+    <div class="form-column-section">
+        <div class="section-header">
+            <i class="fas fa-cross"></i>
+            <h3>{{ 'relic.form.sacred_details'|trans({}, 'relic') }}</h3>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.saint.vars.id }}">{{ 'relic.form.saint'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.saint_help'|trans({}, 'relic') }}</p>
+            {{ form_widget(form.saint) }}
+            {{ form_errors(form.saint) }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.degree.vars.id }}">{{ 'relic.form.degree'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.degree_help'|trans({}, 'relic') }}</p>
+            {{ form_widget(form.degree) }}
+            {{ form_errors(form.degree) }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.description.vars.id }}">{{ 'relic.form.description'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.description_help'|trans({}, 'relic') }}</p>
+            {{ form_widget(form.description) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.provenance.vars.id }}">{{ 'relic.form.provenance'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.provenance_help'|trans({}, 'relic') }}</p>
+            {{ form_widget(form.provenance) }}
+            {{ form_errors(form.provenance) }}
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="{{ form.location.vars.id }}">{{ 'relic.form.location'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.location_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.location, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.location) }}
-    </div>
+    <!-- Right Column: Location & Media -->
+    <div class="form-column-section">
+        <div class="section-header">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>{{ 'relic.form.location_media'|trans({}, 'relic') }}</h3>
+        </div>
 
-    <div class="form-group">
-        <label for="{{ form.description.vars.id }}">{{ 'relic.form.description'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.description_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.description, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.description) }}
-    </div>
+        <div class="form-group">
+            <label for="{{ form.address.vars.id }}">{{ 'relic.form.address'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.address_help'|trans({}, 'relic') }}</p>
+            {{ form_widget(form.address) }}
+            {{ form_errors(form.address) }}
+        </div>
 
-    <div class="form-group">
-        <label for="{{ form.provenance.vars.id }}">{{ 'relic.form.provenance'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.provenance_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.provenance, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.provenance) }}
-    </div>
+        <div class="form-group">
+            <label for="{{ form.location.vars.id }}">{{ 'relic.form.location'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.location_help'|trans({}, 'relic') }}</p>
+            {{ form_widget(form.location) }}
+            {{ form_errors(form.location) }}
+        </div>
 
-    <div class="form-group">
-        <label for="{{ form.saint.vars.id }}">{{ 'relic.form.saint'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.saint_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.saint, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.saint) }}
-    </div>
-
-    <div class="form-group">
-        <label for="{{ form.degree.vars.id }}">{{ 'relic.form.degree'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.degree_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.degree, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.degree) }}
-    </div>
-
-    {% if relic.images|length > 0 %}
-    <div class="form-group">
-        <label>{{ 'relic.form.current_images'|trans({}, 'relic') }}</label>
-        <div class="current-images-container" data-controller="image-removal">
-            {% for image in relic.images %}
-                <div class="current-image-item" data-image-removal-target="imageContainer" data-image-id="{{ image.id }}">
-                    <div class="image-remove-button">
-                        <button type="button" class="btn btn-danger btn-sm" 
-                                data-action="image-removal#markForRemoval"
-                                data-image-removal-target="removeButton">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
-                         alt="{{ 'relic.form.image_of_relic'|trans({}, 'relic') }}" 
-                         class="current-image">
-                    <input type="hidden" name="remove_images[]" value="{{ image.id }}" disabled data-image-removal-target="removeInput">
+        {% if relic.images|length > 0 %}
+            <div class="form-group">
+                <label>{{ 'relic.form.current_images'|trans({}, 'relic') }}</label>
+                <div class="current-images-container" data-controller="image-removal">
+                    {% for image in relic.images %}
+                        <div class="current-image-item" data-image-removal-target="imageContainer" data-image-id="{{ image.id }}">
+                            <div class="image-remove-button">
+                                <button type="button" class="btn btn-danger btn-sm" 
+                                        data-action="image-removal#markForRemoval"
+                                        data-image-removal-target="removeButton">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <img src="{{ image_url(image.thumbnailFilename ?? image.filename) }}"
+                                 alt="{{ 'relic.form.image_of_relic'|trans({}, 'relic') }}" 
+                                 class="current-image">
+                            <input type="hidden" name="remove_images[]" value="{{ image.id }}" disabled data-image-removal-target="removeInput">
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.imageFile.vars.id }}">{{ 'relic.form.image'|trans({}, 'relic') }}</label>
+            <p class="form-help-text">{{ 'relic.form.image_help'|trans({}, 'relic') }}</p>
+            <div class="image-upload-zone">
+                {{ form_widget(form.imageFile) }}
+            </div>
+            {{ form_errors(form.imageFile) }}
         </div>
     </div>
-    {% endif %}
 
-    <div class="form-group">
-        <label for="{{ form.imageFile.vars.id }}">{{ 'relic.form.image'|trans({}, 'relic') }}</label>
-        <p class="form-help-text">{{ 'relic.form.image_help'|trans({}, 'relic') }}</p>
-        {{ form_widget(form.imageFile, {'attr': {'class': ''}}) }}
-        {{ form_errors(form.imageFile) }}
-    </div>
+    <!-- Footer Actions -->
+    <div class="relic-form-footer">
+        {% if form.vars.errors|length > 0 %}
+            <div class="form-error-message">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
 
-    {% if form.vars.errors|length > 0 %}
-        <div class="form-error-message">
-            {{ form_errors(form) }}
-        </div>
-    {% endif %}
+        <button type="submit" class="btn btn-primary">
+            {{ button_label|default('relic.form.submit'|trans({}, 'relic')) }}
+        </button>
 
-    <button type="submit" class="btn btn-primary">
-        {{ button_label|default('relic.form.submit'|trans({}, 'relic')) }}
-    </button>
-
-    <div class="form-actions-center">
-        <p>
+        <div class="form-actions-center">
             <a href="{{ path('app_relic_index') }}" class="gold-link">
                 <i class="fas fa-arrow-left"></i> {{ 'relic.actions.back'|trans({}, 'relic') }}
             </a>
-        </p>
+        </div>
     </div>
+</div>
 
 {{ form_end(form) }}

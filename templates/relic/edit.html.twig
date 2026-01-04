@@ -2,19 +2,20 @@
 
 {% block title %}{{ 'relic.edit_title'|trans({}, 'relic') }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/relic-form.css') }}">
+{% endblock %}
+
 {% block body %}
-<section class="contact-section">
-    <div class="contact-container">
+<section class="list">
+    <div class="relic-form-container">
         <h2 class="section-title">{{ 'relic.edit_title'|trans({}, 'relic') }}</h2>
         
-        <div class="contact-content contact-content-single">
-            <div class="contact-form-section">
-                {{ include('relic/_form.html.twig', {'button_label': 'relic.form.submit'|trans({}, 'relic')}) }}
+        {{ include('relic/_form.html.twig', {'button_label': 'relic.form.submit'|trans({}, 'relic')}) }}
 
-                <div class="form-actions-center" style="margin-top: 20px;">
-                    {{ include('relic/_delete_form.html.twig') }}
-                </div>
-            </div>
+        <div class="form-actions-center" style="margin-top: 20px;">
+            {{ include('relic/_delete_form.html.twig') }}
         </div>
     </div>
 </section>
