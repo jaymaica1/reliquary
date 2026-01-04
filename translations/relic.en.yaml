@@ -3,6 +3,8 @@ relic:
   subtitle: 'Sacred Treasures of Faith Through the Ages'
   my_relics: 'My Relics'
   description: 'Manage your sacred relics collection'
+  search:
+    placeholder: 'Search relics...'
   filter:
     by_degree: 'Filter by Degree'
     all_relics: 'All Relics'

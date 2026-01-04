@@ -5,6 +5,8 @@ relic:
   subtitle: 'Tesouros Sagrados da Fé Pelos Seculos'
   my_relics: 'Minhas Relíquias'
   description: 'Gerencie sua coleção de relíquias sagradas'
+  search:
+    placeholder: 'Buscar relíquias...'
   filter:
     by_degree: 'Filtrar por Grau'
     all_relics: 'Todas as Relíquias'
