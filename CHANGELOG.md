@@ -1,3 +1,13 @@
+# [2.22.0](https://github.com/CesarScur/reliquary/compare/v2.21.0...v2.22.0) (2026-01-05)
+
+
+### Features
+
+* **admin:** add image preview column to saints tools ([e7ee9d2](https://github.com/CesarScur/reliquary/commit/e7ee9d2c27703efd2ee4b736ac69cb9c85c26352))
+* **admin:** improve sidebar responsiveness and styling ([da02aef](https://github.com/CesarScur/reliquary/commit/da02aef533aab67f3f489ac376113609dfe5f88d))
+* **error:** enhance error pages with improved styles and admin log access ([004d716](https://github.com/CesarScur/reliquary/commit/004d716b8e34bc8bea5f7aab6158f51e312992b8))
+* **menu:** exclude dropdown trigger links from close event handling ([5c33217](https://github.com/CesarScur/reliquary/commit/5c3321724433ed1b1cfaa0c6f63fa04af83f17ac))
+
 # [2.21.0](https://github.com/CesarScur/reliquary/compare/v2.20.0...v2.21.0) (2026-01-05)
 
 
