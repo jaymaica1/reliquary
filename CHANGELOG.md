@@ -1,3 +1,12 @@
+# [2.21.0](https://github.com/CesarScur/reliquary/compare/v2.20.0...v2.21.0) (2026-01-05)
+
+
+### Features
+
+* **admin:** improve saint image generation and handling ([13be127](https://github.com/CesarScur/reliquary/commit/13be12748e140dbde850280f47b550472757f492))
+* **logs:** add log deletion functionality and improve log list UI ([0612ecf](https://github.com/CesarScur/reliquary/commit/0612ecf14bedf3fd471765fa8e758072726b2cc8))
+* **map:** enhance map centering and radius handling ([12e15bf](https://github.com/CesarScur/reliquary/commit/12e15bfbd59eeec2613814abbd6ad74d0c93776c))
+
 # [2.20.0](https://github.com/CesarScur/reliquary/compare/v2.19.0...v2.20.0) (2026-01-04)
 
 
