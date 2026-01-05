@@ -78,10 +78,8 @@ class AdminSaintsToolsController extends AbstractController
         $prompt = $request->request->get('prompt');
         if (!$prompt) {
             $prompt = sprintf(
-                "A realistic and artistic oil painting portrait of Saint %s, %s. %s",
+                "A realistic and artistic oil painting portrait of Saint %s. Based on historical photos or traditional depiction. Add golden halo with some filigree. No painting frame.",
                 $saint->getName(),
-                $saint->getAbstract() ?? '',
-                $saint->getBiography() ? 'Inspiration: ' . substr(strip_tags($saint->getBiography()), 0, 500) : ''
             );
         }
 
@@ -93,6 +91,13 @@ class AdminSaintsToolsController extends AbstractController
         }
 
         try {
+            // Remove existing images if any
+            foreach ($saint->getImages() as $existingImage) {
+                $imageService->deleteImage($existingImage);
+                $saint->removeImage($existingImage);
+                $entityManager->remove($existingImage);
+            }
+
             $saintImage = $imageService->createSaintImageFromUrl($imageUrl, $saint, $this->getUser());
             $entityManager->persist($saintImage);
             $entityManager->flush();
@@ -128,16 +133,21 @@ class AdminSaintsToolsController extends AbstractController
 
         foreach ($saints as $saint) {
             $prompt = sprintf(
-                "A realistic and artistic oil painting portrait of Saint %s, %s. %s",
+                "A realistic and artistic oil painting portrait of Saint %s. Based on historical photos or traditional depiction. Add golden halo with some filigree. No painting frame.",
                 $saint->getName(),
-                $saint->getAbstract() ?? '',
-                $saint->getBiography() ? 'Inspiration: ' . substr(strip_tags($saint->getBiography()), 0, 500) : ''
             );
 
             $imageUrl = $aiImageService->generatePortrait($prompt);
 
             if ($imageUrl) {
                 try {
+                    // Remove existing images if any
+                    foreach ($saint->getImages() as $existingImage) {
+                        $imageService->deleteImage($existingImage);
+                        $saint->removeImage($existingImage);
+                        $entityManager->remove($existingImage);
+                    }
+
                     $saintImage = $imageService->createSaintImageFromUrl($imageUrl, $saint, $this->getUser());
                     $entityManager->persist($saintImage);
                     $successCount++;
