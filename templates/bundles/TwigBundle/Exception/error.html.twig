@@ -1,14 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing_base.html.twig' %}
 
 {% block title %}{{ 'error.generic.title'|trans({}, 'error') }}{% endblock %}
 
 {% block body %}
-<div class="container py-5">
+<div class="container py-5" style="margin-top: 100px;">
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
             <img src="{{ asset('/images/relic.png') }}" width="100" height="100" class="mb-4" alt="{{ 'error.logo_alt'|trans({}, 'error') }}">
-            <h1 class="display-4 mb-4">{{ 'error.generic.heading'|trans({}, 'error') }}</h1>
-            <div class="card mb-4">
+            <h1 class="display-4 mb-4" style="font-family: 'Cinzel', serif;">{{ 'error.generic.heading'|trans({}, 'error') }}</h1>
+            <div class="card mb-4" style="background: rgba(255, 255, 255, 0.9); border: 1px solid var(--accent-gold);">
                 <div class="card-body">
                     <p class="lead">{{ 'error.generic.server_returned'|trans({'status_code': status_code, 'status_text': status_text}, 'error') }}</p>
                     <p>{{ 'error.generic.broken'|trans({}, 'error') }}</p>
@@ -23,6 +23,12 @@
                 <a href="javascript:history.back()" class="btn btn-outline-secondary btn-lg px-4">
                     {{ 'error.go_back'|trans({}, 'error') }}
                 </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_logs') }}" class="btn btn-outline-danger btn-lg px-4">
+                    <i class="fas fa-terminal me-2"></i>
+                    {{ 'error.view_logs'|trans({}, 'error') }}
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>

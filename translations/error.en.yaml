@@ -3,6 +3,7 @@ error:
   logo_alt: 'Reliquary Logo'
   return_home: 'Return Home'
   go_back: 'Go Back'
+  view_logs: 'View System Logs'
   
   # Generic error page
   generic:

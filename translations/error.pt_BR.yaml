@@ -3,6 +3,7 @@ error:
   logo_alt: 'Logo do Santas Relíquias'
   return_home: 'Voltar para Início'
   go_back: 'Voltar'
+  view_logs: 'Ver Logs do Sistema'
   
   # Generic error page
   generic:
