@@ -316,6 +316,9 @@ body {
     .main-content {
         margin-left: 0;
     }
+    .main-content.expanded {
+        margin-left: 0;
+    }
     .dashboard-widgets {
         grid-template-columns: 1fr;
     }

@@ -122,6 +122,8 @@
         .sidebar {
             transform: translateX(-100%);
             transition: transform 0.3s ease;
+            width: 280px; /* Ensure full width on mobile */
+            box-shadow: 10px 0 20px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar.show {
@@ -129,7 +131,6 @@
         }
 
         .sidebar-collapsed {
-            width: 280px;
             transform: translateX(-100%);
         }
     }

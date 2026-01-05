@@ -23,12 +23,18 @@ export default class extends Controller {
     }
 
     toggleSidebar() {
-        this.sidebarTarget.classList.toggle('sidebar-collapsed');
-        this.mainContentTarget.classList.toggle('expanded');
+        if (window.innerWidth < 768) {
+            this.sidebarTarget.classList.toggle('show');
+        } else {
+            this.sidebarTarget.classList.toggle('sidebar-collapsed');
+            this.mainContentTarget.classList.toggle('expanded');
+        }
     }
 
     handleResize() {
-        if (window.innerWidth < 768) {
+        if (window.innerWidth >= 768) {
+            this.sidebarTarget.classList.remove('show');
+        } else {
             this.sidebarTarget.classList.remove('sidebar-collapsed');
             this.mainContentTarget.classList.remove('expanded');
         }
