@@ -76,6 +76,7 @@
                                     <input type="checkbox" id="select-all-header" class="form-check-input">
                                 </th>
                                 <th scope="col">ID</th>
+                                <th scope="col">{{ 'saint.table.image_link'|trans({}, 'saint') }}</th>
                                 <th scope="col">{{ 'saint.table.name'|trans({}, 'saint') }}</th>
                                 <th scope="col">{{ 'admin.saints.featured.status'|trans({}, 'admin') }}</th>
                                 <th scope="col">{{ 'saint.table.canonical_status'|trans({}, 'saint') }}</th>
@@ -90,6 +91,15 @@
                                     <input type="checkbox" name="saint_ids[]" value="{{ saint.id }}" class="form-check-input saint-checkbox" form="bulk-form">
                                 </td>
                                 <td>{{ saint.id }}</td>
+                                <td>
+                                    {% if saint.images is not empty %}
+                                        <img src="{{ image_url(saint.images.first.thumbnailFilename ?? saint.images.first.filename) }}" alt="{{ saint.name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="bg-light d-flex align-items-center justify-content-center border rounded" style="width: 50px; height: 50px;">
+                                            <i class="fas fa-image text-muted"></i>
+                                        </div>
+                                    {% endif %}
+                                </td>
                                 <td>{{ saint.name }}</td>
                                 <td>
                                     {% if saint.featured %}
