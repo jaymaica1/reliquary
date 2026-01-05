@@ -52,7 +52,15 @@ export default class extends Controller {
     // Method to center map on a location
     centerMapOnLocation(latitude, longitude) {
         if (this.map) {
-            this.map.setView([latitude, longitude], 13);
+            if (this.radiusValue) {
+                const center = L.latLng(latitude, longitude);
+                const circle = L.circle(center, {
+                    radius: this.radiusValue * 1000
+                });
+                this.map.fitBounds(circle.getBounds(), { padding: [20, 20] });
+            } else {
+                this.map.setView([latitude, longitude], 13);
+            }
         }
     }
 
@@ -92,11 +100,7 @@ export default class extends Controller {
             relic.latitude !== null && relic.longitude !== null
         );
 
-        if (relicsWithCoords.length === 0) {
-            return;
-        }
-
-        // Create a bounds object to fit all markers
+        // Create a bounds object to fit markers and radius
         const bounds = L.latLngBounds();
 
         // Add markers for each relic
@@ -115,26 +119,30 @@ export default class extends Controller {
             bounds.extend([relic.latitude, relic.longitude]);
         });
 
-        // Fit the map to show all markers
-        if (bounds.isValid()) {
-            this.map.fitBounds(bounds);
+        // Use user location for the circle center if available, otherwise use bounds center
+        let center;
+        if (this.hasUserLocationValue) {
+            center = L.latLng(this.userLocationValue.latitude, this.userLocationValue.longitude);
+        } else if (relicsWithCoords.length > 0) {
+            center = bounds.getCenter();
+        }
 
-            // Use user location for the circle center if available, otherwise use bounds center
-            let center;
-            if (this.hasUserLocationValue) {
-                center = L.latLng(this.userLocationValue.latitude, this.userLocationValue.longitude);
-                // Don't center the map here, it's already done in connect()
-            } else {
-                center = bounds.getCenter();
-            }
-            
+        if (center) {
             // Add a circle to show the search radius
-            L.circle(center, {
+            const circle = L.circle(center, {
                 radius: this.radiusValue * 1000, // Convert km to meters
                 color: 'blue',
                 fillColor: '#30f',
                 fillOpacity: 0.1
             }).addTo(this.map);
+
+            // Extend bounds to include the circle
+            bounds.extend(circle.getBounds());
+        }
+
+        // Fit the map to show all markers and the circle
+        if (bounds.isValid()) {
+            this.map.fitBounds(bounds, { padding: [20, 20] });
         }
     }
 
@@ -147,7 +155,7 @@ export default class extends Controller {
                 const userLng = position.coords.longitude;
 
                 // Center the map on the user's location
-                this.map.setView([userLat, userLng], 13);
+                this.centerMapOnLocation(userLat, userLng);
             },
             // Error callback is handled by the service
             null,
