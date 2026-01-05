@@ -15,7 +15,9 @@ export default class extends Controller {
     
     // Add event listeners for menu links
     this.menuTarget.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', this.boundCloseOnLinkClick)
+      if (!link.classList.contains('dropdown-trigger')) {
+        link.addEventListener('click', this.boundCloseOnLinkClick)
+      }
     })
   }
 
@@ -25,7 +27,9 @@ export default class extends Controller {
     document.removeEventListener('keydown', this.boundCloseOnEscape)
     
     this.menuTarget.querySelectorAll('a').forEach(link => {
-      link.removeEventListener('click', this.boundCloseOnLinkClick)
+      if (!link.classList.contains('dropdown-trigger')) {
+        link.removeEventListener('click', this.boundCloseOnLinkClick)
+      }
     })
   }
 
