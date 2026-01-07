@@ -1,3 +1,10 @@
+# [2.23.0](https://github.com/CesarScur/reliquary/compare/v2.22.0...v2.23.0) (2026-01-07)
+
+
+### Features
+
+* **error:** enhance error pages with improved styles and admin log access ([44f317b](https://github.com/CesarScur/reliquary/commit/44f317b20b392bf447d75f2816bc38bcb157a233))
+
 # [2.22.0](https://github.com/CesarScur/reliquary/compare/v2.21.0...v2.22.0) (2026-01-05)
 
 
