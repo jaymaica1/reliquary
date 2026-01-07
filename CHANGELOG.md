@@ -1,3 +1,10 @@
+## [2.24.2](https://github.com/CesarScur/reliquary/compare/v2.24.1...v2.24.2) (2026-01-07)
+
+
+### Bug Fixes
+
+* **ai-image:** include response headers in GeminiProvider exception message ([032a6d3](https://github.com/CesarScur/reliquary/commit/032a6d39af6a63c6b864c1677fe1a280ec7aa473))
+
 ## [2.24.1](https://github.com/CesarScur/reliquary/compare/v2.24.0...v2.24.1) (2026-01-07)
 
 
