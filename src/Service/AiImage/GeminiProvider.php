@@ -60,25 +60,29 @@ class GeminiProvider implements AiImageProviderInterface
 
         $targetModel = $model ?? $this->model;
 
+        $jsonPayload = [
+            'instances' => [
+                ['prompt' => $prompt],
+            ],
+            'parameters' => [
+                'sampleCount' => 1,
+                'aspectRatio' => '1:1',
+                'outputMimeType' => 'image/png',
+            ],
+        ];
+
         try {
             $response = $this->httpClient->request('POST', $this->baseUrl . '/models/' . $targetModel . ':predict?key=' . $this->apiKey, [
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'json' => [
-                    'instances' => [
-                        ['prompt' => $prompt],
-                    ],
-                    'parameters' => [
-                        'sampleCount' => 1,
-                    ],
-                ],
+                'json' => $jsonPayload,
             ]);
 
             if ($response->getStatusCode() !== 200) {
                 $errorData = $response->toArray(false);
                 $errorMessage = $errorData['error']['message'] ?? 'Unknown Gemini error';
-                throw new AiImageGenerationException('Gemini error: ' . $errorMessage);
+                throw new AiImageGenerationException('Gemini error: ' . $errorMessage . ' Request: ' . json_encode($jsonPayload));
             }
 
             $data = $response->toArray(false);
@@ -88,7 +92,7 @@ class GeminiProvider implements AiImageProviderInterface
             if (!$base64Image) {
                 $rawContent = $response->getContent(false);
                 $headers = $response->getHeaders(false);
-                throw new AiImageGenerationException('Gemini response did not contain image data. Data: ' . json_encode($data) . ' Raw: ' . $rawContent . ' Headers: ' . json_encode($headers));
+                throw new AiImageGenerationException('Gemini response did not contain image data. Data: ' . json_encode($data) . ' Raw: ' . $rawContent . ' Headers: ' . json_encode($headers) . ' Request: ' . json_encode($jsonPayload));
             }
 
             return 'data:' . $mimeType . ';base64,' . $base64Image;
