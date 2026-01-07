@@ -68,9 +68,13 @@
                     
                     <form method="post" action="{{ path('app_admin_saints_bulk_featured') }}" id="bulk-form" data-admin-saints-tools-target="bulkForm">
                         <input type="hidden" name="action" id="bulk-action" data-admin-saints-tools-target="bulkActionInput">
+                        <input type="hidden" name="q" value="{{ searchTerm }}">
+                        <input type="hidden" name="page" value="{{ pagination.getCurrentPageNumber() }}">
                     </form>
                     
                     <form method="post" action="{{ path('app_admin_saints_bulk_generate_images') }}" id="bulk-image-form" data-admin-saints-tools-target="bulkImageForm">
+                        <input type="hidden" name="q" value="{{ searchTerm }}">
+                        <input type="hidden" name="page" value="{{ pagination.getCurrentPageNumber() }}">
                     </form>
                 </div>
             {% endif %}
@@ -145,7 +149,7 @@
                                         <a href="{{ path('app_saint_edit', {'id': saint.id}) }}" class="btn btn-sm btn-outline-primary" title="{{ 'saint.actions.edit'|trans({}, 'saint') }}">
                                             <i class="fas fa-pencil"></i>
                                         </a>
-                                        <form method="post" action="{{ path('app_admin_saints_toggle_featured', {'id': saint.id}) }}" style="display: inline;">
+                                        <form method="post" action="{{ path('app_admin_saints_toggle_featured', {'id': saint.id, 'q': searchTerm, 'page': pagination.getCurrentPageNumber()}) }}" style="display: inline;">
                                             {% if saint.featured %}
                                                 <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="return confirm('{{ 'admin.saints.featured.confirm_unfeature'|trans({}, 'admin') }}')" title="{{ 'admin.saints.featured.unfeature'|trans({}, 'admin') }}">
                                                     <i class="fas fa-star-o"></i>
@@ -156,7 +160,7 @@
                                                 </button>
                                             {% endif %}
                                         </form>
-                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id}) }}" style="display: inline;" class="generate-image-form" data-action="submit->admin-saints-tools#prepareSingleGeneration">
+                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id, 'q': searchTerm, 'page': pagination.getCurrentPageNumber()}) }}" style="display: inline;" class="generate-image-form" data-action="submit->admin-saints-tools#prepareSingleGeneration">
                                             <button type="submit" class="btn btn-sm btn-outline-warning generate-image-btn" onclick="return confirm('{{ 'admin.saints.tools.confirm_generate_image'|trans({}, 'admin') }}')" title="{{ 'admin.saints.tools.generate_image'|trans({}, 'admin') }}">
                                                 <i class="fas fa-wand-magic-sparkles"></i>
                                             </button>

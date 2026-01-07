@@ -11,6 +11,7 @@ use App\Twig\SaintExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -98,10 +99,7 @@ class AdminSaintsToolsController extends AbstractController
                 '%name%' => $saint->getName(),
                 '%error%' => $e->getMessage()
             ], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_tools', [
-                'page' => $request->request->get('page', 1),
-                'q' => $request->request->get('q'),
-            ]);
+            return $this->redirectToSaintsTools($request);
         }
 
         try {
@@ -120,10 +118,7 @@ class AdminSaintsToolsController extends AbstractController
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_save_failed', ['%error%' => $e->getMessage()], 'admin'));
         }
 
-        return $this->redirectToRoute('app_admin_saints_tools', [
-            'page' => $request->request->get('page', 1),
-            'q' => $request->request->get('q'),
-        ]);
+        return $this->redirectToSaintsTools($request);
     }
 
     /**
@@ -143,10 +138,7 @@ class AdminSaintsToolsController extends AbstractController
 
         if (empty($saintIds)) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_tools', [
-                'page' => $request->request->get('page', 1),
-                'q' => $request->request->get('q'),
-            ]);
+            return $this->redirectToSaintsTools($request);
         }
 
         $saints = $saintRepository->findBy(['id' => $saintIds]);
@@ -183,10 +175,7 @@ class AdminSaintsToolsController extends AbstractController
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_image_failed', ['%count%' => $failCount], 'admin'));
         }
 
-        return $this->redirectToRoute('app_admin_saints_tools', [
-            'page' => $request->request->get('page', 1),
-            'q' => $request->request->get('q'),
-        ]);
+        return $this->redirectToSaintsTools($request);
     }
     
     /**
@@ -208,10 +197,7 @@ class AdminSaintsToolsController extends AbstractController
             $this->addFlash('success', $this->translator->trans('admin.saints.featured.flash.saint_unfeatured', ['%name%' => $saint->getName()], 'admin'));
         }
 
-        return $this->redirectToRoute('app_admin_saints_tools', [
-            'page' => $request->request->get('page', 1),
-            'q' => $request->request->get('q'),
-        ]);
+        return $this->redirectToSaintsTools($request);
     }
 
     /**
@@ -228,10 +214,7 @@ class AdminSaintsToolsController extends AbstractController
         
         if (empty($saintIds) || !in_array($action, ['feature', 'unfeature'])) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_tools', [
-                'page' => $request->request->get('page', 1),
-                'q' => $request->request->get('q'),
-            ]);
+            return $this->redirectToSaintsTools($request);
         }
 
         $saints = $saintRepository->findBy(['id' => $saintIds]);
@@ -256,9 +239,15 @@ class AdminSaintsToolsController extends AbstractController
             $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.no_changes', [], 'admin'));
         }
 
+        return $this->redirectToSaintsTools($request);
+    }
+
+
+    public function redirectToSaintsTools(Request $request): RedirectResponse
+    {
         return $this->redirectToRoute('app_admin_saints_tools', [
-            'page' => $request->request->get('page', 1),
-            'q' => $request->request->get('q'),
+            'page' => $request->get('page', 1),
+            'q' => $request->get('q'),
         ]);
     }
 }
