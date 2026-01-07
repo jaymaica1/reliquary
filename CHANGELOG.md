@@ -1,3 +1,10 @@
+# [2.26.0](https://github.com/CesarScur/reliquary/compare/v2.25.1...v2.26.0) (2026-01-07)
+
+
+### Features
+
+* **ai-image:** enhance prompt generation and add safety settings in GeminiProvider ([69d1b2a](https://github.com/CesarScur/reliquary/commit/69d1b2a8c91bee14a633df8df61ba1e3cb6ee2f9))
+
 ## [2.25.1](https://github.com/CesarScur/reliquary/compare/v2.25.0...v2.25.1) (2026-01-07)
 
 
