@@ -31,14 +31,33 @@ class GeminiProviderTest extends TestCase
         $provider = new GeminiProvider($this->httpClient, 'test_api_key');
 
         $prompt = 'test prompt';
+        $enhancedPrompt = 'A realistic portrait of ' . $prompt;
         $expectedPayload = [
             'instances' => [
-                ['prompt' => $prompt],
+                ['prompt' => $enhancedPrompt],
             ],
             'parameters' => [
                 'sampleCount' => 1,
                 'aspectRatio' => '1:1',
                 'outputMimeType' => 'image/png',
+                'safetySettings' => [
+                    [
+                        'category' => 'HATE_SPEECH',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                    [
+                        'category' => 'DANGEROUS_CONTENT',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                    [
+                        'category' => 'SEXUALLY_EXPLICIT',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                    [
+                        'category' => 'HARASSMENT',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                ],
             ],
         ];
 

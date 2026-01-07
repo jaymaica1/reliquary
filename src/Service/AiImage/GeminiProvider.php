@@ -60,6 +60,11 @@ class GeminiProvider implements AiImageProviderInterface
 
         $targetModel = $model ?? $this->model;
 
+        // Enhance prompt to be more descriptive and avoid silent filtering
+        if (!str_contains(strtolower($prompt), 'portrait')) {
+            $prompt = 'A realistic portrait of ' . $prompt;
+        }
+
         $jsonPayload = [
             'instances' => [
                 ['prompt' => $prompt],
@@ -68,6 +73,24 @@ class GeminiProvider implements AiImageProviderInterface
                 'sampleCount' => 1,
                 'aspectRatio' => '1:1',
                 'outputMimeType' => 'image/png',
+                'safetySettings' => [
+                    [
+                        'category' => 'HATE_SPEECH',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                    [
+                        'category' => 'DANGEROUS_CONTENT',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                    [
+                        'category' => 'SEXUALLY_EXPLICIT',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                    [
+                        'category' => 'HARASSMENT',
+                        'threshold' => 'BLOCK_NONE',
+                    ],
+                ],
             ],
         ];
 
