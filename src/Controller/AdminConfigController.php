@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\AiImageService;
 use App\Service\ConfigurationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,9 +16,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class AdminConfigController extends AbstractController
 {
     #[Route('/', name: 'app_admin_config')]
-    public function index(AiImageService $aiImageService, ConfigurationService $configurationService): Response
+    public function index(
+        #[TaggedIterator('app.ai_image_provider')] iterable $providers,
+        ConfigurationService $configurationService
+    ): Response
     {
-        $providers = $aiImageService->getProviders();
         $currentProvider = $configurationService->get('ai_image_provider', AiImageService::PROVIDER_OPENAI);
         $currentModel = $configurationService->get('ai_image_model');
 

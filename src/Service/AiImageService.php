@@ -11,16 +11,11 @@ class AiImageService
     public const PROVIDER_OPENAI = 'openai';
     public const PROVIDER_GEMINI = 'gemini';
 
-    /**
-     * @var iterable<AiImageProviderInterface>
-     */
-    private iterable $providers;
-
     public function __construct(
-        #[TaggedIterator('app.ai_image_provider')] iterable $providers,
-        private ConfigurationService $configurationService
+        #[TaggedIterator('app.ai_image_provider')]
+        private readonly iterable $providers,
+        private readonly ConfigurationService $configurationService
     ) {
-        $this->providers = $providers;
     }
 
     /**
@@ -38,17 +33,5 @@ class AiImageService
         }
 
         throw new AiImageGenerationException(sprintf('AI image provider "%s" not found or not supported', $provider));
-    }
-
-    /**
-     * @return AiImageProviderInterface[]
-     */
-    public function getProviders(): array
-    {
-        $providers = [];
-        foreach ($this->providers as $provider) {
-            $providers[] = $provider;
-        }
-        return $providers;
     }
 }

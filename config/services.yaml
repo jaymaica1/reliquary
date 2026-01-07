@@ -102,9 +102,6 @@ services:
             $model: '%env(default:gemini_model_default:GEMINI_MODEL)%'
         tags: ['app.ai_image_provider']
 
-    App\Service\AiImageService:
-        arguments:
-            $providers: !tagged_iterator app.ai_image_provider
 
     App\Service\TranslationAnalyzerService:
         arguments:
