@@ -1,3 +1,10 @@
+## [2.24.1](https://github.com/CesarScur/reliquary/compare/v2.24.0...v2.24.1) (2026-01-07)
+
+
+### Bug Fixes
+
+* **ai-image:** improve GeminiProvider exception with detailed response data ([82aa89d](https://github.com/CesarScur/reliquary/commit/82aa89d7a0826178aadab61c172add0d50077c38))
+
 # [2.24.0](https://github.com/CesarScur/reliquary/compare/v2.23.0...v2.24.0) (2026-01-07)
 
 
