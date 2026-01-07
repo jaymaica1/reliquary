@@ -1,3 +1,10 @@
+# [2.25.0](https://github.com/CesarScur/reliquary/compare/v2.24.2...v2.25.0) (2026-01-07)
+
+
+### Features
+
+* **templates:** add Reliquary version display in footers ([f2101dd](https://github.com/CesarScur/reliquary/commit/f2101ddf4ef2440b747dd5a37d37adb78ec287a6))
+
 ## [2.24.2](https://github.com/CesarScur/reliquary/compare/v2.24.1...v2.24.2) (2026-01-07)
 
 
