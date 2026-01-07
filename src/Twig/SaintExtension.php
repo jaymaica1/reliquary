@@ -30,10 +30,10 @@ class SaintExtension extends AbstractExtension
      * Formats a saint's name with the appropriate title prefix
      * and uses translated name if available
      */
-    public function formatSaintName(Saint $saint): string
+    public function formatSaintName(Saint $saint, ?string $locale = null): string
     {
         $canonicalStatus = $saint->getCanonicalStatus();
-        $locale = $this->requestStack->getCurrentRequest()?->getLocale() ?? 'en';
+        $locale = $locale ?? $this->requestStack->getCurrentRequest()?->getLocale() ?? 'en';
         $name = $saint->getTranslatedName($locale);
         
         if ($canonicalStatus === null) {
@@ -41,7 +41,7 @@ class SaintExtension extends AbstractExtension
         }
         
         $titleKey = $canonicalStatus->getTitleTransKey();
-        $title = $this->translator->trans($titleKey, [], 'saint');
+        $title = $this->translator->trans($titleKey, [], 'saint', $locale);
         
         return sprintf('%s %s', $title, $name);
     }

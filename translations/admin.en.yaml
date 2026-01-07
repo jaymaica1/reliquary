@@ -14,6 +14,7 @@ admin:
       mark_complete: 'Mark Complete'
     tools:
       title: 'Saints Tools'
+      ai_provider: 'AI Provider'
       no_saints: 'No saints found.'
       no_results: 'No saints matching "%search%" found.'
       generate_image: 'Generate Image'
@@ -23,7 +24,7 @@ admin:
       flash:
         image_generation_queued: 'Image generation for saint "%name%" has been queued.'
         image_generated: 'Image for saint "%name%" has been generated successfully.'
-        image_generation_failed: 'Failed to generate image for saint "%name%".'
+        image_generation_failed: 'Failed to generate image for saint "%name%": %error%'
         image_save_failed: 'Failed to save generated image: %error%'
         bulk_image_generation_queued: 'Image generation for %count% saint(s) has been queued.'
         bulk_image_generated: '%count% image(s) have been generated successfully.'

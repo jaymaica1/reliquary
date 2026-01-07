@@ -93,6 +93,10 @@
                 <i class="fas fa-cloud-upload-alt"></i>
                 <span>{{ 'common.admin.s3_migration'|trans({}, 'common') }}</span>
             </a>
+            <a href="{{ path('app_admin_config') }}" class="nav-link {{ app.request.get('_route') == 'app_admin_config' ? 'active' : '' }}">
+                <i class="fas fa-cogs"></i>
+                <span>{{ 'common.admin.configuration'|trans({}, 'common') }}</span>
+            </a>
         </div>
     </div>
 </nav>

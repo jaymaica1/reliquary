@@ -47,6 +47,7 @@ common:
     import_saints: 'Import Saints'
     import_translations: 'Import Translations'
     s3_migration: 'S3 Image Migration'
+    configuration: 'Configuration'
   auth:
     login: 'Login'
     signup: 'Sign-up'

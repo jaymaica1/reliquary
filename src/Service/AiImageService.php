@@ -2,52 +2,52 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Service\AiImage\AiImageProviderInterface;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 class AiImageService
 {
-    private HttpClientInterface $httpClient;
-    private string $apiKey;
-    private string $baseUrl;
-    private string $model;
+    public const PROVIDER_OPENAI = 'openai';
+    public const PROVIDER_GEMINI = 'gemini';
+
+    /**
+     * @var iterable<AiImageProviderInterface>
+     */
+    private iterable $providers;
 
     public function __construct(
-        HttpClientInterface $httpClient,
-        string $aiApiKey,
-        string $aiBaseUrl = 'https://api.openai.com/v1',
-        string $aiModel = 'dall-e-3'
+        #[TaggedIterator('app.ai_image_provider')] iterable $providers,
+        private ConfigurationService $configurationService
     ) {
-        $this->httpClient = $httpClient;
-        $this->apiKey = $aiApiKey;
-        $this->baseUrl = rtrim($aiBaseUrl, '/');
-        $this->model = $aiModel;
+        $this->providers = $providers;
     }
 
-    public function generatePortrait(string $prompt, string $size = '1024x1024'): ?string
+    /**
+     * @throws \App\Exception\AiImageGenerationException
+     */
+    public function generatePortrait(string $prompt, string $size = '1024x1024', ?string $provider = null): string
     {
-        try {
-            $response = $this->httpClient->request('POST', $this->baseUrl . '/images/generations', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'model' => $this->model,
-                    'prompt' => $prompt,
-                    'n' => 1,
-                    'size' => $size,
-                ],
-            ]);
+        $provider = $provider ?? $this->configurationService->get('ai_image_provider', self::PROVIDER_OPENAI);
+        $model = $this->configurationService->get('ai_image_model');
 
-            if ($response->getStatusCode() !== 200) {
-                return null;
+        foreach ($this->providers as $providerInstance) {
+            if ($providerInstance->supports($provider)) {
+                return $providerInstance->generatePortrait($prompt, $size, $model);
             }
-
-            $data = $response->toArray();
-            return $data['data'][0]['url'] ?? null;
-        } catch (\Exception $e) {
-            // Log error or handle it
-            return null;
         }
+
+        throw new \App\Exception\AiImageGenerationException(sprintf('AI image provider "%s" not found or not supported', $provider));
+    }
+
+    /**
+     * @return AiImageProviderInterface[]
+     */
+    public function getProviders(): array
+    {
+        $providers = [];
+        foreach ($this->providers as $provider) {
+            $providers[] = $provider;
+        }
+        return $providers;
     }
 }

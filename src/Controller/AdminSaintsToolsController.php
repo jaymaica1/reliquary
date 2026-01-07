@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Saint;
 use App\Repository\SaintRepository;
 use App\Service\AiImageService;
+use App\Service\ConfigurationService;
 use App\Service\ImageService;
+use App\Twig\SaintExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +36,8 @@ class AdminSaintsToolsController extends AbstractController
     public function saintsTools(
         Request $request,
         SaintRepository $saintRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        ConfigurationService $configurationService
     ): Response {
         $searchTerm = $request->query->get('q');
         
@@ -57,10 +60,13 @@ class AdminSaintsToolsController extends AbstractController
             $request->query->getInt('page', 1),
             200
         );
+
+        $defaultProvider = $configurationService->get('ai_image_provider', AiImageService::PROVIDER_OPENAI);
         
         return $this->render('admin/saints/tools.html.twig', [
             'pagination' => $pagination,
             'searchTerm' => $searchTerm,
+            'defaultProvider' => $defaultProvider,
         ]);
     }
     
@@ -73,21 +79,29 @@ class AdminSaintsToolsController extends AbstractController
         AiImageService $aiImageService,
         ImageService $imageService,
         EntityManagerInterface $entityManager,
-        Request $request
+        Request $request,
+        ConfigurationService $configurationService,
+        SaintExtension $saintExtension
     ): Response {
         $prompt = $request->request->get('prompt');
+        $provider = $request->request->get('ai_provider', $configurationService->get('ai_image_provider', AiImageService::PROVIDER_OPENAI));
+
+
         if (!$prompt) {
-            $prompt = sprintf(
-                "A realistic and artistic oil painting portrait of Saint %s. Based on historical photos or traditional depiction. Add golden halo with some filigree. No painting frame.",
-                $saint->getName(),
-            );
+            $prompt = $saintExtension->formatSaintName($saint, 'pt_BR');
         }
 
-        $imageUrl = $aiImageService->generatePortrait($prompt);
-
-        if (!$imageUrl) {
-            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_generation_failed', ['%name%' => $saint->getName()], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_tools');
+        try {
+            $imageUrl = $aiImageService->generatePortrait($prompt, '1024x1024', $provider);
+        } catch (\App\Exception\AiImageGenerationException $e) {
+            $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_generation_failed', [
+                '%name%' => $saint->getName(),
+                '%error%' => $e->getMessage()
+            ], 'admin'));
+            return $this->redirectToRoute('app_admin_saints_tools', [
+                'page' => $request->request->get('page', 1),
+                'q' => $request->request->get('q'),
+            ]);
         }
 
         try {
@@ -106,7 +120,10 @@ class AdminSaintsToolsController extends AbstractController
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_save_failed', ['%error%' => $e->getMessage()], 'admin'));
         }
 
-        return $this->redirectToRoute('app_admin_saints_tools');
+        return $this->redirectToRoute('app_admin_saints_tools', [
+            'page' => $request->request->get('page', 1),
+            'q' => $request->request->get('q'),
+        ]);
     }
 
     /**
@@ -118,13 +135,18 @@ class AdminSaintsToolsController extends AbstractController
         SaintRepository $saintRepository,
         AiImageService $aiImageService,
         ImageService $imageService,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        SaintExtension $saintExtension
     ): Response {
         $saintIds = $request->request->all('saint_ids');
+        $provider = $request->request->get('ai_provider', AiImageService::PROVIDER_OPENAI);
 
         if (empty($saintIds)) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_tools');
+            return $this->redirectToRoute('app_admin_saints_tools', [
+                'page' => $request->request->get('page', 1),
+                'q' => $request->request->get('q'),
+            ]);
         }
 
         $saints = $saintRepository->findBy(['id' => $saintIds]);
@@ -132,29 +154,22 @@ class AdminSaintsToolsController extends AbstractController
         $failCount = 0;
 
         foreach ($saints as $saint) {
-            $prompt = sprintf(
-                "A realistic and artistic oil painting portrait of Saint %s. Based on historical photos or traditional depiction. Add golden halo with some filigree. No painting frame.",
-                $saint->getName(),
-            );
+            $prompt = $saintExtension->formatSaintName($saint, 'pt_BR');
 
-            $imageUrl = $aiImageService->generatePortrait($prompt);
+            try {
+                $imageUrl = $aiImageService->generatePortrait($prompt, '1024x1024', $provider);
 
-            if ($imageUrl) {
-                try {
-                    // Remove existing images if any
-                    foreach ($saint->getImages() as $existingImage) {
-                        $imageService->deleteImage($existingImage);
-                        $saint->removeImage($existingImage);
-                        $entityManager->remove($existingImage);
-                    }
-
-                    $saintImage = $imageService->createSaintImageFromUrl($imageUrl, $saint, $this->getUser());
-                    $entityManager->persist($saintImage);
-                    $successCount++;
-                } catch (\Exception $e) {
-                    $failCount++;
+                // Remove existing images if any
+                foreach ($saint->getImages() as $existingImage) {
+                    $imageService->deleteImage($existingImage);
+                    $saint->removeImage($existingImage);
+                    $entityManager->remove($existingImage);
                 }
-            } else {
+
+                $saintImage = $imageService->createSaintImageFromUrl($imageUrl, $saint, $this->getUser());
+                $entityManager->persist($saintImage);
+                $successCount++;
+            } catch (\Exception $e) {
                 $failCount++;
             }
         }
@@ -168,7 +183,10 @@ class AdminSaintsToolsController extends AbstractController
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_image_failed', ['%count%' => $failCount], 'admin'));
         }
 
-        return $this->redirectToRoute('app_admin_saints_tools');
+        return $this->redirectToRoute('app_admin_saints_tools', [
+            'page' => $request->request->get('page', 1),
+            'q' => $request->request->get('q'),
+        ]);
     }
     
     /**
@@ -177,20 +195,25 @@ class AdminSaintsToolsController extends AbstractController
     #[Route('/featured/{id}/toggle', name: 'app_admin_saints_toggle_featured', methods: ['POST'])]
     public function toggleFeatured(
         Saint $saint,
-        EntityManagerInterface $entityManager
-    ): Response {
+        EntityManagerInterface $entityManager,
+        Request                $request
+    ): Response
+    {
         $saint->setFeatured(!$saint->isFeatured());
         $entityManager->flush();
-        
+
         if ($saint->isFeatured()) {
             $this->addFlash('success', $this->translator->trans('admin.saints.featured.flash.saint_featured', ['%name%' => $saint->getName()], 'admin'));
         } else {
             $this->addFlash('success', $this->translator->trans('admin.saints.featured.flash.saint_unfeatured', ['%name%' => $saint->getName()], 'admin'));
         }
-        
-        return $this->redirectToRoute('app_admin_saints_tools');
+
+        return $this->redirectToRoute('app_admin_saints_tools', [
+            'page' => $request->request->get('page', 1),
+            'q' => $request->request->get('q'),
+        ]);
     }
-    
+
     /**
      * Bulk feature/unfeature saints
      */
@@ -205,20 +228,23 @@ class AdminSaintsToolsController extends AbstractController
         
         if (empty($saintIds) || !in_array($action, ['feature', 'unfeature'])) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
-            return $this->redirectToRoute('app_admin_saints_tools');
+            return $this->redirectToRoute('app_admin_saints_tools', [
+                'page' => $request->request->get('page', 1),
+                'q' => $request->request->get('q'),
+            ]);
         }
-        
+
         $saints = $saintRepository->findBy(['id' => $saintIds]);
         $featured = ($action === 'feature');
         $count = 0;
-        
+
         foreach ($saints as $saint) {
             if ($saint->isFeatured() !== $featured) {
                 $saint->setFeatured($featured);
                 $count++;
             }
         }
-        
+
         if ($count > 0) {
             $entityManager->flush();
             if ($featured) {
@@ -229,7 +255,10 @@ class AdminSaintsToolsController extends AbstractController
         } else {
             $this->addFlash('info', $this->translator->trans('admin.saints.tools.flash.no_changes', [], 'admin'));
         }
-        
-        return $this->redirectToRoute('app_admin_saints_tools');
+
+        return $this->redirectToRoute('app_admin_saints_tools', [
+            'page' => $request->request->get('page', 1),
+            'q' => $request->request->get('q'),
+        ]);
     }
 }

@@ -4,7 +4,12 @@
 {% block pageTitle %}{{ 'admin.saints.tools.title'|trans({}, 'admin') }}{% endblock %}
 
 {% block body %}
-    <div class="content-section">
+    <div class="content-section" 
+         data-controller="admin-saints-tools"
+         data-admin-saints-tools-no-selection-value="{{ 'admin.saints.featured.no_selection'|trans({}, 'admin') }}"
+         data-admin-saints-tools-confirm-bulk-value="{{ 'admin.saints.featured.confirm_bulk'|trans({}, 'admin') }}"
+         data-admin-saints-tools-confirm-bulk-image-value="{{ 'admin.saints.tools.confirm_bulk_generate_image'|trans({}, 'admin') }}"
+         data-admin-saints-tools-loading-text-value="{{ 'common.ui.loading'|trans({}, 'common') }}">
         <div class="card-body">
             <div class="mb-4">
                 <form method="get" action="{{ path('app_admin_saints_tools') }}" class="row g-3">
@@ -28,29 +33,44 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-success" onclick="submitBulkAction('feature')">
+                            <button type="button" class="btn btn-outline-success" 
+                                    data-action="click->admin-saints-tools#submitBulkAction" 
+                                    data-admin-saints-tools-action-param="feature">
                                 <i class="fas fa-star"></i> {{ 'admin.saints.featured.bulk_feature'|trans({}, 'admin') }}
                             </button>
-                            <button type="button" class="btn btn-outline-secondary" onclick="submitBulkAction('unfeature')">
+                            <button type="button" class="btn btn-outline-secondary" 
+                                    data-action="click->admin-saints-tools#submitBulkAction" 
+                                    data-admin-saints-tools-action-param="unfeature">
                                 <i class="fas fa-star-o"></i> {{ 'admin.saints.featured.bulk_unfeature'|trans({}, 'admin') }}
                             </button>
-                            <button type="button" class="btn btn-outline-warning" onclick="submitBulkImageGeneration()">
+                            <button type="button" class="btn btn-outline-warning" 
+                                    data-action="click->admin-saints-tools#submitBulkImageGeneration">
                                 <i class="fas fa-wand-magic-sparkles"></i> {{ 'admin.saints.tools.bulk_generate_image'|trans({}, 'admin') }}
                             </button>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="select-all">
-                            <label class="form-check-label" for="select-all">
-                                {{ 'admin.saints.featured.select_all'|trans({}, 'admin') }}
-                            </label>
+
+                        <div class="ms-auto d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <label for="ai-provider-selector" class="small fw-bold text-muted">{{ 'admin.saints.tools.ai_provider'|trans({}, 'admin') }}:</label>
+                                <select id="ai-provider-selector" class="form-select form-select-sm" style="width: auto;" data-admin-saints-tools-target="providerSelector">
+                                    <option value="openai" {% if defaultProvider == 'openai' %}selected{% endif %}>OpenAI (DALL-E 3)</option>
+                                    <option value="gemini" {% if defaultProvider == 'gemini' %}selected{% endif %}>Google (Gemini/Imagen)</option>
+                                </select>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="select-all" data-admin-saints-tools-target="selectAll" data-action="change->admin-saints-tools#toggleAll">
+                                <label class="form-check-label" for="select-all">
+                                    {{ 'admin.saints.featured.select_all'|trans({}, 'admin') }}
+                                </label>
+                            </div>
                         </div>
                     </div>
                     
-                    <form method="post" action="{{ path('app_admin_saints_bulk_featured') }}" id="bulk-form">
-                        <input type="hidden" name="action" id="bulk-action">
+                    <form method="post" action="{{ path('app_admin_saints_bulk_featured') }}" id="bulk-form" data-admin-saints-tools-target="bulkForm">
+                        <input type="hidden" name="action" id="bulk-action" data-admin-saints-tools-target="bulkActionInput">
                     </form>
                     
-                    <form method="post" action="{{ path('app_admin_saints_bulk_generate_images') }}" id="bulk-image-form">
+                    <form method="post" action="{{ path('app_admin_saints_bulk_generate_images') }}" id="bulk-image-form" data-admin-saints-tools-target="bulkImageForm">
                     </form>
                 </div>
             {% endif %}
@@ -73,7 +93,7 @@
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col" width="40">
-                                    <input type="checkbox" id="select-all-header" class="form-check-input">
+                                    <input type="checkbox" id="select-all-header" class="form-check-input" data-admin-saints-tools-target="selectAllHeader" data-action="change->admin-saints-tools#toggleAll">
                                 </th>
                                 <th scope="col">ID</th>
                                 <th scope="col">{{ 'saint.table.image_link'|trans({}, 'saint') }}</th>
@@ -88,7 +108,7 @@
                         {% for saint in pagination %}
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="saint_ids[]" value="{{ saint.id }}" class="form-check-input saint-checkbox" form="bulk-form">
+                                    <input type="checkbox" name="saint_ids[]" value="{{ saint.id }}" class="form-check-input saint-checkbox" form="bulk-form" data-admin-saints-tools-target="checkbox">
                                 </td>
                                 <td>{{ saint.id }}</td>
                                 <td>
@@ -136,7 +156,7 @@
                                                 </button>
                                             {% endif %}
                                         </form>
-                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id}) }}" style="display: inline;" class="generate-image-form">
+                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id}) }}" style="display: inline;" class="generate-image-form" data-action="submit->admin-saints-tools#prepareSingleGeneration">
                                             <button type="submit" class="btn btn-sm btn-outline-warning generate-image-btn" onclick="return confirm('{{ 'admin.saints.tools.confirm_generate_image'|trans({}, 'admin') }}')" title="{{ 'admin.saints.tools.generate_image'|trans({}, 'admin') }}">
                                                 <i class="fas fa-wand-magic-sparkles"></i>
                                             </button>
@@ -160,86 +180,4 @@
             {% endif %}
         </div>
     </div>
-
-    <script>
-        // Handle select all checkboxes
-        function updateCheckboxes(checked) {
-            const checkboxes = document.querySelectorAll('.saint-checkbox');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = checked;
-            });
-        }
-
-        document.getElementById('select-all').addEventListener('change', function() {
-            updateCheckboxes(this.checked);
-        });
-
-        document.getElementById('select-all-header').addEventListener('change', function() {
-            updateCheckboxes(this.checked);
-        });
-
-        // Submit bulk action
-        function submitBulkAction(action) {
-            const checkedBoxes = document.querySelectorAll('.saint-checkbox:checked');
-            if (checkedBoxes.length === 0) {
-                alert('{{ 'admin.saints.featured.no_selection'|trans({}, 'admin') }}');
-                return;
-            }
-            
-            const actionText = action === 'feature' ? '{{ 'admin.saints.featured.feature'|trans({}, 'admin') }}' : '{{ 'admin.saints.featured.unfeature'|trans({}, 'admin') }}';
-            if (confirm('{{ 'admin.saints.featured.confirm_bulk'|trans({}, 'admin') }}'.replace('%action%', actionText).replace('%count%', checkedBoxes.length))) {
-                const bulkForm = document.getElementById('bulk-form');
-                
-                // Ensure all checked boxes are in this form
-                checkedBoxes.forEach(cb => {
-                    if (cb.getAttribute('form') !== 'bulk-form') {
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.type = 'hidden';
-                        hiddenInput.name = 'saint_ids[]';
-                        hiddenInput.value = cb.value;
-                        bulkForm.appendChild(hiddenInput);
-                    }
-                });
-                
-                document.getElementById('bulk-action').value = action;
-                bulkForm.submit();
-            }
-        }
-
-        function submitBulkImageGeneration() {
-            const checkedBoxes = document.querySelectorAll('.saint-checkbox:checked');
-            if (checkedBoxes.length === 0) {
-                alert('{{ 'admin.saints.featured.no_selection'|trans({}, 'admin') }}');
-                return;
-            }
-            
-            if (confirm('{{ 'admin.saints.tools.confirm_bulk_generate_image'|trans({}, 'admin') }}'.replace('%count%', checkedBoxes.length))) {
-                const btn = document.querySelector('button[onclick="submitBulkImageGeneration()"]');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {{ 'common.ui.loading'|trans({}, 'common') }}';
-
-                const form = document.getElementById('bulk-image-form');
-                form.innerHTML = ''; // clear previous
-                
-                checkedBoxes.forEach(cb => {
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.name = 'saint_ids[]';
-                    hiddenInput.value = cb.value;
-                    form.appendChild(hiddenInput);
-                });
-                
-                form.submit();
-            }
-        }
-
-        // Add loading state to single image generation
-        document.querySelectorAll('.generate-image-form').forEach(form => {
-            form.addEventListener('submit', function() {
-                const btn = this.querySelector('.generate-image-btn');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            });
-        });
-    </script>
 {% endblock %}

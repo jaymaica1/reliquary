@@ -12,6 +12,8 @@ parameters:
     env(MONGODB_DB): ''
     ai_base_url_default: 'https://api.openai.com/v1'
     ai_model_default: 'dall-e-3'
+    gemini_base_url_default: 'https://generativelanguage.googleapis.com/v1beta'
+    gemini_model_default: 'imagen-3.0-generate-001'
     
     # Access Log PII Protection Configuration
     access_log_pii_protection_default: 'partial'
@@ -86,11 +88,23 @@ services:
         arguments:
             $defaultStorage: '@default.storage'
             
+    App\Service\AiImage\OpenAiProvider:
+        arguments:
+            $apiKey: '%env(AI_API_KEY)%'
+            $baseUrl: '%env(default:ai_base_url_default:AI_BASE_URL)%'
+            $model: '%env(default:ai_model_default:AI_MODEL)%'
+        tags: ['app.ai_image_provider']
+
+    App\Service\AiImage\GeminiProvider:
+        arguments:
+            $apiKey: '%env(GEMINI_API_KEY)%'
+            $baseUrl: '%env(default:gemini_base_url_default:GEMINI_BASE_URL)%'
+            $model: '%env(default:gemini_model_default:GEMINI_MODEL)%'
+        tags: ['app.ai_image_provider']
+
     App\Service\AiImageService:
         arguments:
-            $aiApiKey: '%env(AI_API_KEY)%'
-            $aiBaseUrl: '%env(default:ai_base_url_default:AI_BASE_URL)%'
-            $aiModel: '%env(default:ai_model_default:AI_MODEL)%'
+            $providers: !tagged_iterator app.ai_image_provider
 
     App\Service\TranslationAnalyzerService:
         arguments:

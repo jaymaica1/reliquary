@@ -61,4 +61,13 @@ export default class extends Controller {
             window.location.href = event.currentTarget.getAttribute('data-href');
         }
     }
+
+    confirm(event) {
+        const message = event.currentTarget.dataset.adminBaseConfirmValue || 'Are you sure?';
+        if (!window.confirm(message)) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return false;
+        }
+    }
 }

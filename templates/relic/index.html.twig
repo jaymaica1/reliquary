@@ -27,11 +27,13 @@
                             <i class="fas fa-location-crosshairs"></i>
                         </button>
                     </div>
-                    <div class="distance-slider-wrapper" style="display: flex; align-items: center; gap: 0.5rem; color: var(--sacred-white); min-width: 200px;">
-                        <label for="distanceRange" class="form-label mb-0" style="white-space: nowrap;">{{ 'relic.filter.distance'|trans({}, 'relic')|default('Distance') }}: <span id="distanceValue">{{ distance }}</span>km</label>
-                        <input type="range" class="form-range" name="distance" min="1" max="500" step="1" id="distanceRange" value="{{ distance }}" oninput="document.getElementById('distanceValue').innerText = this.value" onchange="this.form.submit()">
+                    <div class="distance-slider-wrapper" style="display: flex; align-items: center; gap: 0.5rem; color: var(--sacred-white); min-width: 200px;" data-controller="range-value">
+                        <label for="distanceRange" class="form-label mb-0" style="white-space: nowrap;">{{ 'relic.filter.distance'|trans({}, 'relic')|default('Distance') }}: <span id="distanceValue" data-range-value-target="output">{{ distance }}</span>km</label>
+                        <input type="range" class="form-range" name="distance" min="1" max="500" step="1" id="distanceRange" value="{{ distance }}" 
+                               data-action="input->range-value#update change->autosubmit#submit"
+                               data-controller="autosubmit">
                     </div>
-                    <select class="filter-select" id="filter" name="filter" onchange="this.form.submit()">
+                    <select class="filter-select" id="filter" name="filter" data-controller="autosubmit" data-action="change->autosubmit#submit">
                         <option value="">{{ 'relic.filter.all_relics'|trans({}, 'relic') }}</option>
                         {% for degree in relic_degrees %}
                             <option value="{{ degree.value }}" {% if filter == degree.value %}selected{% endif %}>

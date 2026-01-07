@@ -1,0 +1,46 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}System Configuration{% endblock %}
+{% block pageTitle %}System Configuration{% endblock %}
+
+{% block body %}
+    <div class="row" data-controller="admin-config" 
+         data-admin-config-models-by-provider-value="{{ providers_json|e('html_attr') }}"
+         data-admin-config-current-model-value="{{ currentModel }}">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0"><i class="fas fa-wand-magic-sparkles me-2"></i>AI Image Generation</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ path('app_admin_config_save_ai') }}" method="post">
+                        <div class="mb-3">
+                            <label for="ai_provider" class="form-label">Default Provider</label>
+                            <select name="ai_provider" id="ai_provider" class="form-select" data-admin-config-target="provider" data-action="change->admin-config#updateModels">
+                                {% for provider in providers %}
+                                    <option value="{{ provider.name }}" {% if provider.name == currentProvider %}selected{% endif %}>
+                                        {{ provider.name|capitalize }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ai_model" class="form-label">Default Model</label>
+                            <select name="ai_model" id="ai_model" class="form-select" data-admin-config-target="model" data-action="change->admin-config#updatePricing">
+                                {# Models will be populated by JavaScript #}
+                            </select>
+                        </div>
+
+                        <div class="mb-3 p-3 bg-light border rounded" data-admin-config-target="pricingContainer" style="display: none;">
+                            <small class="text-muted d-block mb-1">Estimated Pricing:</small>
+                            <span data-admin-config-target="pricing" class="fw-bold text-primary"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save AI Configuration</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
