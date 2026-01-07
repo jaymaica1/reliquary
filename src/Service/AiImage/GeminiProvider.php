@@ -2,6 +2,7 @@
 
 namespace App\Service\AiImage;
 
+use App\Exception\AiImageGenerationException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeminiProvider implements AiImageProviderInterface
@@ -54,7 +55,7 @@ class GeminiProvider implements AiImageProviderInterface
     public function generatePortrait(string $prompt, string $size = '1024x1024', ?string $model = null): string
     {
         if (!$this->apiKey) {
-            throw new \App\Exception\AiImageGenerationException('Gemini API key is not configured');
+            throw new AiImageGenerationException('Gemini API key is not configured');
         }
 
         $targetModel = $model ?? $this->model;
@@ -77,7 +78,7 @@ class GeminiProvider implements AiImageProviderInterface
             if ($response->getStatusCode() !== 200) {
                 $errorData = $response->toArray(false);
                 $errorMessage = $errorData['error']['message'] ?? 'Unknown Gemini error';
-                throw new \App\Exception\AiImageGenerationException('Gemini error: ' . $errorMessage);
+                throw new AiImageGenerationException('Gemini error: ' . $errorMessage);
             }
 
             $data = $response->toArray();
@@ -85,14 +86,14 @@ class GeminiProvider implements AiImageProviderInterface
             $mimeType = $data['predictions'][0]['mimeType'] ?? 'image/png';
 
             if (!$base64Image) {
-                throw new \App\Exception\AiImageGenerationException('Gemini response did not contain image data');
+                throw new AiImageGenerationException('Gemini response did not contain image data');
             }
 
             return 'data:' . $mimeType . ';base64,' . $base64Image;
-        } catch (\App\Exception\AiImageGenerationException $e) {
+        } catch (AiImageGenerationException $e) {
             throw $e;
         } catch (\Exception $e) {
-            throw new \App\Exception\AiImageGenerationException('Gemini request failed: ' . $e->getMessage(), 0, $e);
+            throw new AiImageGenerationException('Gemini request failed: ' . $e->getMessage(), 0, $e);
         }
     }
 }

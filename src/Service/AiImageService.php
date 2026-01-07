@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Exception\AiImageGenerationException;
 use App\Service\AiImage\AiImageProviderInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
@@ -23,7 +24,7 @@ class AiImageService
     }
 
     /**
-     * @throws \App\Exception\AiImageGenerationException
+     * @throws AiImageGenerationException
      */
     public function generatePortrait(string $prompt, string $size = '1024x1024', ?string $provider = null): string
     {
@@ -36,7 +37,7 @@ class AiImageService
             }
         }
 
-        throw new \App\Exception\AiImageGenerationException(sprintf('AI image provider "%s" not found or not supported', $provider));
+        throw new AiImageGenerationException(sprintf('AI image provider "%s" not found or not supported', $provider));
     }
 
     /**
