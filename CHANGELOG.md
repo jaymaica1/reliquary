@@ -1,3 +1,10 @@
+## [2.25.1](https://github.com/CesarScur/reliquary/compare/v2.25.0...v2.25.1) (2026-01-07)
+
+
+### Bug Fixes
+
+* **ai-image:** include request payload in GeminiProvider exception messages ([bc998be](https://github.com/CesarScur/reliquary/commit/bc998be6e16d6fccec042313be21344599015a05))
+
 # [2.25.0](https://github.com/CesarScur/reliquary/compare/v2.24.2...v2.25.0) (2026-01-07)
 
 
