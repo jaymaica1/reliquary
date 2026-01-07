@@ -1,3 +1,10 @@
+# [2.24.0](https://github.com/CesarScur/reliquary/compare/v2.23.0...v2.24.0) (2026-01-07)
+
+
+### Features
+
+* **exception:** add custom AiImageGenerationException class ([6c3f1f1](https://github.com/CesarScur/reliquary/commit/6c3f1f1a5eb5fb03dee525ce8bef26188821b3b4))
+
 # [2.23.0](https://github.com/CesarScur/reliquary/compare/v2.22.0...v2.23.0) (2026-01-07)
 
 
