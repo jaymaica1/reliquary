@@ -24,13 +24,15 @@ class GeminiProviderTest extends TestCase
         $this->response->method('getStatusCode')->willReturn(200);
         $this->response->method('toArray')->willReturn([]);
         $this->response->method('getContent')->willReturn('{}');
+        $this->response->method('getHeaders')->willReturn(['content-type' => ['application/json']]);
 
         $this->httpClient->method('request')->willReturn($this->response);
 
         $provider = new GeminiProvider($this->httpClient, 'test_api_key');
 
         $this->expectException(AiImageGenerationException::class);
-        $this->expectExceptionMessage('Gemini response did not contain image data. Data: [] Raw: {}');
+        $expectedMessage = 'Gemini response did not contain image data. Data: [] Raw: {} Headers: ' . json_encode(['content-type' => ['application/json']]);
+        $this->expectExceptionMessage($expectedMessage);
 
         $provider->generatePortrait('test prompt');
     }
