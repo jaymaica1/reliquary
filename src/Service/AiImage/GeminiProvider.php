@@ -81,12 +81,13 @@ class GeminiProvider implements AiImageProviderInterface
                 throw new AiImageGenerationException('Gemini error: ' . $errorMessage);
             }
 
-            $data = $response->toArray();
+            $data = $response->toArray(false);
             $base64Image = $data['predictions'][0]['bytesBase64Encoded'] ?? null;
             $mimeType = $data['predictions'][0]['mimeType'] ?? 'image/png';
 
             if (!$base64Image) {
-                throw new AiImageGenerationException('Gemini response did not contain image data. Data: ' . json_encode($data));
+                $rawContent = $response->getContent(false);
+                throw new AiImageGenerationException('Gemini response did not contain image data. Data: ' . json_encode($data) . ' Raw: ' . $rawContent);
             }
 
             return 'data:' . $mimeType . ';base64,' . $base64Image;
