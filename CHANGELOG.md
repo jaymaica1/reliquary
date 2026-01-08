@@ -1,3 +1,10 @@
+# [2.27.0](https://github.com/CesarScur/reliquary/compare/v2.26.0...v2.27.0) (2026-01-08)
+
+
+### Features
+
+* **ai-image:** add Gemini API support and improve model handling ([241d306](https://github.com/CesarScur/reliquary/commit/241d306afb5a5fac7a2731f954dccc25b3cc251f))
+
 # [2.26.0](https://github.com/CesarScur/reliquary/compare/v2.25.1...v2.26.0) (2026-01-07)
 
 
