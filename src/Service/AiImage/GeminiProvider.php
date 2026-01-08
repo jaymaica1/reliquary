@@ -7,6 +7,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeminiProvider implements AiImageProviderInterface
 {
+    private const PROMPT_GENERATOR_MODEL = 'gemini-2.0-flash';
+
     public function __construct(
         private HttpClientInterface $httpClient,
         private ?string $apiKey,
@@ -60,6 +62,61 @@ class GeminiProvider implements AiImageProviderInterface
         return str_starts_with($model, 'gemini-');
     }
 
+    /**
+     * Generate an optimized prompt for image generation using a text model
+     */
+    private function generateOptimizedPrompt(string $saintName): string
+    {
+        $metaPrompt = sprintf(
+            'Write a prompt that describe Santo(a) %s, with max 300 words, to be used to generate an image that will populate a catalog of catholic saints. Make it safe against the content restrictions. Reply only with the prompt.',
+            $saintName
+        );
+
+        $jsonPayload = [
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $metaPrompt]
+                    ]
+                ]
+            ],
+        ];
+
+        try {
+            $response = $this->httpClient->request('POST', $this->baseUrl . '/models/' . self::PROMPT_GENERATOR_MODEL . ':generateContent?key=' . $this->apiKey, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $jsonPayload,
+            ]);
+
+            if ($response->getStatusCode() !== 200) {
+                $errorData = $response->toArray(false);
+                $errorMessage = $errorData['error']['message'] ?? 'Unknown Gemini error';
+                throw new AiImageGenerationException('Gemini prompt generation error: ' . $errorMessage);
+            }
+
+            $data = $response->toArray(false);
+
+            // Extract text response from candidates
+            $candidates = $data['candidates'] ?? [];
+            if (!empty($candidates)) {
+                $parts = $candidates[0]['content']['parts'] ?? [];
+                foreach ($parts as $part) {
+                    if (isset($part['text'])) {
+                        return trim($part['text']);
+                    }
+                }
+            }
+
+            throw new AiImageGenerationException('Gemini did not return a text prompt');
+        } catch (AiImageGenerationException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            throw new AiImageGenerationException('Gemini prompt generation failed: ' . $e->getMessage(), 0, $e);
+        }
+    }
+
     public function generatePortrait(string $prompt, string $size = '1024x1024', ?string $model = null): string
     {
         if (!$this->apiKey) {
@@ -68,16 +125,14 @@ class GeminiProvider implements AiImageProviderInterface
 
         $targetModel = $model ?? $this->model;
 
-        // Enhance prompt to be more descriptive and avoid silent filtering
-        if (!str_contains(strtolower($prompt), 'portrait')) {
-            $prompt = 'A realistic portrait of ' . $prompt;
-        }
+        // First, generate an optimized prompt using the text model
+        $optimizedPrompt = $this->generateOptimizedPrompt($prompt);
 
         if ($this->isGeminiModel($targetModel)) {
-            return $this->generateWithGeminiApi($prompt, $targetModel);
+            return $this->generateWithGeminiApi($optimizedPrompt, $targetModel);
         }
 
-        return $this->generateWithImagenApi($prompt, $targetModel);
+        return $this->generateWithImagenApi($optimizedPrompt, $targetModel);
     }
 
     /**
