@@ -1,3 +1,10 @@
+# [2.28.0](https://github.com/CesarScur/reliquary/compare/v2.27.0...v2.28.0) (2026-01-08)
+
+
+### Features
+
+* **ai-image:** enhance GeminiProvider with optimized prompt generation ([9779e48](https://github.com/CesarScur/reliquary/commit/9779e487be57dd3d472331637cc8d7c7b4cbb759))
+
 # [2.27.0](https://github.com/CesarScur/reliquary/compare/v2.26.0...v2.27.0) (2026-01-08)
 
 
