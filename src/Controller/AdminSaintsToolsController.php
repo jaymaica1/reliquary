@@ -52,10 +52,13 @@ class AdminSaintsToolsController extends AbstractController
                 ->setParameter('searchTerm', '%' . $searchTerm . '%');
         }
             
-        $query = $queryBuilder
-            ->orderBy('s.featured', 'DESC')
-            ->addOrderBy('s.name', 'ASC')
-            ->getQuery();
+        if (!$request->query->get('sort')) {
+            $queryBuilder
+                ->orderBy('s.featured', 'DESC')
+                ->addOrderBy('s.name', 'ASC');
+        }
+            
+        $query = $queryBuilder->getQuery();
         
         $pagination = $paginator->paginate(
             $query,

@@ -89,12 +89,12 @@
                     <table class="table table-striped table-hover align-middle">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col" width="40">
+                                <th scope="col" style="width: 40px; padding: 20px">
                                     <input type="checkbox" id="select-all-header" class="form-check-input" data-admin-saints-tools-target="selectAllHeader" data-action="change->admin-saints-tools#toggleAll">
                                 </th>
-                                <th scope="col">ID</th>
+                                <th scope="col" class="text-nowrap" >{{ knp_pagination_sortable(pagination, 'ID', 's.id') }}</th>
                                 <th scope="col">{{ 'saint.table.image_link'|trans({}, 'saint') }}</th>
-                                <th scope="col">{{ 'saint.table.name'|trans({}, 'saint') }}</th>
+                                <th scope="col">{{ knp_pagination_sortable(pagination, 'saint.table.name'|trans({}, 'saint'), 's.name') }}</th>
                                 <th scope="col">{{ 'admin.saints.featured.status'|trans({}, 'admin') }}</th>
                                 <th scope="col">{{ 'saint.table.canonical_status'|trans({}, 'saint') }}</th>
                                 <th scope="col">{{ 'saint.table.relics'|trans({}, 'saint') }}</th>
@@ -104,7 +104,7 @@
                         <tbody>
                         {% for saint in pagination %}
                             <tr>
-                                <td>
+                                <td style="width: 40px; padding: 20px">
                                     <input type="checkbox" name="saint_ids[]" value="{{ saint.id }}" class="form-check-input saint-checkbox" form="bulk-form" data-admin-saints-tools-target="checkbox">
                                 </td>
                                 <td>{{ saint.id }}</td>
