@@ -1,3 +1,11 @@
+# [2.29.0](https://github.com/CesarScur/reliquary/compare/v2.28.0...v2.29.0) (2026-01-09)
+
+
+### Features
+
+* **ai-image:** add prompt to config ([9652684](https://github.com/CesarScur/reliquary/commit/96526840fc9f2a7082e2b2a67650084cdc870c6e))
+* **composer:** require ext-fileinfo PHP extension in dependencies ([6d3e597](https://github.com/CesarScur/reliquary/commit/6d3e5976c8b32ccc6eef46494dfc9f7c38de0ce0))
+
 # [2.28.0](https://github.com/CesarScur/reliquary/compare/v2.27.0...v2.28.0) (2026-01-08)
 
 
