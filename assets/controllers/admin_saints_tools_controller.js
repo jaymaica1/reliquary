@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['checkbox', 'selectAll', 'selectAllHeader', 'bulkForm', 'bulkImageForm', 'bulkActionInput', 'providerSelector'];
+    static targets = ['checkbox', 'selectAll', 'selectAllHeader', 'bulkForm', 'bulkImageForm', 'bulkActionInput'];
     static values = {
         confirmFeature: String,
         confirmUnfeature: String,
@@ -71,15 +71,8 @@ export default class extends Controller {
             btn.disabled = true;
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${this.loadingTextValue}`;
 
-            const provider = this.providerSelectorTarget.value;
             const form = this.bulkImageFormTarget;
             form.innerHTML = ''; // clear previous
-
-            const providerInput = document.createElement('input');
-            providerInput.type = 'hidden';
-            providerInput.name = 'ai_provider';
-            providerInput.value = provider;
-            form.appendChild(providerInput);
 
             checkedBoxes.forEach(cb => {
                 const hiddenInput = document.createElement('input');
@@ -97,23 +90,7 @@ export default class extends Controller {
         const form = event.currentTarget;
         const btn = form.querySelector('.generate-image-btn');
         
-        // Confirmation is handled by onclick on the button itself currently, 
-        // but Stimulus can handle it if we want to be cleaner.
-        // For now, let's just add the loading state and provider.
-        
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-        const provider = this.providerSelectorTarget.value;
-        let providerInput = form.querySelector('input[name="ai_provider"]');
-        
-        if (!providerInput) {
-            providerInput = document.createElement('input');
-            providerInput.type = 'hidden';
-            providerInput.name = 'ai_provider';
-            form.appendChild(providerInput);
-        }
-        
-        providerInput.value = provider;
     }
 }

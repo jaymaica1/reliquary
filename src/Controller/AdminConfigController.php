@@ -23,6 +23,7 @@ class AdminConfigController extends AbstractController
     {
         $currentProvider = $configurationService->get('ai_image_provider', AiImageService::PROVIDER_OPENAI);
         $currentModel = $configurationService->get('ai_image_model');
+        $currentPrompt = $configurationService->get('ai_image_prompt', '{name}');
 
         $providersJson = [];
         foreach ($providers as $provider) {
@@ -34,6 +35,7 @@ class AdminConfigController extends AbstractController
             'providers_json' => json_encode($providersJson),
             'currentProvider' => $currentProvider,
             'currentModel' => $currentModel,
+            'currentPrompt' => $currentPrompt,
         ]);
     }
 
@@ -42,12 +44,16 @@ class AdminConfigController extends AbstractController
     {
         $provider = $request->request->get('ai_provider');
         $model = $request->request->get('ai_model');
+        $prompt = $request->request->get('ai_prompt');
 
         if ($provider) {
             $configurationService->set('ai_image_provider', $provider, 'ai');
         }
         if ($model) {
             $configurationService->set('ai_image_model', $model, 'ai');
+        }
+        if ($prompt !== null) {
+            $configurationService->set('ai_image_prompt', $prompt, 'ai');
         }
 
         $this->addFlash('success', 'AI configuration updated successfully.');

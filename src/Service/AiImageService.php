@@ -21,10 +21,13 @@ class AiImageService
     /**
      * @throws AiImageGenerationException
      */
-    public function generatePortrait(string $prompt, string $size = '1024x1024', ?string $provider = null): string
+    public function generatePortrait(string $name, string $size = '1024x1024'): string
     {
-        $provider = $provider ?? $this->configurationService->get('ai_image_provider', self::PROVIDER_OPENAI);
+        $provider = $this->configurationService->get('ai_image_provider', self::PROVIDER_OPENAI);
         $model = $this->configurationService->get('ai_image_model');
+        $promptTemplate = $this->configurationService->get('ai_image_prompt', '{name}');
+
+        $prompt = str_replace('{name}', $name, $promptTemplate);
 
         foreach ($this->providers as $providerInstance) {
             if ($providerInstance->supports($provider)) {

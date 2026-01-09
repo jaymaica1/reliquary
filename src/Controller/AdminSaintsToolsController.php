@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Saint;
+use App\Exception\AiImageGenerationException;
 use App\Repository\SaintRepository;
 use App\Service\AiImageService;
 use App\Service\ConfigurationService;
@@ -81,20 +82,13 @@ class AdminSaintsToolsController extends AbstractController
         ImageService $imageService,
         EntityManagerInterface $entityManager,
         Request $request,
-        ConfigurationService $configurationService,
         SaintExtension $saintExtension
     ): Response {
-        $prompt = $request->request->get('prompt');
-        $provider = $request->request->get('ai_provider', $configurationService->get('ai_image_provider', AiImageService::PROVIDER_OPENAI));
-
-
-        if (!$prompt) {
-            $prompt = $saintExtension->formatSaintName($saint, 'pt_BR');
-        }
+        $saintName = $saintExtension->formatSaintName($saint, 'pt_BR');
 
         try {
-            $imageUrl = $aiImageService->generatePortrait($prompt, '1024x1024', $provider);
-        } catch (\App\Exception\AiImageGenerationException $e) {
+            $imageUrl = $aiImageService->generatePortrait($saintName, '1024x1024');
+        } catch (AiImageGenerationException $e) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.image_generation_failed', [
                 '%name%' => $saint->getName(),
                 '%error%' => $e->getMessage()
@@ -134,7 +128,6 @@ class AdminSaintsToolsController extends AbstractController
         SaintExtension $saintExtension
     ): Response {
         $saintIds = $request->request->all('saint_ids');
-        $provider = $request->request->get('ai_provider', AiImageService::PROVIDER_OPENAI);
 
         if (empty($saintIds)) {
             $this->addFlash('error', $this->translator->trans('admin.saints.tools.flash.bulk_error', [], 'admin'));
@@ -146,10 +139,10 @@ class AdminSaintsToolsController extends AbstractController
         $failCount = 0;
 
         foreach ($saints as $saint) {
-            $prompt = $saintExtension->formatSaintName($saint, 'pt_BR');
+            $saintName = $saintExtension->formatSaintName($saint, 'pt_BR');
 
             try {
-                $imageUrl = $aiImageService->generatePortrait($prompt, '1024x1024', $provider);
+                $imageUrl = $aiImageService->generatePortrait($saintName, '1024x1024');
 
                 // Remove existing images if any
                 foreach ($saint->getImages() as $existingImage) {

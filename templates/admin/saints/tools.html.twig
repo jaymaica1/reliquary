@@ -50,13 +50,6 @@
                         </div>
 
                         <div class="ms-auto d-flex align-items-center gap-3">
-                            <div class="d-flex align-items-center gap-2">
-                                <label for="ai-provider-selector" class="small fw-bold text-muted">{{ 'admin.saints.tools.ai_provider'|trans({}, 'admin') }}:</label>
-                                <select id="ai-provider-selector" class="form-select form-select-sm" style="width: auto;" data-admin-saints-tools-target="providerSelector">
-                                    <option value="openai" {% if defaultProvider == 'openai' %}selected{% endif %}>OpenAI (DALL-E 3)</option>
-                                    <option value="gemini" {% if defaultProvider == 'gemini' %}selected{% endif %}>Google (Gemini/Imagen)</option>
-                                </select>
-                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="select-all" data-admin-saints-tools-target="selectAll" data-action="change->admin-saints-tools#toggleAll">
                                 <label class="form-check-label" for="select-all">

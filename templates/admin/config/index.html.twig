@@ -32,6 +32,12 @@
                             </select>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="ai_prompt" class="form-label">Default Prompt</label>
+                            <textarea name="ai_prompt" id="ai_prompt" class="form-control" rows="3" placeholder="e.g. A portrait of {name} in a classical style">{{ currentPrompt }}</textarea>
+                            <div class="form-text">Use <code>{name}</code> as a placeholder for the saint's name.</div>
+                        </div>
+
                         <div class="mb-3 p-3 bg-light border rounded" data-admin-config-target="pricingContainer" style="display: none;">
                             <small class="text-muted d-block mb-1">Estimated Pricing:</small>
                             <span data-admin-config-target="pricing" class="fw-bold text-primary"></span>
