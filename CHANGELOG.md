@@ -1,3 +1,10 @@
+# [2.30.0](https://github.com/CesarScur/reliquary/compare/v2.29.0...v2.30.0) (2026-01-10)
+
+
+### Features
+
+* **admin-saints-tools:** add sortable columns and conditional ordering in tools listing ([39348ed](https://github.com/CesarScur/reliquary/commit/39348edb6d3d311e7d056e73de3982020d1244b0))
+
 # [2.29.0](https://github.com/CesarScur/reliquary/compare/v2.28.0...v2.29.0) (2026-01-09)
 
 
