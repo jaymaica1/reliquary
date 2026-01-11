@@ -51,8 +51,15 @@ class AdminSaintsToolsController extends AbstractController
                 ->andWhere('LOWER(s.name) LIKE LOWER(:searchTerm) OR LOWER(t.name) LIKE LOWER(:searchTerm)')
                 ->setParameter('searchTerm', '%' . $searchTerm . '%');
         }
-            
-        if (!$request->query->get('sort')) {
+
+        if ($request->query->get('sort') === 'has_image') {
+            $queryBuilder
+                ->addSelect('COUNT(i.id) as HIDDEN has_image')
+                ->leftJoin('s.images', 'i')
+                ->groupBy('s.id')
+                ->orderBy('has_image', $request->query->get('direction', 'desc'))
+                ->addOrderBy('s.name', 'ASC');
+        } elseif (!$request->query->get('sort')) {
             $queryBuilder
                 ->orderBy('s.featured', 'DESC')
                 ->addOrderBy('s.name', 'ASC');
@@ -244,6 +251,8 @@ class AdminSaintsToolsController extends AbstractController
         return $this->redirectToRoute('app_admin_saints_tools', [
             'page' => $request->get('page', 1),
             'q' => $request->get('q'),
+            'sort' => $request->get('sort'),
+            'direction' => $request->get('direction'),
         ]);
     }
 }

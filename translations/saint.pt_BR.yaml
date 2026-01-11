@@ -24,7 +24,7 @@ saint:
     name: 'Nome'
     url: 'Fonte'
     file: 'Arquivo'
-    canonical_status: 'Status Canônico'
+    canonical_status: 'Status'
     canonization_date: 'Data de Canonização'
     canonizing_pope: 'Papa Canonizante'
     saint_phrase: 'Frase do Santo'

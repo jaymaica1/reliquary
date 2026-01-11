@@ -37,7 +37,7 @@ admin:
       bulk_unfeature: 'Unfeature Selected'
       select_all: 'Select All'
       no_saints: 'No saints found.'
-      status: 'Featured Status'
+      status: 'Featured'
       featured: 'Featured'
       not_featured: 'Not Featured'
       feature: 'Feature'

@@ -22,7 +22,7 @@ saint:
     name: 'Name'
     url: 'URL'
     file: 'File'
-    canonical_status: 'Canonical Status'
+    canonical_status: 'Status'
     feast_date: 'Feast Date'
     canonization_date: 'Canonization Date'
     canonizing_pope: 'Canonizing Pope'

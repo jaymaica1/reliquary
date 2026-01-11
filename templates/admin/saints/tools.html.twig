@@ -63,11 +63,15 @@
                         <input type="hidden" name="action" id="bulk-action" data-admin-saints-tools-target="bulkActionInput">
                         <input type="hidden" name="q" value="{{ searchTerm }}">
                         <input type="hidden" name="page" value="{{ pagination.getCurrentPageNumber() }}">
+                        <input type="hidden" name="sort" value="{{ app.request.query.get('sort') }}">
+                        <input type="hidden" name="direction" value="{{ app.request.query.get('direction') }}">
                     </form>
                     
                     <form method="post" action="{{ path('app_admin_saints_bulk_generate_images') }}" id="bulk-image-form" data-admin-saints-tools-target="bulkImageForm">
                         <input type="hidden" name="q" value="{{ searchTerm }}">
                         <input type="hidden" name="page" value="{{ pagination.getCurrentPageNumber() }}">
+                        <input type="hidden" name="sort" value="{{ app.request.query.get('sort') }}">
+                        <input type="hidden" name="direction" value="{{ app.request.query.get('direction') }}">
                     </form>
                 </div>
             {% endif %}
@@ -92,13 +96,21 @@
                                 <th scope="col" style="width: 40px; padding: 20px">
                                     <input type="checkbox" id="select-all-header" class="form-check-input" data-admin-saints-tools-target="selectAllHeader" data-action="change->admin-saints-tools#toggleAll">
                                 </th>
-                                <th scope="col" class="text-nowrap" >{{ knp_pagination_sortable(pagination, 'ID', 's.id') }}</th>
-                                <th scope="col">{{ 'saint.table.image_link'|trans({}, 'saint') }}</th>
-                                <th scope="col">{{ knp_pagination_sortable(pagination, 'saint.table.name'|trans({}, 'saint'), 's.name') }}</th>
-                                <th scope="col">{{ 'admin.saints.featured.status'|trans({}, 'admin') }}</th>
-                                <th scope="col">{{ 'saint.table.canonical_status'|trans({}, 'saint') }}</th>
-                                <th scope="col">{{ 'saint.table.relics'|trans({}, 'saint') }}</th>
-                                <th scope="col">{{ 'saint.table.actions'|trans({}, 'saint') }}</th>
+                                <th scope="col" class="text-nowrap" style="width: 80px;">{{ knp_pagination_sortable(pagination, 'ID', 's.id') }}</th>
+                                <th scope="col" class="text-nowrap" style="width: 100px;">{{ knp_pagination_sortable(pagination, '<i class="fas fa-image text-muted"></i>'|raw, 'has_image') }}</th>
+                                <th scope="col" class="text-nowrap">{{ knp_pagination_sortable(pagination, 'saint.table.name'|trans({}, 'saint'), 's.name') }}</th>
+                                <th scope="col" class="text-nowrap" style="width: 150px;">{{ knp_pagination_sortable(pagination, 'admin.saints.featured.status'|trans({}, 'admin'), 's.featured') }}</th>
+                                <th scope="col" class="text-nowrap" style="width: 150px;">{{ knp_pagination_sortable(pagination, 'saint.table.canonical_status'|trans({}, 'saint'), 's.canonical_status') }}</th>
+                                <th scope="col" class="text-nowrap" style="width: 100px;">
+                                    <div class="btn btn-light w-100 disabled border-0 bg-light text-dark opacity-100 text-nowrap" style="cursor: default;">
+                                        {{ 'saint.table.relics'|trans({}, 'saint') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="text-nowrap" style="width: 120px;">
+                                    <div class="btn btn-light w-100 disabled border-0 bg-light text-dark opacity-100 text-nowrap" style="cursor: default;">
+                                        {{ 'saint.table.actions'|trans({}, 'saint') }}
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,7 +154,7 @@
                                         <a href="{{ path('app_saint_edit', {'id': saint.id}) }}" class="btn btn-sm btn-outline-primary" title="{{ 'saint.actions.edit'|trans({}, 'saint') }}">
                                             <i class="fas fa-pencil"></i>
                                         </a>
-                                        <form method="post" action="{{ path('app_admin_saints_toggle_featured', {'id': saint.id, 'q': searchTerm, 'page': pagination.getCurrentPageNumber()}) }}" style="display: inline;">
+                                        <form method="post" action="{{ path('app_admin_saints_toggle_featured', {'id': saint.id, 'q': searchTerm, 'page': pagination.getCurrentPageNumber(), 'sort': app.request.query.get('sort'), 'direction': app.request.query.get('direction')}) }}" style="display: inline;">
                                             {% if saint.featured %}
                                                 <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="return confirm('{{ 'admin.saints.featured.confirm_unfeature'|trans({}, 'admin') }}')" title="{{ 'admin.saints.featured.unfeature'|trans({}, 'admin') }}">
                                                     <i class="fas fa-star-o"></i>
@@ -153,7 +165,7 @@
                                                 </button>
                                             {% endif %}
                                         </form>
-                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id, 'q': searchTerm, 'page': pagination.getCurrentPageNumber()}) }}" style="display: inline;" class="generate-image-form" data-action="submit->admin-saints-tools#prepareSingleGeneration">
+                                        <form method="post" action="{{ path('app_admin_saints_generate_image', {'id': saint.id, 'q': searchTerm, 'page': pagination.getCurrentPageNumber(), 'sort': app.request.query.get('sort'), 'direction': app.request.query.get('direction')}) }}" style="display: inline;" class="generate-image-form" data-action="submit->admin-saints-tools#prepareSingleGeneration">
                                             <button type="submit" class="btn btn-sm btn-outline-warning generate-image-btn" onclick="return confirm('{{ 'admin.saints.tools.confirm_generate_image'|trans({}, 'admin') }}')" title="{{ 'admin.saints.tools.generate_image'|trans({}, 'admin') }}">
                                                 <i class="fas fa-wand-magic-sparkles"></i>
                                             </button>
