@@ -1,3 +1,10 @@
+# [2.31.0](https://github.com/CesarScur/reliquary/compare/v2.30.0...v2.31.0) (2026-01-11)
+
+
+### Features
+
+* **admin-saints-tools:** add sortable "has_image" column and improve query handling ([5cbe3f2](https://github.com/CesarScur/reliquary/commit/5cbe3f2a3217e5204058855728a28feb7e21799f))
+
 # [2.30.0](https://github.com/CesarScur/reliquary/compare/v2.29.0...v2.30.0) (2026-01-10)
 
 
