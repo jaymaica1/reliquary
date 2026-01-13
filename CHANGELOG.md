@@ -1,3 +1,10 @@
+# [2.32.0](https://github.com/CesarScur/reliquary/compare/v2.31.0...v2.32.0) (2026-01-13)
+
+
+### Features
+
+* **access-logs:** add path tracking and enhance log visibility ([ecb8d21](https://github.com/CesarScur/reliquary/commit/ecb8d2124e35f23819567362c21be44ea5eb987e))
+
 # [2.31.0](https://github.com/CesarScur/reliquary/compare/v2.30.0...v2.31.0) (2026-01-11)
 
 
