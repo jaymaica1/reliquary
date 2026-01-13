@@ -156,15 +156,16 @@ class AdminAccessLogController extends AbstractController
         $accessLogs = $this->accessLogService->getAccessLogs(1, 10000, $filters);
 
         // Create CSV content
-        $csvContent = "Timestamp,User ID,IP Address (Hashed),Action,Resource,HTTP Method,Response Code,Severity,User Agent\n";
+        $csvContent = "Timestamp,User ID,IP Address (Hashed),Action,Path,Resource,HTTP Method,Response Code,Severity,User Agent\n";
         
         foreach ($accessLogs as $log) {
             $csvContent .= sprintf(
-                "%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+                "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                 $log->getTimestamp()->format('Y-m-d H:i:s'),
                 $this->escapeCsv($log->getUserId() ?? ''),
                 $this->escapeCsv($log->getIpAddress()),
                 $this->escapeCsv($log->getAction()),
+                $this->escapeCsv($log->getPath() ?? ''),
                 $this->escapeCsv($log->getResource() ?? ''),
                 $this->escapeCsv($log->getHttpMethod() ?? ''),
                 $log->getResponseCode() ?? '',

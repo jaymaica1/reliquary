@@ -114,6 +114,7 @@
                                         <th>Count</th>
                                         <th>Percentage</th>
                                         <th>Visual</th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -128,6 +129,15 @@
                                                     <div class="progress-bar-custom"
                                                          style="width: {{ percentage }}%"></div>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('app_admin_access_logs_index', {
+                                                    'action': action,
+                                                    'date_from': filters.dateFrom ?? '',
+                                                    'date_to': filters.dateTo ?? ''
+                                                }) }}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-search me-1"></i>View Logs
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -153,34 +163,37 @@
                         {% set severityCounts = severityCounts|merge({(severity): (severityCounts[severity] ?? 0) + 1}) %}
                     {% endfor %}
 
-                    {% if severityCounts %}
-                        {% for severity, count in severityCounts|sort((a, b) => b - a) %}
-                            {% set percentage = (count / statistics.totalAccesses) * 100 %}
-                            {% set severityClass = {
-                                'info': 'info',
-                                'success': 'success',
-                                'warning': 'warning',
-                                'failure': 'danger'
-                            } %}
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="col-1">
-
-                                <span class="badge bg-{{ severityClass[severity] ?? 'secondary' }} me-2">
-                                    {{ severity|title }}
-                                </span>
-                                </div>
-                                <div class="col-10">
-                                    <div class="progress-custom mt-2">
-                                        <div class="progress-bar-custom" style="width: {{ percentage }}%"></div>
+                        {% if severityCounts %}
+                            <div class="mb-4">
+                                {% for severity, count in severityCounts|sort((a, b) => b - a) %}
+                                    {% set percentage = (count / statistics.totalAccesses) * 100 %}
+                                    {% set severityClass = {
+                                        'info': 'info',
+                                        'success': 'success',
+                                        'warning': 'warning',
+                                        'failure': 'danger'
+                                    } %}
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <a href="{{ path('app_admin_access_logs_index', {
+                                                'severity': severity,
+                                                'date_from': filters.dateFrom ?? '',
+                                                'date_to': filters.dateTo ?? ''
+                                            }) }}" class="text-decoration-none">
+                                                <span class="badge bg-{{ severityClass[severity] ?? 'secondary' }}">
+                                                    {{ severity|title }}
+                                                </span>
+                                            </a>
+                                            <small class="text-muted">{{ count }} ({{ percentage|round(1) }}%)</small>
+                                        </div>
+                                        <div class="progress-custom">
+                                            <div class="progress-bar-custom bg-{{ severityClass[severity] ?? 'secondary' }}" 
+                                                 style="width: {{ percentage }}%"></div>
+                                        </div>
                                     </div>
-
-                                </div>
-                                <div class="col-1 floa">
-                                    <small class="text-muted">{{ count }} ({{ percentage|round(1) }}%)</small>
-                                </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
-                    {% else %}
+                        {% else %}
                         <p class="text-muted">No severity data available.</p>
                     {% endif %}
                 </div>

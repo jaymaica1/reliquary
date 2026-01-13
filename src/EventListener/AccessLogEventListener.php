@@ -56,6 +56,7 @@ class AccessLogEventListener implements EventSubscriberInterface
         $metadata = [
             'route' => $route, // Route is controlled by application, should be safe
             'method' => $request->getMethod(), // HTTP method is controlled, should be safe
+            'path' => $request->getPathInfo(),
             'response_code' => $response->getStatusCode(),
             'user_agent' => $userAgent ? $this->sanitizeString($userAgent) : null,
         ];

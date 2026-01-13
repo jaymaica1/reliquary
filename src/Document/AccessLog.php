@@ -62,6 +62,10 @@ class AccessLog
     #[Assert\Length(max: 64)] // SHA-256 hash length
     private ?string $sessionHash = null;
 
+    #[ODM\Field(type: 'string')]
+    #[Assert\Length(max: 2048)]
+    private ?string $path = null;
+
     public function __construct()
     {
         $this->timestamp = new DateTime();
@@ -205,6 +209,17 @@ class AccessLog
     {
         // Session ID is already protected by AccessLogPIIProtection service
         $this->sessionHash = $sessionId;
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(?string $path): self
+    {
+        $this->path = $path ? $this->sanitizeString($path) : null;
         return $this;
     }
 

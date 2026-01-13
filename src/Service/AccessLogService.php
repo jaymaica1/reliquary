@@ -271,6 +271,9 @@ class AccessLogService
         // Set HTTP method
         $accessLog->setHttpMethod($request->getMethod());
 
+        // Set request path
+        $accessLog->setPath($request->getPathInfo());
+
         // Set session ID hash if session exists (with PII protection)
         if ($request->hasSession()) {
             $session = $request->getSession();

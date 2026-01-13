@@ -38,7 +38,7 @@ parameters:
         metadata:
             enabled: true
             strategy: 'sanitize' # Remove sensitive headers, keep safe ones
-            allowed_fields: ['route', 'method', 'response_code']
+            allowed_fields: ['route', 'method', 'response_code', 'path']
             blocked_headers: ['authorization', 'cookie', 'x-auth-token', 'x-api-key']
 
 services:

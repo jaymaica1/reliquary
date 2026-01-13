@@ -146,7 +146,7 @@
                                 <th scope="col">Timestamp</th>
                                 <th scope="col">User</th>
                                 <th scope="col">Action</th>
-                                <th scope="col">Resource</th>
+                                <th scope="col">Path / Resource</th>
                                 <th scope="col">Method</th>
                                 <th scope="col">Response</th>
                                 <th scope="col">Severity</th>
@@ -171,10 +171,16 @@
                                     <code class="small">{{ log.action }}</code>
                                 </td>
                                 <td>
+                                    {% if log.path %}
+                                        <div class="small text-truncate" style="max-width: 200px;" title="{{ log.path }}">
+                                            <span class="text-muted">Path:</span> {{ log.path }}
+                                        </div>
+                                    {% endif %}
                                     {% if log.resource %}
-                                        <span class="small text-truncate d-inline-block" style="max-width: 150px;" 
-                                              title="{{ log.resource }}">{{ log.resource }}</span>
-                                    {% else %}
+                                        <div class="small text-truncate" style="max-width: 200px;" title="{{ log.resource }}">
+                                            <span class="text-muted">Res:</span> {{ log.resource }}
+                                        </div>
+                                    {% elseif not log.path %}
                                         <span class="text-muted">-</span>
                                     {% endif %}
                                 </td>
