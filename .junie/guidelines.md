@@ -40,6 +40,15 @@ This document provides an index to essential information for developers working 
     - Monitoring and Troubleshooting
 12. [Common Issues](docs/common-issues.md)
 
+## AI Execution Guidelines
+
+To ensure the environment consistency, the following rules MUST be followed by the AI when executing commands:
+
+- **PHP Commands**: Always use `docker compose exec app php` instead of local `php`.
+- **Composer Commands**: Always use `docker compose exec app composer` instead of local `composer`.
+- **Symfony Console**: Always use `docker compose exec app bin/console` instead of local `bin/console`.
+- **Other Container Commands**: For any other tool required that is part of the application stack, use `docker compose exec app <command>`.
+
 ## How to Use This Documentation
 
 Each link in the table of contents leads to a detailed document about that specific topic. If you're new to the project, we recommend reading through all the documentation in order. If you're looking for specific information, use the table of contents to navigate to the relevant section.
