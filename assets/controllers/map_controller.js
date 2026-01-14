@@ -15,7 +15,10 @@ export default class extends Controller {
     static values = {
         relics: Array,
         radius: Number,
-        userLocation: { type: Object, default: null }
+        userLocation: { type: Object, default: null },
+        translationTitle: String,
+        translationMessage: String,
+        translationButton: String
     };
 
     connect() {
@@ -24,6 +27,24 @@ export default class extends Controller {
             return;
         }
 
+        // Check for consent before initializing third-party map
+        if (!this.hasPreferenceConsent()) {
+            this.showConsentRequiredMessage();
+            
+            // Listen for consent updates
+            document.addEventListener('cookie-consent:consent-updated', (event) => {
+                if (event.detail.preferences.preferences) {
+                    this.clearConsentMessage();
+                    this.initialize();
+                }
+            });
+            return;
+        }
+
+        this.initialize();
+    }
+
+    initialize() {
         // Load Leaflet CSS
         if (!document.querySelector('link[href*="leaflet.css"]')) {
             const link = document.createElement('link');
@@ -47,6 +68,46 @@ export default class extends Controller {
             // Only request browser geolocation if we don't have it from the backend
             this.requestUserLocation();
         }
+    }
+
+    hasPreferenceConsent() {
+        if (window.cookieConsent) {
+            return window.cookieConsent.preferences === true;
+        }
+        
+        // Fallback to cookie check if window object not yet populated
+        const nameEQ = "cookie_consent=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) {
+                try {
+                    const preferences = JSON.parse(decodeURIComponent(c.substring(nameEQ.length, c.length)));
+                    return preferences.preferences === true;
+                } catch (e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    showConsentRequiredMessage() {
+        this.containerTarget.innerHTML = `
+            <div class="d-flex flex-column align-items-center justify-content-center p-5 bg-light border rounded text-center" style="min-height: 300px;">
+                <i class="fas fa-map-marked-alt fa-3x mb-3 text-secondary"></i>
+                <h5>${this.translationTitleValue || 'Map requires consent'}</h5>
+                <p>${this.translationMessageValue || 'To view the interactive map, please enable "Preferences" in the cookie settings.'}</p>
+                <button class="btn btn-primary btn-sm" data-action="click->cookie-consent#showBanner">
+                    ${this.translationButtonValue || 'Adjust Settings'}
+                </button>
+            </div>
+        `;
+    }
+
+    clearConsentMessage() {
+        this.containerTarget.innerHTML = '';
     }
     
     // Method to center map on a location
@@ -147,6 +208,11 @@ export default class extends Controller {
     }
 
     requestUserLocation() {
+        // Double check consent before using browser geolocation
+        if (!this.hasPreferenceConsent()) {
+            return;
+        }
+
         // Use the UserLocationService to get the user's location
         UserLocationService.getCurrentPosition(
             // Success callback

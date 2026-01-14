@@ -12,19 +12,31 @@ export default class extends Controller {
         // If no specific targets, find all anchor links in the element
         if (!this.hasLinkTarget) {
             this.element.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', this.handleClick.bind(this));
+                const href = anchor.getAttribute('href');
+                if (href !== '#') {
+                    anchor.addEventListener('click', this.handleClick.bind(this));
+                }
             });
         }
     }
 
     handleClick(event) {
+        const href = event.currentTarget.getAttribute('href');
+        if (href === '#' || !href.startsWith('#')) {
+            return;
+        }
+
         event.preventDefault();
-        const target = document.querySelector(event.currentTarget.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        try {
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        } catch (e) {
+            console.warn(`SmoothScroll: Invalid selector "${href}"`, e);
         }
     }
 

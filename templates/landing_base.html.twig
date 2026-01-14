@@ -12,7 +12,7 @@
         {% block importmap %}{{ importmap('landing') }}{% endblock %}
     {% endblock %}
 </head>
-<body data-controller="smooth-scroll fade-in">
+<body data-controller="smooth-scroll fade-in cookie-consent">
     <div class="particles" id="particles" data-controller="particles"></div>
     
     <!-- Navigation -->
@@ -90,6 +90,10 @@
                 <a href="{{ path('app_privacy_policy') }}">{{ 'footer.privacy'|trans({}, 'landing') }}</a>
                 <a href="{{ path('app_terms_of_use') }}">{{ 'footer.terms'|trans({}, 'landing') }}</a>
                 <a href="{{ path('app_about') }}#authentication">{{ 'footer.authentication'|trans({}, 'landing') }}</a>
+                <a href="#" data-action="click->cookie-consent#showBanner">
+                    <i class="fas fa-cookie-bite me-1"></i>
+                    {{ 'common.cookie_consent.settings'|trans({}, 'common') }}
+                </a>
                 <a href="{{ path('app_contact') }}">{{ 'footer.support'|trans({}, 'landing') }}</a>
             </div>
             <div class="footer-divider"></div>
@@ -98,5 +102,6 @@
             </p>
         </div>
     </footer>
+    {% include '_cookie_banner.html.twig' %}
 </body>
 </html>

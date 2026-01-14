@@ -11,7 +11,7 @@
         {% block importmap %}{{ importmap('admin') }}{% endblock %}
     {% endblock %}
 </head>
-<body id="admin" data-controller="admin-base">
+<body id="admin" data-controller="admin-base cookie-consent">
     {{ include('admin/_navbar.html.twig') }}
     <!-- Main Content -->
     <div class="main-content" id="mainContent" data-admin-base-target="mainContent">
@@ -46,6 +46,11 @@
                         &copy; {{ "now"|date("Y") }} {{ 'common.reliquary'|trans({}, 'common') }}
                     </div>
                     <div>
+                        <a href="#" class="text-muted text-decoration-none" data-action="click->cookie-consent#showBanner">
+                            <i class="fas fa-cookie-bite me-1"></i>
+                            {{ 'common.cookie_consent.settings'|trans({}, 'common') }}
+                        </a>
+                        <span class="mx-2">|</span>
                         Reliquary v{{ app_version }}
                     </div>
                 </div>
@@ -55,5 +60,6 @@
 
     {% block footer_javascripts %}
     {% endblock %}
+    {% include '_cookie_banner.html.twig' %}
 </body>
 </html>

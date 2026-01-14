@@ -54,6 +54,9 @@
         {% if location_data and relics_for_map|length > 0 %}
             <div class="map-container-wrapper mb-4" 
                  data-controller="map" 
+                 data-map-translation-title-value="{{ 'common.cookie_consent.map_consent.title'|trans({}, 'common') }}"
+                 data-map-translation-message-value="{{ 'common.cookie_consent.map_consent.message'|trans({}, 'common') }}"
+                 data-map-translation-button-value="{{ 'common.cookie_consent.map_consent.button'|trans({}, 'common') }}"
                  data-map-relics-value="{{ relics_for_map|json_encode }}"
                  data-map-radius-value="{{ distance }}"
                  {% if location_data %}

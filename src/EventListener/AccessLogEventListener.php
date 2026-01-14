@@ -5,6 +5,7 @@ namespace App\EventListener;
 use App\Service\AccessLogService;
 use App\Service\AccessLogPIIProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -37,10 +38,16 @@ class AccessLogEventListener implements EventSubscriberInterface
         }
 
         $request = $event->getRequest();
+
+        // Check for cookie consent if it's not a critical system route
+        $route = $request->attributes->get('_route');
+        if (!$this->hasAnalyticsConsent($request) && !$this->isCriticalRoute($route)) {
+            return;
+        }
+
         $response = $event->getResponse();
 
         // Skip logging for certain routes to avoid noise
-        $route = $request->attributes->get('_route');
         if ($this->shouldSkipLogging($request, $route)) {
             return;
         }
@@ -79,7 +86,46 @@ class AccessLogEventListener implements EventSubscriberInterface
         );
     }
 
-    private function shouldSkipLogging(\Symfony\Component\HttpFoundation\Request $request, ?string $route): bool
+    private function hasAnalyticsConsent(Request $request): bool
+    {
+        $consentCookie = $request->cookies->get('cookie_consent');
+        if (!$consentCookie) {
+            return false;
+        }
+
+        try {
+            $preferences = json_decode($consentCookie, true);
+            return isset($preferences['analytics']) && $preferences['analytics'] === true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function isCriticalRoute(?string $route): bool
+    {
+        if (!$route) {
+            return false;
+        }
+
+        // List of routes that should always be logged for security/audit purposes
+        $criticalRoutes = [
+            'app_login',
+            'app_logout',
+            'app_register',
+            'app_admin_', // All admin routes
+            'app_profile_delete',
+        ];
+
+        foreach ($criticalRoutes as $criticalRoute) {
+            if (str_starts_with($route, $criticalRoute)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function shouldSkipLogging(Request $request, ?string $route): bool
     {
         // 1) Skip known internal/maintenance routes by name when present
         if ($route) {

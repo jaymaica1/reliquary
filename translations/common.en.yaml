@@ -68,3 +68,24 @@ common:
   pagination:
     of: 'of'
     items: 'items'
+  cookie_consent:
+    message: 'We use cookies to ensure you get the best experience on our website.'
+    accept: 'Accept All'
+    accept_essential: 'Accept Essential'
+    settings: 'Settings'
+    learn_more: 'Learn More'
+    save_preferences: 'Save Preferences'
+    categories:
+      essential:
+        title: 'Essential'
+        description: 'Necessary for the website to function (session, security).'
+      analytics:
+        title: 'Analytics'
+        description: 'Help us understand how visitors interact with the website.'
+      preferences:
+        title: 'Preferences'
+        description: 'Allow the website to remember choices you make (language, theme).'
+    map_consent:
+      title: 'Map requires consent'
+      message: 'To view the interactive map, please enable "Preferences" in the cookie settings.'
+      button: 'Adjust Settings'
