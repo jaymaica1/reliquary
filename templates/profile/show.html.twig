@@ -159,6 +159,53 @@
                         </li>
                     </ul>
                 </div>
+
+                {# GDPR Section #}
+                <div class="profile-card">
+                    <h5 class="profile-card-title">{{ 'gdpr.title'|trans({}, 'profile') }}</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="d-flex flex-column h-100">
+                                <h6 class="profile-list-label mb-0">{{ 'gdpr.export_data'|trans({}, 'profile') }}</h6>
+                                <p class="profile-list-value small flex-grow-1">{{ 'gdpr.export_help'|trans({}, 'profile') }}</p>
+                                <a href="{{ path('app_profile_export') }}" class="btn-action btn-outline-action mt-2">
+                                    <i class="fas fa-download"></i> {{ 'gdpr.export_data'|trans({}, 'profile') }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="d-flex flex-column h-100">
+                                <h6 class="profile-list-label text-danger mb-0">{{ 'gdpr.delete_account'|trans({}, 'profile') }}</h6>
+                                <p class="profile-list-value small flex-grow-1">{{ 'gdpr.delete_warning'|trans({}, 'profile') }}</p>
+                                <button type="button" class="btn-action btn-danger-action mt-2" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                                    <i class="fas fa-trash"></i> {{ 'gdpr.delete_account'|trans({}, 'profile') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Delete Account Modal #}
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border-danger">
+                <div class="modal-header border-danger">
+                    <h5 class="modal-title text-danger" id="deleteAccountModalLabel">{{ 'gdpr.delete_account'|trans({}, 'profile') }}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ 'gdpr.delete_warning'|trans({}, 'profile') }}</p>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel'|trans({}, 'profile') }}</button>
+                    <form action="{{ path('app_profile_delete') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete_account') }}">
+                        <button type="submit" class="btn btn-danger">{{ 'gdpr.confirm_delete'|trans({}, 'profile') }}</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

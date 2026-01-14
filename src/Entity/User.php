@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ImageOw
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $geolocationTimestamp = null;
 
+    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    private bool $allowGeolocationStorage = true;
+
     /**
      * @var Collection<int, Relic>
      */
@@ -292,5 +295,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ImageOw
     public function getProfileImage(): ?UserImage
     {
         return $this->images->isEmpty() ? null : $this->images->first();
+    }
+
+    public function isAllowGeolocationStorage(): bool
+    {
+        return $this->allowGeolocationStorage;
+    }
+
+    public function setAllowGeolocationStorage(bool $allowGeolocationStorage): static
+    {
+        $this->allowGeolocationStorage = $allowGeolocationStorage;
+
+        return $this;
     }
 }

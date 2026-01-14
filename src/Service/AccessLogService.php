@@ -129,6 +129,26 @@ class AccessLogService
     }
 
     /**
+     * Log GDPR consent events anonymously
+     */
+    public function logConsentEvent(
+        string $action,
+        array $preferences,
+        ?Request $request = null
+    ): void {
+        // We log consent events without userId to remain anonymous
+        // The IP and session hash are already handled by logAccess which calls extractRequestInfo
+        // which uses AccessLogPIIProtection to hash/mask them.
+        $this->logAccess(
+            "gdpr.consent.{$action}",
+            $request,
+            'GDPR_Consent',
+            ['preferences' => $preferences],
+            'info'
+        );
+    }
+
+    /**
      * Get access logs with pagination and filtering
      */
     public function getAccessLogs(

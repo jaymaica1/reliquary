@@ -1,0 +1,96 @@
+<div class="cookie-consent-banner d-none" 
+     data-cookie-consent-target="banner"
+     id="cookie-consent-banner">
+    <div class="container py-3">
+        <div class="row align-items-center">
+            <div class="col-md-7 col-lg-8 cookie-consent-message mb-3 mb-md-0">
+                {{ 'common.cookie_consent.message'|trans({}, 'common') }}
+                <a href="{{ path('app_privacy_policy') }}" class="ms-2 text-decoration-underline text-white">
+                    {{ 'common.cookie_consent.learn_more'|trans({}, 'common') }}
+                </a>
+            </div>
+            <div class="col-md-5 col-lg-4 text-md-end cookie-consent-actions">
+                <button class="btn btn-outline-light btn-sm px-3 me-2" 
+                        data-action="click->cookie-consent#toggleSettings">
+                    {{ 'common.cookie_consent.settings'|trans({}, 'common') }}
+                </button>
+                <button class="btn btn-primary btn-sm px-4" 
+                        data-action="click->cookie-consent#acceptAll">
+                    {{ 'common.cookie_consent.accept'|trans({}, 'common') }}
+                </button>
+            </div>
+        </div>
+
+        <div class="cookie-settings d-none mt-3 pt-3 border-top border-secondary" data-cookie-consent-target="settings">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="essential" id="cookie-essential" checked disabled>
+                        <label class="form-check-label" for="cookie-essential">
+                            <strong>{{ 'common.cookie_consent.categories.essential.title'|trans({}, 'common') }}</strong>
+                        </label>
+                        <div class="small text-light-50">{{ 'common.cookie_consent.categories.essential.description'|trans({}, 'common') }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="analytics" id="cookie-analytics" data-cookie-consent-target="category">
+                        <label class="form-check-label" for="cookie-analytics">
+                            <strong>{{ 'common.cookie_consent.categories.analytics.title'|trans({}, 'common') }}</strong>
+                        </label>
+                        <div class="small text-light-50">{{ 'common.cookie_consent.categories.analytics.description'|trans({}, 'common') }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="preferences" id="cookie-preferences" data-cookie-consent-target="category">
+                        <label class="form-check-label" for="cookie-preferences">
+                            <strong>{{ 'common.cookie_consent.categories.preferences.title'|trans({}, 'common') }}</strong>
+                        </label>
+                        <div class="small text-light-50">{{ 'common.cookie_consent.categories.preferences.description'|trans({}, 'common') }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-2">
+                <button class="btn btn-outline-light btn-sm px-4 me-2" data-action="click->cookie-consent#acceptEssential">
+                    {{ 'common.cookie_consent.accept_essential'|trans({}, 'common') }}
+                </button>
+                <button class="btn btn-primary btn-sm px-4" data-action="click->cookie-consent#savePreferences">
+                    {{ 'common.cookie_consent.save_preferences'|trans({}, 'common') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(33, 37, 41, 0.98);
+    color: white;
+    z-index: 1050;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.cookie-consent-message {
+    font-size: 0.9rem;
+}
+
+.text-light-50 {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 767.98px) {
+    .cookie-consent-message {
+        text-align: center;
+    }
+    .cookie-consent-actions {
+        text-align: center;
+    }
+}
+</style>

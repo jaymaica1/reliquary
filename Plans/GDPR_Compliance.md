@@ -20,25 +20,27 @@ This document outlines the steps required to achieve full GDPR compliance for th
     - Ensure non-essential scripts only load *after* consent is granted for their specific category.
     - Implemented conditional loading for Leaflet maps and Geolocation based on "Preferences" consent.
     - Implemented conditional Server-side Access Logging based on "Analytics" consent (with fallback for critical routes).
-- [ ] **Consent Logging:**
+- [✓] **Consent Logging:**
     - Maintain an anonymous log of when consent was given/withdrawn (for accountability).
+    - Implemented anonymous logging via AccessLogService and GDPRController.
 
 ## 2. Data Subject Rights (User Control)
 ### Current Status
 - Users can update their username/email.
-- No automated way to export or delete all data.
+- Data export and account deletion implemented.
+- Geolocation storage opt-out implemented.
 
 ### Tasks
-- [ ] **Right to Access & Portability (Data Export):**
+- [✓] **Right to Access & Portability (Data Export):**
     - Implement a service to aggregate all user-related data (Profile, Relics created, Images uploaded, Geolocation history).
     - Create a secure route `/profile/export` to download this data in JSON/CSV format.
-- [ ] **Right to Erasure (Account Deletion):**
+- [✓] **Right to Erasure (Account Deletion):**
     - Implement a "Delete My Account" feature in the user profile.
     - Ensure "Cascade Delete" or anonymization is correctly handled for:
         - Relics (Should they be deleted or assigned to a "System" user?).
         - Images.
         - Geolocation logs.
-- [ ] **Right to Object/Restict Processing:**
+- [✓] **Right to Object/Restict Processing:**
     - Add toggles in user settings to opt-out of specific data processing (e.g., "Do not store my geolocation").
 
 ## 3. Data Minimization & Privacy by Design

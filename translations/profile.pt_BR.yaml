@@ -13,3 +13,13 @@ image:
 save: 'Salvar'
 cancel: 'Cancelar'
 success: 'Perfil atualizado com sucesso'
+gdpr:
+  title: 'Dados e Privacidade'
+  export_data: 'Exportar Meus Dados'
+  export_help: 'Baixe um arquivo JSON contendo todos os seus dados pessoais armazenados nesta plataforma.'
+  delete_account: 'Excluir Minha Conta'
+  delete_warning: 'Esta ação é permanente e não pode ser desfeita. Todas as suas informações pessoais serão excluídas e suas contribuições (relíquias) serão anonimizadas.'
+  confirm_delete: 'Eu entendo, excluir minha conta'
+  allow_geolocation: 'Armazenar minha geolocalização'
+  allow_geolocation_help: 'Se desativado, sua última posição conhecida será apagada e nenhuma nova posição será salva.'
+account_deleted: 'Sua conta e dados pessoais foram excluídos com sucesso.'

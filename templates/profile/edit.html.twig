@@ -162,6 +162,17 @@
                         {{ form_errors(form.email) }}
                     </div>
 
+                    <div class="profile-form-group mt-4 p-3 border border-warning rounded">
+                        <h6 class="text-warning mb-3"><i class="fas fa-shield-halved"></i> {{ 'gdpr.title'|trans({}, 'profile') }}</h6>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.allowGeolocationStorage) }}
+                            {{ form_label(form.allowGeolocationStorage) }}
+                            {% if form.allowGeolocationStorage.vars.help %}
+                                <div class="profile-form-help">{{ form.allowGeolocationStorage.vars.help }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
                     <div class="profile-form-actions">
                         <a href="{{ path('app_profile_show') }}" class="btn-action btn-outline">
                             <i class="fas fa-times"></i>

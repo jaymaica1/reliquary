@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -55,6 +56,14 @@ class ProfileType extends AbstractType
                 ],
                 'help' => $this->translator->trans('image.help', [], 'profile'),
                 'translation_domain' => false,
+            ])
+            ->add('allowGeolocationStorage', CheckboxType::class, [
+                'required' => false,
+                'label' => $this->translator->trans('gdpr.allow_geolocation', [], 'profile'),
+                'translation_domain' => false,
+                'attr' => ['class' => 'form-check-input'],
+                'label_attr' => ['class' => 'form-check-label'],
+                'help' => $this->translator->trans('gdpr.allow_geolocation_help', [], 'profile'),
             ]);
     }
 
