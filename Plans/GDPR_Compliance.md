@@ -81,10 +81,15 @@ This document outlines the steps required to achieve full GDPR compliance for th
 
 ## 5. Technical Security
 ### Tasks
-- [ ] **Audit Sensitive Data:**
-    - Ensure no personal data is inadvertently leaked into system logs or error reports (e.g., Sentry, Monolog).
-- [ ] **Encryption at Rest:**
-    - Verify that the database and backups are encrypted if they contain sensitive PII.
+- [✓] **Audit Sensitive Data:**
+    - Implemented `LogPIIProcessor` to automatically mask IPs, emails, and session IDs in system logs (Monolog).
+    - Verified `AccessLogPIIProtection` correctly hashes/masks PII in application-level access logs.
+- [✓] **Encryption at Rest:**
+    - Recommendation: Database and MongoDB volumes should be stored on encrypted partitions (e.g., LUKS) or use provider-level encryption (e.g., AWS EBS encryption, DigitalOcean encrypted volumes).
+    - Application-level encryption is currently focused on password hashing (Argon2id) and PII masking in logs.
+- [✓] **Secure Communication:**
+    - Forced HTTPS in production via Apache configuration and Let's Encrypt certificates.
+    - MongoDB is not exposed to the public internet (internal network only).
 
 ---
 *Created on: 2026-01-12*

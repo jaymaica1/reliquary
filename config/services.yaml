@@ -119,6 +119,10 @@ services:
         arguments:
             $uploadDir: '%kernel.project_dir%/public/uploads'
 
+    App\Monolog\LogPIIProcessor:
+        tags:
+            - { name: monolog.processor }
+
     # Access Log PII Protection Service Configuration
     App\Service\AccessLogPIIProtection:
         arguments:
