@@ -1,3 +1,10 @@
+# [2.35.0](https://github.com/CesarScur/reliquary/compare/v2.34.0...v2.35.0) (2026-01-27)
+
+
+### Features
+
+* **image:** update thumbnail dimensions and include new dependency path ([1c07d88](https://github.com/CesarScur/reliquary/commit/1c07d883f6ff65bf1056d6f89b22cbdbadb145c0))
+
 # [2.34.0](https://github.com/CesarScur/reliquary/compare/v2.33.0...v2.34.0) (2026-01-27)
 
 
