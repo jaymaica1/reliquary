@@ -60,6 +60,9 @@ common:
   date_formats:
     feast_date: 'MMM d'
     canonization_date: 'MMM d, y'
+  relic:
+    submit:
+      success: 'Relic submitted successfully and awaiting approval'
   reliquary: 'Holy Relics'
   search:
     placeholder: 'Search...'

@@ -60,6 +60,9 @@ common:
   date_formats:
     feast_date: d 'de' MMMM
     canonization_date: d 'de' MMMM 'de' y
+  relic:
+    submit:
+      success: 'Relíquia enviada com sucesso e aguardando aprovação'
   reliquary: 'Santas Relíquias'
   search:
     placeholder: 'Buscar...'

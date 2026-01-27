@@ -25,18 +25,18 @@ docker compose up -d
 3. Install Composer dependencies:
 
 ```bash
-docker compose exec php composer install
+docker compose exec app composer install
 ```
 
 4. Access the application in your browser:
 
 ```
-http://localhost:8080
+http://localhost:8080 (HTTP) or https://localhost:8443 (HTTPS)
 ```
 
 ### Services
 
-- **Web Server**: http://localhost:8080
+- **Web Server**: http://localhost:8080 / https://localhost:8443
 - **Database**: PostgreSQL (accessible via port 5432)
 - **Mail Server**: Mailpit (accessible via http://localhost:8025)
 
@@ -52,6 +52,10 @@ http://localhost:8080
 
 - PHP configuration can be modified in `docker/app/php.ini`
 - Database configuration can be modified in `.env` file or by setting environment variables
+
+## Documentation
+
+Detailed documentation for developers can be found in the [docs/](docs/) directory.
 
 ## Production Setup
 
@@ -91,8 +95,7 @@ For a complete list of releases and changes, please see the [CHANGELOG.md](CHANG
 
 
 ### To do
-* [ ] Add GDPR
 * [ ] Review app source
-* [x] Created new private repo for prod secrets
-*  [ ] Relic submitted successfully and awaiting approval: missing translation
-*  [ ] Add Relics
+* [ ] Integrate more Saints
+* [ ] Add more relics
+* [ ] Add more translation support for different languages (FR, ES)

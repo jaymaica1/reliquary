@@ -170,7 +170,7 @@ final class RelicController extends AbstractController
             $entityManager->persist($relic);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Relic submitted successfully and awaiting approval');
+            $this->addFlash('success', 'relic.submit.success');
 
             return $this->redirectToRoute('app_relic_index', [], Response::HTTP_SEE_OTHER);
         }
