@@ -1,3 +1,10 @@
+# [2.36.0](https://github.com/CesarScur/reliquary/compare/v2.35.0...v2.36.0) (2026-01-27)
+
+
+### Features
+
+* **thumbnails:** enhance `GenerateThumbnailsCommand` with targeted options and S3 compatibility ([38cc693](https://github.com/CesarScur/reliquary/commit/38cc69341bef87f985c30ff85ac23ab02ea64ef1))
+
 # [2.35.0](https://github.com/CesarScur/reliquary/compare/v2.34.0...v2.35.0) (2026-01-27)
 
 
