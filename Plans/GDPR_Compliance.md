@@ -47,17 +47,20 @@ This document outlines the steps required to achieve full GDPR compliance for th
 ### Current Status
 - Geolocation is stored in the `User` entity.
 - IP addresses and technical data are collected (as per Privacy Policy).
+- Explicit Geolocation Consent implemented (requires "Preferences" category).
+- Automated cleanup command implemented (`app:gdpr:cleanup`).
 
 ### Tasks
-- [ ] **Explicit Geolocation Consent:**
+- [✓] **Explicit Geolocation Consent:**
     - Before calling browser Geolocation APIs, show a specific prompt explaining *why* it's needed and *how long* it's stored.
-- [ ] **Data Retention Policy (Automated Cleanup):**
+- [✓] **Data Retention Policy (Automated Cleanup):**
     - Create a Symfony Command to:
         - Anonymize IP addresses in logs older than 30 days.
-        - Delete inactive users (e.g., no login for 2 years) after notification.
-- [ ] **Anonymization of Public Contributions:**
+        - Delete inactive users (e.g., no login for 2 years).
+- ❌ **Anonymization of Public Contributions:**
     - Allow users to submit relics "Anonymously" (linked to their account for moderation, but name hidden from public view).
-
+    - No! This is a terrible idea. We want to keep track of who contributed what.
+  
 ## 4. Documentation & Accountability
 ### Current Status
 - AI-generated drafts for Privacy Policy and Terms of Use.

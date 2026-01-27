@@ -14,6 +14,20 @@ export default class UserLocationService {
      * @returns {Promise} - A promise that resolves with the position or rejects with an error
      */
     static getCurrentPosition(onSuccess = null, onError = null, options = {}) {
+        // Check for GDPR consent before proceeding
+        const consent = this.getCookie('cookie_consent');
+        let preferences = null;
+        try {
+            preferences = consent ? JSON.parse(consent) : null;
+        } catch (e) {}
+
+        if (!preferences || !preferences.preferences) {
+            const error = new Error('Geolocation requires user consent for preferences');
+            error.code = 'CONSENT_REQUIRED';
+            if (onError) onError(error);
+            return Promise.reject(error);
+        }
+
         // Default options
         const defaultOptions = {
             enableHighAccuracy: true,
@@ -100,5 +114,19 @@ export default class UserLocationService {
             }
             return response.json();
         });
+    }
+
+    /**
+     * Helper to get a cookie value
+     */
+    static getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+        }
+        return null;
     }
 }

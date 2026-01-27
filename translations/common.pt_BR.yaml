@@ -1,5 +1,3 @@
-# This is a stubbed translation file for Portuguese Brazil
-# It will be populated with actual translations in the future
 common:
   welcome: 'Bem-vindo(a)!'
   yes: 'Sim'
@@ -62,15 +60,14 @@ common:
   date_formats:
     feast_date: d 'de' MMMM
     canonization_date: d 'de' MMMM 'de' y
-  pagination:
-    of: 'de'
-    items: 'itens'
   reliquary: 'Santas Relíquias'
   search:
     placeholder: 'Buscar...'
     button: 'Buscar'
     clear: 'Limpar'
-  find_relics: 'Encontre Relíquias'
+  pagination:
+    of: 'de'
+    items: 'itens'
   cookie_consent:
     message: 'Utilizamos cookies para garantir que você tenha a melhor experiência em nosso site.'
     accept: 'Aceitar Todos'
@@ -86,9 +83,9 @@ common:
         title: 'Análise'
         description: 'Nos ajudam a entender como os visitantes interagem com o site.'
       preferences:
-        title: 'Preferências'
-        description: 'Permitem que o site lembre de escolhas que você faz (idioma, tema).'
+        title: 'Preferências e Recursos'
+        description: 'Permite recursos avançados como mapas interativos e armazenamento de geolocalização.'
     map_consent:
-      title: 'O mapa requer consentimento'
-      message: 'Para ver o mapa interativo, por favor ative "Preferências" nas configurações de cookies.'
+      title: 'Recursos Interativos'
+      message: 'Para ver o mapa e usar a geolocalização, por favor ative "Preferências e Recursos" nas configurações de cookies.'
       button: 'Ajustar Configurações'

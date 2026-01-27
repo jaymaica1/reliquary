@@ -83,9 +83,9 @@ common:
         title: 'Analytics'
         description: 'Help us understand how visitors interact with the website.'
       preferences:
-        title: 'Preferences'
-        description: 'Allow the website to remember choices you make (language, theme).'
+        title: 'Preferences & Features'
+        description: 'Allow advanced features like interactive maps and geolocation storage.'
     map_consent:
-      title: 'Map requires consent'
-      message: 'To view the interactive map, please enable "Preferences" in the cookie settings.'
+      title: 'Interactive Features'
+      message: 'To view the map and use geolocation, please enable "Preferences & Features" in the cookie settings.'
       button: 'Adjust Settings'

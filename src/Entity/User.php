@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, ImageOwnerInterface
 {
     #[ORM\Id]
@@ -51,8 +52,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ImageOw
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $geolocationTimestamp = null;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $lastLoginAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private bool $allowGeolocationStorage = true;
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     /**
      * @var Collection<int, Relic>
@@ -305,6 +318,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ImageOw
     public function setAllowGeolocationStorage(bool $allowGeolocationStorage): static
     {
         $this->allowGeolocationStorage = $allowGeolocationStorage;
+
+        return $this;
+    }
+
+    public function getLastLoginAt(): ?\DateTimeInterface
+    {
+        return $this->lastLoginAt;
+    }
+
+    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): static
+    {
+        $this->lastLoginAt = $lastLoginAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
