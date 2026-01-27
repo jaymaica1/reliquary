@@ -147,7 +147,7 @@ class ImageService
      * @param string $sourcePath Local path to the source image
      * @param string $thumbnailPath S3 path where the thumbnail should be saved
      */
-    private function generateAndUploadThumbnail(string $sourcePath, string $thumbnailPath): void
+    public function generateAndUploadThumbnail(string $sourcePath, string $thumbnailPath): void
     {
         // Create a temporary file for the thumbnail
         $tempThumbnailPath = tempnam(sys_get_temp_dir(), 'thumb_');
@@ -206,5 +206,10 @@ class ImageService
         $subDir = $hash[0] . '/' . $hash[1];
 
         return $subDir;
+    }
+
+    public function getFilesystem(): FilesystemOperator
+    {
+        return $this->filesystem;
     }
 }

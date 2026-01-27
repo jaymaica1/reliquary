@@ -107,13 +107,7 @@ services:
         arguments:
             $projectDir: '%kernel.project_dir%'
             
-    # Disable GenerateThumbnailsCommand as it's incompatible with S3-based ImageService
-    # The command relies on local filesystem operations and needs complete refactoring
-    # to work with cloud storage. For now, thumbnails are generated automatically
-    # during upload via ImageService.
-    App\Command\GenerateThumbnailsCommand:
-        autowire: false
-        autoconfigure: false
+    App\Command\GenerateThumbnailsCommand: ~
             
     App\Command\MigrateImagesToS3Command:
         arguments:
