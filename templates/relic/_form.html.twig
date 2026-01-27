@@ -1,5 +1,15 @@
 {{ form_start(form, {'attr': {'class': 'relic-main-form', 'novalidate': 'novalidate'}}) }}
 
+{% if not form.vars.valid %}
+    <div class="form-alert-danger">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>
+            <strong>{{ 'relic.form.errors_found'|trans({}, 'relic') }}</strong>
+            <p class="mb-0">{{ 'relic.form.errors_check_fields'|trans({}, 'relic') }}</p>
+        </div>
+    </div>
+{% endif %}
+
 <div class="relic-form-grid">
     <!-- Left Column: Sacred Details -->
     <div class="form-column-section">
@@ -11,29 +21,37 @@
         <div class="form-group">
             <label for="{{ form.saint.vars.id }}">{{ 'relic.form.saint'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.saint_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.saint) }}
-            {{ form_errors(form.saint) }}
+            {{ form_widget(form.saint, {'attr': {'class': (not form.saint.vars.valid ? 'is-invalid' : '')}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.saint) }}
+            </div>
         </div>
 
         <div class="form-group">
             <label for="{{ form.degree.vars.id }}">{{ 'relic.form.degree'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.degree_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.degree) }}
-            {{ form_errors(form.degree) }}
+            {{ form_widget(form.degree, {'attr': {'class': 'form-select ' ~ (not form.degree.vars.valid ? 'is-invalid' : '')}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.degree) }}
+            </div>
         </div>
 
         <div class="form-group">
             <label for="{{ form.description.vars.id }}">{{ 'relic.form.description'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.description_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.description) }}
-            {{ form_errors(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': (not form.description.vars.valid ? 'is-invalid' : '')}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.description) }}
+            </div>
         </div>
 
         <div class="form-group">
             <label for="{{ form.provenance.vars.id }}">{{ 'relic.form.provenance'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.provenance_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.provenance) }}
-            {{ form_errors(form.provenance) }}
+            {{ form_widget(form.provenance, {'attr': {'class': 'form-control ' ~ (not form.provenance.vars.valid ? 'is-invalid' : '')}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.provenance) }}
+            </div>
         </div>
     </div>
 
@@ -47,15 +65,19 @@
         <div class="form-group">
             <label for="{{ form.address.vars.id }}">{{ 'relic.form.address'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.address_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.address) }}
-            {{ form_errors(form.address) }}
+            {{ form_widget(form.address, {'attr': {'class': (not form.address.vars.valid ? 'is-invalid' : '')}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.address) }}
+            </div>
         </div>
 
         <div class="form-group">
             <label for="{{ form.location.vars.id }}">{{ 'relic.form.location'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.location_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.location) }}
-            {{ form_errors(form.location) }}
+            {{ form_widget(form.location, {'attr': {'class': 'form-control ' ~ (not form.location.vars.valid ? 'is-invalid' : '')}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.location) }}
+            </div>
         </div>
 
         {% if relic.images|length > 0 %}
@@ -84,27 +106,31 @@
         <div class="form-group">
             <label for="{{ form.imageFile.vars.id }}">{{ 'relic.form.image'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.image_help'|trans({}, 'relic') }}</p>
-            <div class="image-upload-zone">
-                {{ form_widget(form.imageFile) }}
+            <div class="image-upload-zone {{ not form.imageFile.vars.valid ? 'is-invalid' : '' }}">
+                {{ form_widget(form.imageFile, {'attr': {'class': 'form-control ' ~ (not form.imageFile.vars.valid ? 'is-invalid' : '')}}) }}
             </div>
-            {{ form_errors(form.imageFile) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.imageFile) }}
+            </div>
         </div>
 
         <div class="form-group checkbox-group pii-consent-group">
             <div class="form-check">
-                {{ form_widget(form.pii_consent) }}
+                {{ form_widget(form.pii_consent, {'attr': {'class': 'form-check-input ' ~ (not form.pii_consent.vars.valid ? 'is-invalid' : '')}}) }}
                 {{ form_label(form.pii_consent) }}
             </div>
             <p class="form-help-text">{{ 'relic.form.pii_consent_help'|trans({}, 'relic') }}</p>
-            {{ form_errors(form.pii_consent) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.pii_consent) }}
+            </div>
         </div>
     </div>
 
     <!-- Footer Actions -->
     <div class="relic-form-footer">
         {% if form.vars.errors|length > 0 %}
-            <div class="form-error-message">
-                {{ form_errors(form) }}
+            <div class="form-error-message mb-3">
+                <i class="fas fa-exclamation-circle"></i> {{ form_errors(form) }}
             </div>
         {% endif %}
 

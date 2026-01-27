@@ -75,6 +75,8 @@ relic:
     submit: 'Salvar'
     current_images: 'Imagens Atuais'
     image_of_relic: 'Imagem da relíquia'
+    errors_found: 'Erros de Submissão'
+    errors_check_fields: 'Por favor, revise os campos destacados abaixo e corrija os erros antes de enviar.'
   description_options:
     bone_fragment: 'Fragmento de Osso'
     piece_of_cloth: 'Pedaço de roupa'

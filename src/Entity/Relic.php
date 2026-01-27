@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RelicRepository::class)]
 class Relic implements ImageOwnerInterface
@@ -20,12 +21,15 @@ class Relic implements ImageOwnerInterface
 
     #[ORM\ManyToOne(inversedBy: 'relics')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'relic.form.saint_error')]
     private ?Saint $saint = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $location = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
+    #[Assert\NotBlank(message: 'relic.form.address_error')]
     private ?string $address = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
@@ -51,7 +55,8 @@ class Relic implements ImageOwnerInterface
     private ?string $rejectionReason = null;
 
     #[ORM\Column(length: 1024, nullable: false)]
-    private string $provenance = '';
+    #[Assert\NotBlank]
+    private ?string $provenance = null;
 
     /**
      * @var Collection<int, RelicImage>
@@ -86,7 +91,7 @@ class Relic implements ImageOwnerInterface
         return $this->location;
     }
 
-    public function setLocation(string $location): static
+    public function setLocation(?string $location): static
     {
         $this->location = $location;
 
@@ -189,12 +194,12 @@ class Relic implements ImageOwnerInterface
         return $this;
     }
 
-    public function getProvenance(): string
+    public function getProvenance(): ?string
     {
         return $this->provenance;
     }
 
-    public function setProvenance(string $provenance): static
+    public function setProvenance(?string $provenance): static
     {
         $this->provenance = $provenance;
 

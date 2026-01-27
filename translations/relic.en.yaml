@@ -73,6 +73,8 @@ relic:
     submit: 'Save'
     current_images: 'Current Images'
     image_of_relic: 'Image of relic'
+    errors_found: 'Submission Errors'
+    errors_check_fields: 'Please review the highlighted fields below and correct the errors before submitting.'
   actions:
     view: 'View'
     edit: 'Edit'

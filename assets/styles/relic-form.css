@@ -131,6 +131,46 @@
     color: var(--sacred-white);
 }
 
+/* Form Errors Styling */
+.form-error-message,
+.invalid-feedback {
+    color: #ef4444; /* bright red */
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: block;
+}
+
+.form-error-message ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.relic-form-grid input.is-invalid,
+.relic-form-grid select.is-invalid,
+.relic-form-grid textarea.is-invalid,
+.is-invalid .ts-control {
+    border-color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.05) !important;
+}
+
+.form-alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-alert-danger i {
+    font-size: 1.25rem;
+}
+
 @media (max-width: 850px) {
     .relic-form-grid {
         grid-template-columns: 1fr;

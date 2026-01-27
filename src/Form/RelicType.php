@@ -36,6 +36,7 @@ class RelicType extends AbstractType
                 'help' => 'relic.form.address_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
+                'required' => true,
             ])
             ->add('location', null, [
                 'label' => 'relic.form.location',
@@ -74,6 +75,7 @@ class RelicType extends AbstractType
                 'help' => 'relic.form.saint_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
+                'required' => true,
             ])
             ->add('degree', EnumType::class, [
                 'label' => 'relic.form.degree',
