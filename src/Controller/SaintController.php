@@ -90,7 +90,7 @@ final class SaintController extends AbstractController
             $entityManager->persist($saint);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Saint created successfully');
+            $this->addFlash('success', 'common.saint.created');
             return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -143,7 +143,7 @@ final class SaintController extends AbstractController
             
             $entityManager->flush();
 
-            $this->addFlash('success', 'Saint updated successfully');
+            $this->addFlash('success', 'common.saint.updated');
             return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);
         }
 

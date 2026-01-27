@@ -63,12 +63,23 @@ common:
   relic:
     submit:
       success: 'Relíquia enviada com sucesso e aguardando aprovação'
+    update:
+      success: 'Relíquia atualizada com sucesso'
+    delete:
+      success: 'Relíquia excluída com sucesso'
+    approve:
+      success: 'Relíquia aprovada com sucesso'
+    reject:
+      success: 'Relíquia não aceita'
+    resubmit:
+      success: 'Relíquia atualizada e reenviada para aprovação'
   reliquary: 'Santas Relíquias'
   search:
     placeholder: 'Buscar...'
     button: 'Buscar'
     clear: 'Limpar'
   pagination:
+    info: '%start%-%end% de %total% itens'
     of: 'de'
     items: 'itens'
   cookie_consent:

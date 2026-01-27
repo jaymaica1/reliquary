@@ -100,7 +100,7 @@ class RelicType extends AbstractType
                             'image/png',
                             'image/webp',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid image (JPEG, PNG, WEBP)',
+                        'mimeTypesMessage' => 'relic.form.image_error',
                     ])
                 ],
                 'attr' => [

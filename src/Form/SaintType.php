@@ -20,121 +20,133 @@ class SaintType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Name',
+                'label' => 'saint.form.name',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter the name of the saint',
+                    'placeholder' => 'saint.form.name_placeholder',
                 ],
-                'help' => 'Full name of the saint',
+                'help' => 'saint.form.name_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('url', null, [
-                'label' => 'URL',
+                'label' => 'saint.form.url',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter the URL for the saint',
+                    'placeholder' => 'saint.form.url_placeholder',
                 ],
-                'help' => 'Web address with information about the saint',
+                'help' => 'saint.form.url_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('file', null, [
-                'label' => 'File',
+                'label' => 'saint.form.file',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter the file name',
+                    'placeholder' => 'saint.form.file_placeholder',
                 ],
-                'help' => 'File name associated with the saint',
+                'help' => 'saint.form.file_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('canonical_status', EnumType::class, [
-                'label' => 'Canonical Status',
+                'label' => 'saint.form.canonical_status',
+                'translation_domain' => 'saint',
                 'class' => CanonicalStatus::class,
                 'choice_label' => fn(CanonicalStatus $status) => $status->getLabel(),
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'help' => 'Current canonical status (e.g., Canonization, Beatification)',
+                'help' => 'saint.form.canonical_status_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
                 'required' => false,
             ])
             ->add('canonization_date', DateType::class, [
-                'label' => 'Canonization Date',
+                'label' => 'saint.form.canonization_date',
+                'translation_domain' => 'saint',
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'help' => 'Date when the saint was canonized',
+                'help' => 'saint.form.canonization_date_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
                 'required' => false,
             ])
             ->add('feast_date', DateType::class, [
-                'label' => 'Feast Date',
+                'label' => 'saint.form.feast_date',
+                'translation_domain' => 'saint',
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'help' => 'Date when the saint is celebrated',
+                'help' => 'saint.form.feast_date_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
                 'required' => false,
             ])
             ->add('canonizing_pope', null, [
-                'label' => 'Canonizing Pope',
+                'label' => 'saint.form.canonizing_pope',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter the name of the pope who canonized the saint',
+                    'placeholder' => 'saint.form.canonizing_pope_placeholder',
                 ],
-                'help' => 'Name of the pope who performed the canonization',
+                'help' => 'saint.form.canonizing_pope_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('saint_phrase', null, [
-                'label' => 'Saint Phrase',
+                'label' => 'saint.form.saint_phrase',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter a notable phrase by or about the saint',
+                    'placeholder' => 'saint.form.saint_phrase_placeholder',
                 ],
-                'help' => 'A notable quote or phrase associated with the saint',
+                'help' => 'saint.form.saint_phrase_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('abstract', null, [
-                'label' => 'Abstract',
+                'label' => 'saint.form.abstract',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter a brief description of the saint',
+                    'placeholder' => 'saint.form.abstract_placeholder',
                 ],
-                'help' => 'Brief summary about the saint',
+                'help' => 'saint.form.abstract_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('biography', null, [
-                'label' => 'Biography',
+                'label' => 'saint.form.biography',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter the biography of the saint',
+                    'placeholder' => 'saint.form.biography_placeholder',
                 ],
-                'help' => 'Detailed biography of the saint',
+                'help' => 'saint.form.biography_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('image_link', null, [
-                'label' => 'Image Link',
+                'label' => 'saint.form.image_link',
+                'translation_domain' => 'saint',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Enter the URL for the saint\'s image',
+                    'placeholder' => 'saint.form.image_link_placeholder',
                 ],
-                'help' => 'Web address for an image of the saint',
+                'help' => 'saint.form.image_link_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
             ->add('imageFile', FileType::class, [
-                'label' => 'Saint Image',
+                'label' => 'saint.form.image',
+                'translation_domain' => 'saint',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -145,13 +157,13 @@ class SaintType extends AbstractType
                             'image/png',
                             'image/webp',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid image (JPEG, PNG, WEBP)',
+                        'mimeTypesMessage' => 'saint.form.image_error',
                     ])
                 ],
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'help' => 'Upload an image of the saint (max size: 2MB)',
+                'help' => 'saint.form.image_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])

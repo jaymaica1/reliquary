@@ -40,7 +40,7 @@ final class RelicWorkflowController extends AbstractController
                 try {
                     $workflowService->approve($relic);
                     $entityManager->flush();
-                    $this->addFlash('success', 'Relic approved successfully');
+                    $this->addFlash('success', 'common.relic.approve.success');
                 } catch (\RuntimeException $e) {
                     $this->addFlash('error', $e->getMessage());
                 }
@@ -70,7 +70,7 @@ final class RelicWorkflowController extends AbstractController
                 $reason = $request->getPayload()->getString('rejection_reason');
                 $workflowService->reject($relic, $reason);
                 $entityManager->flush();
-                $this->addFlash('success', 'Relic not accepted');
+                $this->addFlash('success', 'common.relic.reject.success');
             } catch (\RuntimeException $e) {
                 $this->addFlash('error', $e->getMessage());
             }
@@ -116,7 +116,7 @@ final class RelicWorkflowController extends AbstractController
             try {
                 $workflowService->resubmit($relic);
                 $entityManager->flush();
-                $this->addFlash('success', 'Relic updated and resubmitted for approval');
+                $this->addFlash('success', 'common.relic.resubmit.success');
                 return $this->redirectToRoute('app_relic_index', [], Response::HTTP_SEE_OTHER);
             } catch (\RuntimeException $e) {
                 $this->addFlash('error', $e->getMessage());

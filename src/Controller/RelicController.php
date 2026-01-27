@@ -170,7 +170,7 @@ final class RelicController extends AbstractController
             $entityManager->persist($relic);
             $entityManager->flush();
 
-            $this->addFlash('success', 'relic.submit.success');
+            $this->addFlash('success', 'common.relic.submit.success');
 
             return $this->redirectToRoute('app_relic_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -224,7 +224,7 @@ final class RelicController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Relic updated successfully');
+            $this->addFlash('success', 'common.relic.update.success');
             return $this->redirectToRoute('app_relic_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -242,7 +242,7 @@ final class RelicController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$relic->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($relic);
             $entityManager->flush();
-            $this->addFlash('success', 'Relic deleted successfully');
+            $this->addFlash('success', 'common.relic.delete.success');
         }
 
         return $this->redirectToRoute('app_relic_index', [], Response::HTTP_SEE_OTHER);

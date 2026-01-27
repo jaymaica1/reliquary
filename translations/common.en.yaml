@@ -63,12 +63,23 @@ common:
   relic:
     submit:
       success: 'Relic submitted successfully and awaiting approval'
+    update:
+      success: 'Relic updated successfully'
+    delete:
+      success: 'Relic deleted successfully'
+    approve:
+      success: 'Relic approved successfully'
+    reject:
+      success: 'Relic not accepted'
+    resubmit:
+      success: 'Relic updated and resubmitted for approval'
   reliquary: 'Holy Relics'
   search:
     placeholder: 'Search...'
     button: 'Search'
     clear: 'Clear'
   pagination:
+    info: '%start%-%end% of %total% items'
     of: 'of'
     items: 'items'
   cookie_consent:

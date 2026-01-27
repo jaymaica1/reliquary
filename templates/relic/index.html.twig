@@ -104,7 +104,11 @@
             
             <div class="pagination-wrapper">
                 <div class="pagination-info">
-                    {{ ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1) }}-{{ min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount) }} of {{ pagination.getTotalItemCount }} items
+                    {{ 'common.pagination.info'|trans({
+                        '%start%': (pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1,
+                        '%end%': min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount),
+                        '%total%': pagination.getTotalItemCount
+                    }, 'common') }}
                 </div>
                 <div class="navigation">
                     {{ knp_pagination_render(pagination) }}
