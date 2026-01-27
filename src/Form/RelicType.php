@@ -5,19 +5,15 @@ namespace App\Form;
 use App\Entity\Relic;
 use App\Enum\RelicDegree;
 use App\EventListener\SaintFormListener;
-use App\Form\SaintAutocompleteField;
-use App\Form\AddressAutocompleteType;
-use App\Form\RelicDescriptionAutocompleteType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RelicType extends AbstractType
@@ -113,6 +109,22 @@ class RelicType extends AbstractType
                 'help' => 'relic.form.image_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
+            ])
+            ->add('pii_consent', CheckboxType::class, [
+                'label' => 'relic.form.pii_consent',
+                'translation_domain' => 'relic',
+                'mapped' => false,
+                'required' => true,
+                'data' => true,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'relic.form.pii_consent_error',
+                    ]),
+                ],
+                'help' => 'relic.form.pii_consent_help',
+                'help_attr' => ['class' => 'form-text text-muted'],
+                'label_attr' => ['class' => 'form-check-label'],
+                'attr' => ['class' => 'form-check-input'],
             ])
         ;
     }

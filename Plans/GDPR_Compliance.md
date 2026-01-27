@@ -63,18 +63,20 @@ This document outlines the steps required to achieve full GDPR compliance for th
   
 ## 4. Documentation & Accountability
 ### Current Status
-- AI-generated drafts for Privacy Policy and Terms of Use.
+- Legal documentation updated with contact info and third-party services.
+- Record of Processing Activities (ROPA) created.
+- PII awareness added to submission form.
 
 ### Tasks
-- [ ] **Legal Review & Update:**
+- [✓] **Legal Review & Update:**
     - Update `translations/legal.en.yaml` with accurate contact information for the Data Controller.
     - Specify exact third-party services used (e.g., Map providers, AI providers).
-- [ ] **Data Mapping (Internal Document):**
+- [✓] **Data Mapping (Internal Document):**
     - Create a "Record of Processing Activities" (ROPA) listing:
         - What data is collected.
         - Legal basis (Consent, Contract, Legitimate Interest).
         - Storage location and duration.
-- [ ] **Privacy Notice for Contributors:**
+- [✓] **Privacy Notice for Contributors:**
     - Update the Relic Submission form to include a checkbox: "I understand my contribution will be public and I have removed PII from images/descriptions."
 
 ## 5. Technical Security

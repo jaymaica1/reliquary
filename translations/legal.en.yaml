@@ -4,7 +4,7 @@ privacy:
   last_updated: 'Last Updated: January 4, 2026'
   introduction:
     title: '1. Introduction'
-    content: 'Welcome to Reliquary. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.'
+    content: 'Welcome to Reliquary. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you. The Data Controller for this website is the Reliquary Project Team (contact: privacy@reliquary.example.com).'
   data_collection:
     title: '2. The Data We Collect'
     content: 'We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:'
@@ -13,8 +13,14 @@ privacy:
       contact: 'Contact Data: includes email address.'
       technical: 'Technical Data: includes internet protocol (IP) address, your login data, browser type and version, time zone setting and location.'
       usage: 'Usage Data: includes information about how you use our website and services.'
+  third_party_services:
+    title: '3. Third-Party Services'
+    content: 'We use the following third-party services to provide our features:'
+    items:
+      maps: 'OpenStreetMap & Leaflet: Used for displaying relic locations and address autocomplete.'
+      storage: 'Images are stored locally or via configured cloud providers (see our technical documentation).'
   how_we_use_data:
-    title: '3. How We Use Your Personal Data'
+    title: '4. How We Use Your Personal Data'
     content: 'We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:'
     items:
       registration: 'To register you as a new user.'
@@ -22,10 +28,10 @@ privacy:
       improvement: 'To improve our website, services, and user experience.'
       communication: 'To communicate with you regarding your account or inquiries.'
   data_security:
-    title: '4. Data Security'
+    title: '5. Data Security'
     content: 'We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed.'
   your_rights:
-    title: '5. Your Legal Rights'
+    title: '6. Your Legal Rights'
     content: 'Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to request access, correction, erasure, restriction, transfer, or to object to processing.'
 
 terms:

@@ -89,6 +89,15 @@
             </div>
             {{ form_errors(form.imageFile) }}
         </div>
+
+        <div class="form-group checkbox-group pii-consent-group">
+            <div class="form-check">
+                {{ form_widget(form.pii_consent) }}
+                {{ form_label(form.pii_consent) }}
+            </div>
+            <p class="form-help-text">{{ 'relic.form.pii_consent_help'|trans({}, 'relic') }}</p>
+            {{ form_errors(form.pii_consent) }}
+        </div>
     </div>
 
     <!-- Footer Actions -->

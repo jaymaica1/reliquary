@@ -4,7 +4,7 @@ privacy:
   last_updated: 'Última atualização: 4 de janeiro de 2026'
   introduction:
     title: '1. Introdução'
-    content: 'Bem-vindo ao Reliquary. Respeitamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais. Esta política de privacidade irá informá-lo sobre como cuidamos dos seus dados pessoais quando visita o nosso website e informá-lo-á sobre os seus direitos de privacidade e como a lei o protege.'
+    content: 'Bem-vindo ao Reliquary. Respeitamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais. Esta política de privacidade irá informá-lo sobre como cuidamos dos seus dados pessoais quando visita o nosso website e informá-lo-á sobre os seus direitos de privacidade e como a lei o protege. O Controlador de Dados para este website é a Equipe do Projeto Reliquary (contato: privacy@reliquary.example.com).'
   data_collection:
     title: '2. Os Dados que Coletamos'
     content: 'Podemos coletar, usar, armazenar e transferir diferentes tipos de dados pessoais sobre si, que agrupamos da seguinte forma:'
@@ -13,8 +13,14 @@ privacy:
       contact: 'Dados de Contato: inclui endereço de e-mail.'
       technical: 'Dados Técnicos: inclui endereço de protocolo de internet (IP), os seus dados de login, tipo e versão do navegador, configuração de fuso horário e localização.'
       usage: 'Dados de Utilização: inclui informações sobre como utiliza o nosso website e serviços.'
+  third_party_services:
+    title: '3. Serviços de Terceiros'
+    content: 'Utilizamos os seguintes serviços de terceiros para fornecer nossos recursos:'
+    items:
+      maps: 'OpenStreetMap e Leaflet: Utilizados para exibir localizações de relíquias e preenchimento automático de endereços.'
+      storage: 'As imagens são armazenadas localmente ou através de provedores de nuvem configurados (veja nossa documentação técnica).'
   how_we_use_data:
-    title: '3. Como Usamos os Seus Dados Pessoais'
+    title: '4. Como Usamos os Seus Dados Pessoais'
     content: 'Apenas utilizaremos os seus dados pessoais quando a lei nos permitir. Mais comumente, utilizaremos os seus dados pessoais nas seguintes circunstâncias:'
     items:
       registration: 'Para registá-lo como um novo usuário.'
@@ -22,10 +28,10 @@ privacy:
       improvement: 'Para melhorar o nosso website, serviços e experiência do usuário.'
       communication: 'Para comunicar consigo relativamente à sua conta ou consultas.'
   data_security:
-    title: '4. Segurança de Dados'
+    title: '5. Segurança de Dados'
     content: 'Implementamos medidas de segurança adequadas para evitar que os seus dados pessoais sejam acidentalmente perdidos, utilizados ou acessados de forma não autorizada, alterados ou divulgados.'
   your_rights:
-    title: '5. Os Seus Direitos Legais'
+    title: '6. Os Seus Direitos Legais'
     content: 'Em certas circunstâncias, tem direitos ao abrigo das leis de proteção de dados em relação aos seus dados pessoais, incluindo o direito de solicitar acesso, correção, eliminação, restrição, transferência ou oposição ao processamento.'
 
 terms:

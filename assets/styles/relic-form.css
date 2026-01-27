@@ -97,7 +97,7 @@
     color: var(--sacred-white) !important;
 }
 
-.relic-form-grid input, 
+.relic-form-grid input:not([type="checkbox"]):not([type="radio"]), 
 .relic-form-grid select, 
 .relic-form-grid textarea {
     background: rgba(255, 255, 255, 0.1);
@@ -114,7 +114,7 @@
     color: rgba(254, 254, 254, 0.5);
 }
 
-.relic-form-grid input:focus, 
+.relic-form-grid input:focus:not([type="checkbox"]):not([type="radio"]), 
 .relic-form-grid select:focus, 
 .relic-form-grid textarea:focus {
     outline: none;
