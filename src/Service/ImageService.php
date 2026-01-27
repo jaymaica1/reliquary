@@ -154,7 +154,7 @@ class ImageService
         
         $this->imageManager->read($sourcePath)
             ->orient()
-            ->coverDown(200, 200)
+            ->coverDown(600, 600)
             ->save($tempThumbnailPath);
             
         // Upload thumbnail to S3
