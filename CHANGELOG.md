@@ -1,3 +1,18 @@
+# [2.33.0](https://github.com/CesarScur/reliquary/compare/v2.32.0...v2.33.0) (2026-01-27)
+
+
+### Features
+
+* **composer:** add symfony/serializer dependency and require ext-fileinfo extension ([e6e7fdc](https://github.com/CesarScur/reliquary/commit/e6e7fdcf4c5565c623903a46261da2aa50a00488))
+* **cookie-consent:** implement GDPR-compliant consent management ([3264894](https://github.com/CesarScur/reliquary/commit/32648945be847bdafb1c6f10f1c7ceaf20e73f9f))
+* **gdpr:** add PII masking processor for enhanced log compliance ([7ee4b5b](https://github.com/CesarScur/reliquary/commit/7ee4b5b213e3cacbc675eff385d5aad24cec209f))
+* **gdpr:** enhance compliance with consent checks, data retention, and user privacy ([026b200](https://github.com/CesarScur/reliquary/commit/026b200819a67b01476205b97ca38e47eb339717))
+* **gdpr:** enhance compliance with consent checks, data retention, and user privacy ([737845d](https://github.com/CesarScur/reliquary/commit/737845d3a82e25e3c16dc5c65928350a7d450a8c))
+* **profile:** implement GDPR-compliant data export and account deletion ([7f15f01](https://github.com/CesarScur/reliquary/commit/7f15f01df073d8ac038f6e96a8846e583be971f1))
+* **relic:** add success message translation and update submission flow ([3287bad](https://github.com/CesarScur/reliquary/commit/3287bade0bd67f4abd5b9c77e5fb635ffe95921f))
+* **translations:** add new keys for relic and saint forms, improve flash messages ([9eb35d3](https://github.com/CesarScur/reliquary/commit/9eb35d33a02f43079c0ac41eb9e8ba60c3d0273f))
+* **validation:** add form validation and error handling across relic forms ([f3f1233](https://github.com/CesarScur/reliquary/commit/f3f12334c4ab19c166e7658c6c46281b15738019))
+
 # [2.32.0](https://github.com/CesarScur/reliquary/compare/v2.31.0...v2.32.0) (2026-01-13)
 
 
