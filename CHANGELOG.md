@@ -1,3 +1,10 @@
+# [2.34.0](https://github.com/CesarScur/reliquary/compare/v2.33.0...v2.34.0) (2026-01-27)
+
+
+### Features
+
+* **user:** add `last_login_at` and immutable `created_at` fields to user entity ([3981a66](https://github.com/CesarScur/reliquary/commit/3981a66c2a259675927e551c8f317b2350e62635))
+
 # [2.33.0](https://github.com/CesarScur/reliquary/compare/v2.32.0...v2.33.0) (2026-01-27)
 
 
