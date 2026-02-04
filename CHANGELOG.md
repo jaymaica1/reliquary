@@ -1,3 +1,10 @@
+# [2.38.0](https://github.com/CesarScur/reliquary/compare/v2.37.0...v2.38.0) (2026-02-04)
+
+
+### Features
+
+* **plans:** add implementation details for relic section redesign and SEO updates ([9831202](https://github.com/CesarScur/reliquary/commit/98312023f33b59ab939e252daa30823479555a01))
+
 # [2.37.0](https://github.com/CesarScur/reliquary/compare/v2.36.0...v2.37.0) (2026-02-04)
 
 
