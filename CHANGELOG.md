@@ -1,3 +1,11 @@
+# [2.37.0](https://github.com/CesarScur/reliquary/compare/v2.36.0...v2.37.0) (2026-02-04)
+
+
+### Features
+
+* **plans:** add implementation plans for saint management architecture ([d0822e3](https://github.com/CesarScur/reliquary/commit/d0822e3648954d0eb940aa5c4cf81b41593d09e3))
+* **seo:** improve favicon support and address indexing issues ([e25761d](https://github.com/CesarScur/reliquary/commit/e25761d633846008eeb049d9693dac4ca54b2e20))
+
 # [2.36.0](https://github.com/CesarScur/reliquary/compare/v2.35.0...v2.36.0) (2026-01-27)
 
 
