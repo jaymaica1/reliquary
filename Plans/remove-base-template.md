@@ -1,0 +1,70 @@
+# Plan: Remove Old base.html.twig Template
+
+## Current State
+
+- **`landing_base.html.twig`**: The new base template - used by most pages
+- **`base.html.twig`**: The old base template - still used by 4 templates
+- **`admin_base.html.twig`**: Standalone admin template
+
+## Templates Still Using `base.html.twig`
+
+| Template | Action Required |
+|----------|-----------------|
+| `relic/resubmit.html.twig` | Migrate to `landing_base.html.twig` |
+| `saint/new.html.twig` | Move to `admin/saints/new.html.twig` with `admin_base.html.twig` |
+| `saint/edit.html.twig` | Move to `admin/saints/edit.html.twig` with `admin_base.html.twig` |
+| `home/index.html.twig` | Delete (obsolete) |
+
+## Migration Steps
+
+### Step 1: Migrate `relic/resubmit.html.twig`
+- [ ] Change `{% extends 'base.html.twig' %}` to `{% extends 'landing_base.html.twig' %}`
+- [ ] Verify block names match (`body`, `title`, etc.)
+- [ ] Test the page functionality (manually - ask user/dev)
+
+### Step 2: Move `saint/new.html.twig` to Admin
+- [ ] Move file to `templates/admin/saints/new.html.twig`
+- [ ] Change extends to `admin_base.html.twig`
+- [ ] Update controller route/render path
+- [ ] Add admin role protection if not present
+- [ ] Test form submission (manually – ask user/dev)
+
+### Step 3: Move `saint/edit.html.twig` to Admin
+- [ ] Move file to `templates/admin/saints/edit.html.twig`
+- [ ] Change extends to `admin_base.html.twig`
+- [ ] Update controller route/render path
+- [ ] Add admin role protection if not present
+- [ ] Test form functionality
+
+### Step 4: Delete `home/index.html.twig`
+- [ ] Remove the template file
+- [ ] Remove or update any route pointing to it in controllers
+- [ ] Verify landing page (`home/landing.html.twig`) is the active home
+
+### Step 5: Delete `base.html.twig`
+- [ ] Remove the file from the repository
+
+### Step 6: Cleanup
+- [ ] Search for any remaining references to `base.html.twig` in the codebase
+- [ ] Update any documentation mentioning the old base template
+- [ ] Remove unused assets/styles specific to old base if any
+
+## Key Differences Between Templates
+
+| Feature | `base.html.twig` | `landing_base.html.twig` | `admin_base.html.twig` |
+|---------|------------------|--------------------------|------------------------|
+| Importmap | `app` | `landing` | `admin` |
+| Styling | Bootstrap dark navbar | Custom landing styles | Admin sidebar layout |
+| Footer | Simple 3-column | Rich footer with CTA | Admin footer |
+| Cookie banner | Not included | Included | Via controller |
+
+## Testing Checklist
+
+- [ ] `relic/resubmit` page renders correctly with landing base
+- [ ] Saint new/edit forms work in admin section
+- [ ] Home route redirects to landing page
+- [ ] Navigation works on all pages
+- [ ] Forms submit properly
+- [ ] Flash messages display correctly
+- [ ] No console errors
+- [ ] No references to `base.html.twig` remain
