@@ -94,7 +94,7 @@ final class SaintController extends AbstractController
             return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('saint/new.html.twig', [
+        return $this->render('admin/saints/new.html.twig', [
             'saint' => $saint,
             'form' => $form,
         ]);
@@ -147,7 +147,7 @@ final class SaintController extends AbstractController
             return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('saint/edit.html.twig', [
+        return $this->render('admin/saints/edit.html.twig', [
             'saint' => $saint,
             'form' => $form,
         ]);

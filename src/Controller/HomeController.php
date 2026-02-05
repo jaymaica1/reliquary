@@ -22,7 +22,7 @@ use Knp\Component\Pager\PaginatorInterface;
 final class HomeController extends AbstractController
 {
     private const DEFAULT_RADIUS_KM = 45;
-    #[Route('/', name: 'app_landing')]
+    #[Route('/', name: 'app_home')]
     public function landing(SaintRepository $saintRepository): Response
     {
         $featuredSaints = $saintRepository->findFeatured();
@@ -39,36 +39,6 @@ final class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'app_home')]
-    public function index(RelicRepository $relicRepository, SaintRepository $saintRepository, Request $request, Security $security, LocationResolverService $locationResolver): Response
-    {
-        // Check if there's a search query
-        $searchQuery = $request->query->get('q');
-        
-        // Define radius here instead of in getFilteredRelics
-        $radius = self::DEFAULT_RADIUS_KM;
-        
-        // Resolve location here
-        $locationData = $locationResolver->resolveLocation($request, $security, $searchQuery);
-        
-        $result = $this->getFilteredRelics($relicRepository, $security->getUser(), $locationData, $radius);
-        
-        // Get saint of the day based on current date
-        $today = new \DateTime();
-        $saintsOfDay = $saintRepository->findByFeastDate($today);
-        $saintOfDay = !empty($saintsOfDay) ? $saintsOfDay[0] : null;
-        $otherSaints = !empty($saintsOfDay) && count($saintsOfDay) > 1 ? array_slice($saintsOfDay, 1) : [];
-
-        return $this->render('home/index.html.twig', [
-            'relics' => $result['relics'],
-            'radius' => $radius,
-            'locationAvailable' => $locationData['available'],
-            'searchQuery' => $searchQuery,
-            'userLocation' => $locationData['location'],
-            'saintOfDay' => $saintOfDay,
-            'otherSaints' => $otherSaints,
-        ]);
-    }
 
     #[Route('/home/desktop', name: 'app_home_relics_desktop', methods: ['GET'])]
     public function homeRelicsDesktop(
