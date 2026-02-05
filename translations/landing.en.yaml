@@ -1,6 +1,9 @@
 # Landing page translations
 title: 'Reliquary - A Sacred Digital Repository'
 
+meta:
+    description: "Discover and explore religious relics and saints from around the world. A comprehensive database of sacred artifacts and their histories."
+
 nav:
   browse_relics: 'Browse Relics'
   saints: 'Saints'

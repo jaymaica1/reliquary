@@ -1,5 +1,21 @@
 {% extends 'landing_base.html.twig' %}
 
+{% block meta_description %}<meta name="description" content="{{ saint.saintPhrase|slice(0, 160) }}">{% endblock %}
+{% block og_title %}{{ saint|format_saint_name }} - Reliquary{% endblock %}
+{% block og_description %}{{ saint.saintPhrase|slice(0, 200) }}{% endblock %}
+{% block og_image %}{% if saint.images is defined and saint.images|length > 0 %}{{ absolute_url(image_url(saint.images.first.filename)) }}{% else %}{{ parent() }}{% endif %}{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ saint|format_saint_name }}",
+    "description": "{{ saint.saintPhrase|slice(0, 200) }}"
+}
+</script>
+{% endblock %}
+
 {% block title %}{{ saint|format_saint_name }} - {{ 'saint.show_title'|trans({}, 'saint') }}{% endblock %}
 
 {% block stylesheets %}

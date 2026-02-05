@@ -1,5 +1,21 @@
 {% extends 'landing_base.html.twig' %}
 
+{% block meta_description %}<meta name="description" content="{{ relic.description|slice(0, 160) }}">{% endblock %}
+{% block og_title %}{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }} - Reliquary{% endblock %}
+{% block og_description %}{{ relic.description|slice(0, 200) }}{% endblock %}
+{% block og_image %}{% if relic.images|length > 0 %}{{ absolute_url(image_url(relic.images|first.filename)) }}{% else %}{{ parent() }}{% endif %}{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Thing",
+    "name": "{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }}",
+    "description": "{{ relic.description|slice(0, 200) }}"
+}
+</script>
+{% endblock %}
+
 {% block title %}{{ relic.saint ? relic.saint|format_saint_name : 'Unknown Saint' }} - {{ 'relic.show_title'|trans({}, 'relic') }}{% endblock %}
 
 {% block stylesheets %}
@@ -178,6 +194,5 @@
                 {% endif %}
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

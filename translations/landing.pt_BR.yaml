@@ -1,6 +1,9 @@
 # Landing page translations - Portuguese Brazil
 title: 'Relicário - Um Repositório Digital Sagrado'
 
+meta:
+    description: "Descubra e explore relíquias religiosas e santos de todo o mundo. Um banco de dados abrangente de artefatos sagrados e suas histórias."
+
 nav:
   browse_relics: 'Explorar Relíquias'
   saints: 'Santos'
