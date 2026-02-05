@@ -1,3 +1,10 @@
+## [2.40.1](https://github.com/CesarScur/reliquary/compare/v2.40.0...v2.40.1) (2026-02-05)
+
+
+### Bug Fixes
+
+* **json-ld:** remove unused "Locais" entry from SiteNavigationElement schema ([01b0b86](https://github.com/CesarScur/reliquary/commit/01b0b863546d5589cc379da1921ba34a540ce4de))
+
 # [2.40.0](https://github.com/CesarScur/reliquary/compare/v2.39.0...v2.40.0) (2026-02-05)
 
 
