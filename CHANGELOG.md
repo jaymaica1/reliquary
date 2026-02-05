@@ -1,3 +1,10 @@
+# [2.39.0](https://github.com/CesarScur/reliquary/compare/v2.38.0...v2.39.0) (2026-02-05)
+
+
+### Features
+
+* **seo:** improve favicon support and update templates for theme consistency ([84ea5ac](https://github.com/CesarScur/reliquary/commit/84ea5ac0e786f3f156de53d7ef4a9f889a48a6e3))
+
 # [2.38.0](https://github.com/CesarScur/reliquary/compare/v2.37.0...v2.38.0) (2026-02-04)
 
 
