@@ -1,3 +1,10 @@
+# [2.40.0](https://github.com/CesarScur/reliquary/compare/v2.39.0...v2.40.0) (2026-02-05)
+
+
+### Features
+
+* **seo:** enhance meta, Open Graph, Twitter Card, and JSON-LD support ([1cb87c7](https://github.com/CesarScur/reliquary/commit/1cb87c71c012b926ef8e559746c3ff3a785b3598))
+
 # [2.39.0](https://github.com/CesarScur/reliquary/compare/v2.38.0...v2.39.0) (2026-02-05)
 
 
