@@ -1,3 +1,10 @@
+# [2.41.0](https://github.com/CesarScur/reliquary/compare/v2.40.1...v2.41.0) (2026-02-08)
+
+
+### Features
+
+* **trans:** complete saint translation ([f58d9cf](https://github.com/CesarScur/reliquary/commit/f58d9cf9920e8372ba780d49228981a62ce76a5e))
+
 ## [2.40.1](https://github.com/CesarScur/reliquary/compare/v2.40.0...v2.40.1) (2026-02-05)
 
 
