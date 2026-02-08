@@ -1,3 +1,10 @@
+# [2.42.0](https://github.com/CesarScur/reliquary/compare/v2.41.0...v2.42.0) (2026-02-08)
+
+
+### Features
+
+* **ai:** integrate AI chat service with provider support ([fa5c3f9](https://github.com/CesarScur/reliquary/commit/fa5c3f94181fdd30e24cdf00264938ca7d8cfff4))
+
 # [2.41.0](https://github.com/CesarScur/reliquary/compare/v2.40.1...v2.41.0) (2026-02-08)
 
 
