@@ -102,12 +102,24 @@ services:
             $model: '%env(default:gemini_model_default:GEMINI_MODEL)%'
         tags: ['app.ai_image_provider']
 
+    App\Service\Ai\OpenAiChatProvider:
+        arguments:
+            $apiKey: '%env(AI_API_KEY)%'
+            $baseUrl: '%env(default:ai_base_url_default:AI_BASE_URL)%'
+        tags: ['app.ai_chat_provider']
+
+    App\Service\Ai\AiTextService:
+        arguments:
+            $providers: !tagged_iterator app.ai_chat_provider
+
 
     App\Service\TranslationAnalyzerService:
         arguments:
             $projectDir: '%kernel.project_dir%'
             
-    App\Command\GenerateThumbnailsCommand: ~
+    App\Command\TranslateSaintsAiCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
             
     App\Command\MigrateImagesToS3Command:
         arguments:
