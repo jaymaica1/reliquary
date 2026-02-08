@@ -16,19 +16,19 @@ This plan outlines the iterative transition from a YAML-based saint management s
 
 ---
 
-## Phase 1: Database Hardening & Initial Cleanup [IN PROGRESS]
+## Phase 1: Database Hardening & Initial Cleanup [COMPLETED]
 **Goal:** Establish the Database as the Single Source of Truth (SSOT) and remove immediate architectural debt.
 
 1.  **Schema Migration:**
-    *   [ ] Remove the obsolete `file` field from the `Saint` entity (legacy YAML path).
-    *   [ ] Migrate `biography` and `abstract` fields to the `SaintTranslation` entity to allow full multi-language support.
-    *   [ ] (canceled) Evaluate and potentially migrate `image_link` to the `SaintImage` system (we decide to keep the reference for reference).
+    *   [x] Remove the obsolete `file` field from the `Saint` entity (legacy YAML path).
+    *   [x] Migrate `biography` and `abstract` fields to the `SaintTranslation` entity to allow full multi-language support.
+    *   [x] (canceled) Evaluate and potentially migrate `image_link` to the `SaintImage` system (we decide to keep the reference for reference).
 2.  **Data Consolidation:**
-    *   [ ] **Final Import:** Run a comprehensive import of all data from `data/saints_info.yaml` and the AI-completed translation files into the database.
-    *   [ ] Verify data integrity (ensure biographies, abstracts, and metadata are correctly persisted in their respective translation tables).
+    *   [x] **Final Import:** Run a comprehensive import of all data from `data/saints_info.yaml` and the AI-completed translation files into the database.
+    *   [x] Verify data integrity (ensure biographies, abstracts, and metadata are correctly persisted in their respective translation tables).
 3.  **Entity Cleanup:**
-    *   [ ] Remove the `file` property and its getter/setter from `src/Entity/Saint.php`.
-    *   [ ] Update `src/Form/SaintType.php` to remove the `file` field.
+    *   [x] Remove the `file` property and its getter/setter from `src/Entity/Saint.php`.
+    *   [x] Update `src/Form/SaintType.php` to remove the `file` field.
 
 **Deployment Outcome:** A cleaner database schema and a verified, complete dataset in the DB.
 

@@ -147,10 +147,6 @@ class ImportSaintsCommand extends Command
                         $saint->setUrl($saintData['url']);
                     }
 
-                    if (isset($saintData['file'])) {
-                        $saint->setFile($saintData['file']);
-                    }
-
                     if (isset($saintData['canonical_status'])) {
                         try {
                             $saint->setCanonicalStatusFromString($saintData['canonical_status']);

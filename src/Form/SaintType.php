@@ -41,17 +41,6 @@ class SaintType extends AbstractType
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
             ])
-            ->add('file', null, [
-                'label' => 'saint.form.file',
-                'translation_domain' => 'saint',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'saint.form.file_placeholder',
-                ],
-                'help' => 'saint.form.file_help',
-                'help_attr' => ['class' => 'form-text text-muted'],
-                'label_attr' => ['class' => 'form-label'],
-            ])
             ->add('canonical_status', EnumType::class, [
                 'label' => 'saint.form.canonical_status',
                 'translation_domain' => 'saint',

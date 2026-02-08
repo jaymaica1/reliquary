@@ -26,6 +26,12 @@ class SaintTranslation
     #[ORM\Column(type: "text", nullable: true)]
     private ?string $saintPhrase = null;
 
+    #[ORM\Column(type: "text", nullable: true)]
+    private ?string $biography = null;
+
+    #[ORM\Column(type: "text", nullable: true)]
+    private ?string $abstract = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +81,30 @@ class SaintTranslation
     public function setSaintPhrase(?string $saintPhrase): static
     {
         $this->saintPhrase = $saintPhrase;
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): static
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getAbstract(): ?string
+    {
+        return $this->abstract;
+    }
+
+    public function setAbstract(?string $abstract): static
+    {
+        $this->abstract = $abstract;
 
         return $this;
     }

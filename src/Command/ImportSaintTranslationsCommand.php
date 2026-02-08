@@ -109,6 +109,12 @@ HELP
                 if (isset($saintData['saint_phrase'])) {
                     $existingTranslation->setSaintPhrase($saintData['saint_phrase']);
                 }
+                if (isset($saintData['biography'])) {
+                    $existingTranslation->setBiography($saintData['biography']);
+                }
+                if (isset($saintData['abstract'])) {
+                    $existingTranslation->setAbstract($saintData['abstract']);
+                }
                 $this->entityManager->persist($existingTranslation);
             } else {
                 // Create new translation
@@ -122,6 +128,14 @@ HELP
                 
                 if (isset($saintData['saint_phrase'])) {
                     $translation->setSaintPhrase($saintData['saint_phrase']);
+                }
+
+                if (isset($saintData['biography'])) {
+                    $translation->setBiography($saintData['biography']);
+                }
+
+                if (isset($saintData['abstract'])) {
+                    $translation->setAbstract($saintData['abstract']);
                 }
                 
                 $this->entityManager->persist($translation);

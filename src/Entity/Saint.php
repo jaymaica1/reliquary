@@ -24,9 +24,6 @@ class Saint implements ImageOwnerInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $file = null;
-
     #[ORM\Column(type: 'string', enumType: CanonicalStatus::class, length: 255, nullable: true)]
     private ?CanonicalStatus $canonical_status = null;
 
@@ -38,15 +35,6 @@ class Saint implements ImageOwnerInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $canonizing_pope = null;
-
-    #[ORM\Column(type: "text", nullable: true)]
-    private ?string $saint_phrase = null;
-
-    #[ORM\Column(type: "text", nullable: true)]
-    private ?string $abstract = null;
-
-    #[ORM\Column(type: "text", nullable: true)]
-    private ?string $biography = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image_link = null;
@@ -141,18 +129,6 @@ class Saint implements ImageOwnerInterface
         return $this;
     }
 
-    public function getFile(): ?string
-    {
-        return $this->file;
-    }
-
-    public function setFile(?string $file): static
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
     public function getCanonicalStatus(): ?CanonicalStatus
     {
         return $this->canonical_status;
@@ -198,36 +174,54 @@ class Saint implements ImageOwnerInterface
 
     public function getSaintPhrase(): ?string
     {
-        return $this->saint_phrase;
+        return $this->getTranslation('en')?->getSaintPhrase();
     }
 
     public function setSaintPhrase(?string $saint_phrase): static
     {
-        $this->saint_phrase = $saint_phrase;
+        $translation = $this->getTranslation('en');
+        if (!$translation) {
+            $translation = new SaintTranslation();
+            $translation->setLocale('en');
+            $this->addTranslation($translation);
+        }
+        $translation->setSaintPhrase($saint_phrase);
 
         return $this;
     }
 
     public function getAbstract(): ?string
     {
-        return $this->abstract;
+        return $this->getTranslation('en')?->getAbstract();
     }
 
     public function setAbstract(?string $abstract): static
     {
-        $this->abstract = $abstract;
+        $translation = $this->getTranslation('en');
+        if (!$translation) {
+            $translation = new SaintTranslation();
+            $translation->setLocale('en');
+            $this->addTranslation($translation);
+        }
+        $translation->setAbstract($abstract);
 
         return $this;
     }
 
     public function getBiography(): ?string
     {
-        return $this->biography;
+        return $this->getTranslation('en')?->getBiography();
     }
 
     public function setBiography(?string $biography): static
     {
-        $this->biography = $biography;
+        $translation = $this->getTranslation('en');
+        if (!$translation) {
+            $translation = new SaintTranslation();
+            $translation->setLocale('en');
+            $this->addTranslation($translation);
+        }
+        $translation->setBiography($biography);
 
         return $this;
     }
