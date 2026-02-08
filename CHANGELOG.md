@@ -1,3 +1,11 @@
+# [2.44.0](https://github.com/CesarScur/reliquary/compare/v2.43.0...v2.44.0) (2026-02-08)
+
+
+### Features
+
+* **admin:** complete administrative workflow and UI polish for saints ([486859c](https://github.com/CesarScur/reliquary/commit/486859c92fedd8b38342c2bf97898004e6209bd4))
+* **entity:** migrate biography and abstract fields to SaintTranslation ([68cdc41](https://github.com/CesarScur/reliquary/commit/68cdc41f5ac16fdf64734fdf81b6f1d3f742b5e4))
+
 # [2.43.0](https://github.com/CesarScur/reliquary/compare/v2.42.0...v2.43.0) (2026-02-08)
 
 
