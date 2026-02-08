@@ -34,18 +34,20 @@ This plan outlines the iterative transition from a YAML-based saint management s
 
 ---
 
-## Phase 2: Administrative Workflow & UI Polish
-**Goal:** Provide a full-featured interface for managing saints without needing manual file edits.
+## Phase 2: Administrative Workflow & UI Polish [COMPLETED]
+Goal: Provide a full-featured interface for managing saints without needing manual file edits.
 
 1.  **Vetting Dashboard (Discovery Hub):**
-    *   [ ] Enhance the existing `AdminIncompleteSaintsController` to provide a clear workflow for "Draft" saints.
-    *   [ ] Add "Approve/Complete" actions that mark a saint as ready for public view.
-    *   [ ] Allow admins to discard incomplete saints – relics of said saint must be moved or deleted.
+    *   [x] Enhance the existing `AdminIncompleteSaintsController` to provide a clear workflow for "Draft" saints.
+    *   [x] Add "Approve/Complete" actions that mark a saint as ready for public view.
+    *   [x] Allow admins to discard incomplete saints – relics of said saint must be moved or deleted.
 2.  **Enhanced Saint Editor:**
-    *   [ ] Ensure all fields (biography, abstract, feast days) are fully editable via the `SaintType` form.
-    *   [ ] (Optional) Add a simple translation toggle or sub-form for managing `SaintTranslation` entities.
+    *   [x] Ensure all fields (biography, abstract, feast days) are fully editable via the `SaintType` form.
+    *   [x] Added `is_incomplete` and `featured` toggles to the editor.
 3.  **Search & Filtering:**
-    *   [ ] Improve the `Saint` index in the admin area with robust search (name) and filters (canonical status, incomplete status).
+    *   [x] Improve the `Saint` index in the admin area with robust search (name) and filters (canonical status, incomplete status).
+    *   [x] Added "Include Incomplete" toggle for admins on the main saint index.
+    *   [x] Added "Incomplete" badge for better visibility.
 
 **Deployment Outcome:** Admins can manage the entire lifecycle of a saint (creation, discovery, vetting, editing) through the Web UI.
 

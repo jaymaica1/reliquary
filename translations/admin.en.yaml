@@ -11,7 +11,10 @@ admin:
       description: 'Saints that were automatically created when adding relics and need to be completed with additional information'
       no_saints: 'No incomplete saints found.'
       not_set: 'Not Set'
+      badge: 'Incomplete'
       mark_complete: 'Mark Complete'
+      discard: 'Discard'
+      confirm_discard: 'Are you sure you want to discard this saint and all its associated relics? This action cannot be undone.'
     tools:
       title: 'Saints Tools'
       ai_provider: 'AI Provider'

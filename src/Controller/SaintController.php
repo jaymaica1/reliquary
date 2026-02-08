@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/saint')]
 final class SaintController extends AbstractController
@@ -21,9 +22,10 @@ final class SaintController extends AbstractController
     {
         $filter = $request->query->get('filter');
         $searchTerm = $request->query->get('q');
+        $includeIncomplete = $this->isGranted('ROLE_ADMIN') && $request->query->getBoolean('include_incomplete', true);
 
         $pagination = $paginator->paginate(
-            $saintRepository->findAllQuery($filter, $searchTerm),
+            $saintRepository->findAllQuery($filter, $searchTerm, $includeIncomplete),
             $request->query->getInt('page', 1),
         );
 
@@ -32,6 +34,7 @@ final class SaintController extends AbstractController
             'filter' => $filter,
             'title' => isset($searchTerm) ? 'Search Results for "' . $searchTerm . '"' : null,
             'canonical_statuses' => \App\Enum\CanonicalStatus::cases(),
+            'include_incomplete' => $includeIncomplete,
         ]);
     }
 
@@ -71,7 +74,7 @@ final class SaintController extends AbstractController
     }
 
     #[Route('/new', name: 'app_saint_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, ImageService $imageService): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ImageService $imageService, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -90,7 +93,7 @@ final class SaintController extends AbstractController
             $entityManager->persist($saint);
             $entityManager->flush();
 
-            $this->addFlash('success', 'common.saint.created');
+            $this->addFlash('success', $translator->trans('saint.messages.created', [], 'saint'));
             return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -113,9 +116,11 @@ final class SaintController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_saint_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Saint $saint, EntityManagerInterface $entityManager, ImageService $imageService): Response
+    public function edit(Request $request, Saint $saint, EntityManagerInterface $entityManager, ImageService $imageService, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $origin = $request->query->get('origin');
 
         $form = $this->createForm(SaintType::class, $saint);
         $form->handleRequest($request);
@@ -143,25 +148,35 @@ final class SaintController extends AbstractController
             
             $entityManager->flush();
 
-            $this->addFlash('success', 'common.saint.updated');
+            $this->addFlash('success', $translator->trans('saint.messages.updated', [], 'saint'));
+
+            if ($origin === 'incomplete') {
+                return $this->redirectToRoute('app_admin_saints_incomplete', [], Response::HTTP_SEE_OTHER);
+            }
+
+            if ($origin === 'tools') {
+                return $this->redirectToRoute('app_admin_saints_tools', [], Response::HTTP_SEE_OTHER);
+            }
+
             return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/saints/edit.html.twig', [
             'saint' => $saint,
             'form' => $form,
+            'origin' => $origin,
         ]);
     }
 
     #[Route('/{id}', name: 'app_saint_delete', methods: ['POST'])]
-    public function delete(Request $request, Saint $saint, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Saint $saint, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         if ($this->isCsrfTokenValid('delete'.$saint->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($saint);
             $entityManager->flush();
-            $this->addFlash('success', 'Saint deleted successfully');
+            $this->addFlash('success', $translator->trans('saint.messages.deleted', [], 'saint'));
         }
 
         return $this->redirectToRoute('app_saint_index', [], Response::HTTP_SEE_OTHER);

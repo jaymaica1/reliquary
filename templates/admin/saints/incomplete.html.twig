@@ -38,12 +38,20 @@
                                 <td>{{ saint.relics|length }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ path('app_saint_edit', {'id': saint.id}) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ path('app_saint_edit', {'id': saint.id, 'origin': 'incomplete'}) }}" class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-pencil"></i> {{ 'saint.actions.edit'|trans({}, 'saint') }}
                                         </a>
-                                        <a href="{{ path('app_admin_saints_mark_complete', {'id': saint.id}) }}" class="btn btn-sm btn-outline-success">
-                                            <i class="fas fa-circle-check"></i> {{ 'admin.saints.incomplete.mark_complete'|trans({}, 'admin') }}
-                                        </a>
+                                        <form method="post" action="{{ path('app_admin_saints_mark_complete', {'id': saint.id}) }}" style="display:inline-block">
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="fas fa-circle-check"></i> {{ 'admin.saints.incomplete.mark_complete'|trans({}, 'admin') }}
+                                            </button>
+                                        </form>
+                                        <form method="post" action="{{ path('app_admin_saints_discard', {'id': saint.id}) }}" style="display:inline-block" onsubmit="return confirm('{{ 'admin.saints.incomplete.confirm_discard'|trans({}, 'admin') }}');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('discard' ~ saint.id) }}">
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i> {{ 'admin.saints.incomplete.discard'|trans({}, 'admin') }}
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

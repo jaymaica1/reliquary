@@ -11,7 +11,10 @@ admin:
       description: 'Santos que foram criados automaticamente ao adicionar relíquias e precisam ser completados com informações adicionais'
       no_saints: 'Nenhum santo incompleto encontrado.'
       not_set: 'Não Definido'
+      badge: 'Incompleto'
       mark_complete: 'Marcar como Completo'
+      discard: 'Descartar'
+      confirm_discard: 'Tem certeza de que deseja descartar este santo e todas as suas relíquias associadas? Esta ação não pode ser desfeita.'
     tools:
       title: 'Ferramentas de Santos'
       ai_provider: 'Provedor de IA'

@@ -6,6 +6,7 @@ use App\Entity\Saint;
 use App\Enum\CanonicalStatus;
 use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -106,10 +107,12 @@ class SaintType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'saint.form.abstract_placeholder',
+                    'rows' => 3,
                 ],
                 'help' => 'saint.form.abstract_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
+                'required' => false,
             ])
             ->add('biography', null, [
                 'label' => 'saint.form.biography',
@@ -117,10 +120,12 @@ class SaintType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'saint.form.biography_placeholder',
+                    'rows' => 10,
                 ],
                 'help' => 'saint.form.biography_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
+                'required' => false,
             ])
             ->add('image_link', null, [
                 'label' => 'saint.form.image_link',
@@ -155,6 +160,32 @@ class SaintType extends AbstractType
                 'help' => 'saint.form.image_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
+            ])
+            ->add('is_incomplete', CheckboxType::class, [
+                'label' => 'saint.form.is_incomplete',
+                'translation_domain' => 'saint',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+                'label_attr' => [
+                    'class' => 'form-check-label',
+                ],
+                'help' => 'saint.form.is_incomplete_help',
+                'help_attr' => ['class' => 'form-text text-muted'],
+            ])
+            ->add('featured', CheckboxType::class, [
+                'label' => 'saint.form.is_featured',
+                'translation_domain' => 'saint',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+                'label_attr' => [
+                    'class' => 'form-check-label',
+                ],
+                'help' => 'saint.form.is_featured_help',
+                'help_attr' => ['class' => 'form-text text-muted'],
             ])
         ;
     }
