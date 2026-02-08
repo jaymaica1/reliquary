@@ -1,3 +1,13 @@
+# [2.43.0](https://github.com/CesarScur/reliquary/compare/v2.42.0...v2.43.0) (2026-02-08)
+
+
+### Features
+
+* **plans:** add post-launch SEO and UI refinement plan ([3777241](https://github.com/CesarScur/reliquary/commit/3777241718129e3c76e771b0aa1ccffd10bc41a1))
+* **plans:** mark post-launch refinements as complete ([c5108b0](https://github.com/CesarScur/reliquary/commit/c5108b08779e07d171c38f4896b1b3521a2d9f38))
+* **plans:** update phase details for saint architecture and SEO redesign ([abed6e9](https://github.com/CesarScur/reliquary/commit/abed6e9c28f3f4ad571c3ea9468e95d49cdb6b26))
+* **seo:** integrate PrestaSitemapBundle and enhance multilingual metadata ([c35652d](https://github.com/CesarScur/reliquary/commit/c35652d116d2bbb3c66d7eb7150d591f07def60f))
+
 # [2.42.0](https://github.com/CesarScur/reliquary/compare/v2.41.0...v2.42.0) (2026-02-08)
 
 
