@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Relic;
+use App\Entity\RelicImage;
 use App\Entity\User;
 use App\Enum\RelicStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -50,6 +51,31 @@ class RelicRepository extends ServiceEntityRepository
             ->setParameter('status', $status->value, ParameterType::STRING)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Approved relics with at least one image, for landing showcase (newest by id).
+     *
+     * @return Relic[]
+     */
+    public function findApprovedWithImagesForShowcase(int $limit = 6): array
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->leftJoin('r.saint', 's')
+            ->addSelect('s')
+            ->andWhere('r.status = :approved')
+            ->setParameter('approved', RelicStatus::APPROVED->value, ParameterType::STRING)
+            ->orderBy('r.id', 'DESC')
+            ->setMaxResults($limit);
+
+        $imageExistsSub = $this->getEntityManager()->createQueryBuilder()
+            ->select('1')
+            ->from(RelicImage::class, 'rim')
+            ->where('rim.relic = r');
+
+        $qb->andWhere($qb->expr()->exists($imageExistsSub->getDQL()));
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

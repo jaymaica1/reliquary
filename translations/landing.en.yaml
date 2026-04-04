@@ -22,18 +22,17 @@ hero:
   submit_relic: 'Submit a Relic'
   join_now: 'Join Now'
 
-classes:
-  title: 'Classes of Relics'
-  subtitle: 'Understanding the Sacred Hierarchy of Veneration'
-  first:
-    title: 'First-Class Relics'
-    description: 'Physical remains of saints including bones, hair, and blood. These most precious relics provide the closest physical connection to the holy person.'
-  second:
-    title: 'Second-Class Relics'
-    description: 'Items owned or frequently used by saints during their lifetime, such as clothing, books, rosaries, or instruments of their martyrdom.'
-  third:
-    title: 'Third-Class Relics'
-    description: 'Objects that have been touched to first-class relics, allowing the faithful to venerate saints through blessed items.'
+featured:
+  title: 'Instruments of Grace'
+  quote: '“Power came forth from Him and healed them all.”'
+  quote_ref: 'Luke 6:19'
+  body: 'The Church names classes of relics to honor what we touch and see—bone, garment, or blessed cloth—yet grace is not measured in matter. From the bones of martyrs to the humblest touched fabric, each entry in this catalog is offered as a door to prayer and to the communion of saints.'
+  relic_image_alt: 'Sacred Relic'
+  empty: 'The sanctuary is preparing its visual exhibits. We invite you to explore the complete registry of sacred artifacts.'
+  browse_all: 'View Full Catalog'
+  filter_by_class: 'Explore by Classification'
+  about_classes: 'Understanding Relic Classes'
+  about_authentication: 'Authentication Process'
 
 saints:
   title: 'Featured Saints'

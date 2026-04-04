@@ -22,18 +22,17 @@ hero:
   submit_relic: 'Enviar uma Relíquia'
   join_now: 'Junte-se Agora'
 
-classes:
-  title: 'Classes de Relíquias'
-  subtitle: 'Compreendendo a Hierarquia Sagrada de Veneração'
-  first:
-    title: 'Relíquias de Primeira Classe'
-    description: 'Restos físicos de santos incluindo ossos, cabelos e sangue. Estas relíquias mais preciosas proporcionam a conexão física mais próxima à pessoa santa.'
-  second:
-    title: 'Relíquias de Segunda Classe'
-    description: 'Itens possuídos ou frequentemente usados pelos santos durante sua vida, como roupas, livros, rosários ou instrumentos de seu martírio.'
-  third:
-    title: 'Relíquias de Terceira Classe'
-    description: 'Objetos que foram tocados em relíquias de primeira classe, permitindo aos fiéis venerar santos através de itens abençoados.'
+featured:
+  title: 'Instrumentos da Graça'
+  quote: '“Dele saía uma força que curava a todos.”'
+  quote_ref: 'Lucas 6:19'
+  body: 'A Igreja nomeia as classes de relíquias para honrar o que tocamos e vemos—osso, veste ou tecido abençoado—, mas a graça não se mede pela matéria. Dos ossos dos mártires ao mais humilde tecido, cada entrada neste catálogo é oferecida como porta de oração e de comunhão com os santos.'
+  relic_image_alt: 'Relíquia Sagrada'
+  empty: 'O santuário está preparando suas exposições visuais. Convidamos você a explorar o registro completo de artefatos sagrados.'
+  browse_all: 'Ver Catálogo Completo'
+  filter_by_class: 'Explorar por Classificação'
+  about_classes: 'Compreendendo as Classes de Relíquias'
+  about_authentication: 'Processo de Autenticação'
 
 saints:
   title: 'Santos em Destaque'

@@ -26,6 +26,18 @@ about:
     title: 'Contato'
     description: 'Para mais informações sobre o projeto Relicário, visite nosso'
     github_repository: 'repositório no GitHub'
+  relic_classes:
+    title: 'Compreendendo as Classes de Relíquias'
+    intro: 'A Igreja distingue as relíquias em classes para descrever com reverência a natureza do objeto sagrado. Esta classificação é uma tradição material e histórica para ajudar os fiéis a compreenderem o que estão venerando. No entanto, Deus não está preso a essas categorias—Ele infunde Sua graça onde Lhe apraz. Uma humilde relíquia de terceira classe pode ser o instrumento de milagres extraordinários, pois é a fé e a intercessão do santo que atraem o favor de Deus, não a matéria em si. Mantemos estas classificações para preservar a integridade histórica e a organização do santuário.'
+    first:
+      title: 'Relíquias de primeira classe'
+      body: 'Restos físicos do santo, como osso, cabelo ou sangue. Na tradição da Igreja recebem o maior cuidado material por serem o corpo do santo ou partes dele.'
+    second:
+      title: 'Relíquias de segunda classe'
+      body: 'Objetos que o santo possuiu ou usou em vida—roupas, livros, terço ou instrumentos do martírio. Não são o corpo, mas estiveram em contato íntimo com a vida e a santidade do santo.'
+    third:
+      title: 'Relíquias de terceira classe'
+      body: 'Objetos tocados a uma relíquia de primeira classe (ou, por vezes, de segunda), por exemplo um tecido encostado ao túmulo. Prolongam a devoção e são abençoados para os fiéis; a classe descreve proveniência e contato, não a medida do favor de Deus.'
   authentication:
     title: 'Processo de Autenticação'
     description: 'A autenticação de uma relíquia em nosso banco de dados segue um processo rigoroso para garantir sua autenticidade e significância histórica.'

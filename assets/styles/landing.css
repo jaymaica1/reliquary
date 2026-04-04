@@ -378,6 +378,245 @@ nav#navbar.scrolled {
     line-height: 1.6;
 }
 
+/* Landing: featured relics + class chips */
+.landing-featured-relics {
+    padding: 5rem 2rem;
+    background: linear-gradient(180deg, rgba(10, 14, 39, 0.95), rgba(30, 58, 138, 0.95));
+    position: relative;
+    z-index: 2;
+}
+
+.landing-featured-intro {
+    max-width: 46rem;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.landing-featured-quote {
+    margin: 0 0 1.25rem;
+    padding: 1.25rem 1.5rem 1.35rem;
+    border: none;
+    border-left: 3px solid rgba(245, 158, 11, 0.55);
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), transparent);
+    text-align: left;
+}
+
+.landing-featured-quote p {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--light-gold);
+    line-height: 1.55;
+}
+
+.landing-featured-cite {
+    font-style: normal;
+    font-size: 0.85em;
+    letter-spacing: 0.06em;
+    color: rgba(254, 243, 199, 0.75);
+    font-variant: small-caps;
+}
+
+.landing-featured-body {
+    margin: 0;
+    color: rgba(254, 254, 254, 0.88);
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.75;
+}
+
+.landing-showcase-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 2.5rem;
+}
+
+.landing-showcase-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(254, 254, 254, 0.03);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-top: 2px solid rgba(245, 158, 11, 0.4);
+    border-radius: 140px 140px 12px 12px;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    position: relative;
+}
+
+.landing-showcase-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-gold);
+}
+
+.landing-showcase-card:focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 4px;
+}
+
+.landing-showcase-image-wrap {
+    aspect-ratio: 4 / 5;
+    background: rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    border-radius: 140px 140px 0 0;
+    margin: 0.5rem 0.5rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.landing-showcase-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease, filter 0.8s ease;
+}
+
+.landing-showcase-card:hover .landing-showcase-image-wrap img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.landing-showcase-info {
+    padding: 1.5rem 1rem 1.75rem;
+}
+
+.landing-showcase-saint {
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+    color: var(--accent-gold);
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+}
+
+.landing-showcase-degree {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--sacred-white);
+    opacity: 0.9;
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.landing-showcase-location {
+    font-size: 0.9rem;
+    color: rgba(254, 254, 254, 0.5);
+    margin: 0;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.landing-showcase-empty-wrap {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+}
+
+.landing-showcase-empty {
+    color: rgba(254, 254, 254, 0.8);
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+.landing-showcase-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.landing-showcase-chips-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: rgba(254, 254, 254, 0.65);
+    margin: 0 0 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.landing-class-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.landing-class-chip {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    background: rgba(254, 254, 254, 0.02);
+    color: var(--sacred-white);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.landing-class-chip:hover {
+    border-color: var(--accent-gold);
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--sacred-white);
+}
+
+.landing-class-chip:focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 3px;
+}
+
+.landing-showcase-meta {
+    font-size: 0.95rem;
+    color: rgba(254, 254, 254, 0.7);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.landing-showcase-meta-link {
+    color: var(--light-gold);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.landing-showcase-meta-link:hover {
+    color: var(--accent-gold);
+}
+
+.landing-showcase-meta-sep {
+    margin: 0 0.5rem;
+    color: rgba(254, 254, 254, 0.35);
+}
+
+@media (max-width: 900px) {
+    .landing-showcase-track {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1.25rem;
+        padding: 0 0.25rem 0.75rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .landing-showcase-card {
+        flex: 0 0 min(82vw, 320px);
+        scroll-snap-align: start;
+    }
+}
+
 /* Featured Saints Section */
 .featured-saints {
     padding: 5rem 2rem;

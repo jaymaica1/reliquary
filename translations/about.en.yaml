@@ -25,6 +25,18 @@ about:
     title: 'Contact'
     description: 'For more information about the Reliquary project, please visit our'
     github_repository: 'GitHub repository'
+  relic_classes:
+    title: 'Understanding Relic Classes'
+    intro: 'The Church distinguishes relics into classes to reverently describe the nature of the sacred object. This classification is a material and historical tradition to help the faithful understand what they are venerating. However, God is not bound by these categories—He breathes grace where He wills. A humble third-class relic may be the instrument of extraordinary miracles, as it is the faith and the intercession of the saint that invite God’s favor, not the material itself. We maintain these classifications to preserve the historical integrity and searchability of the sanctuary.'
+    first:
+      title: 'First-class relics'
+      body: 'Physical remains of a saint, such as bone, hair, or blood. In the tradition of the Church they are treated with the greatest material care because they are the saint’s own body or its parts.'
+    second:
+      title: 'Second-class relics'
+      body: 'Things the saint owned or used in life—clothing, books, a rosary, or instruments of martyrdom. They are not the body but were in close contact with the saint’s life and sanctity.'
+    third:
+      title: 'Third-class relics'
+      body: 'Objects touched to a first-class relic (or sometimes to a second-class relic), for example a cloth pressed to a tomb. They extend devotion and are blessed for the faithful; their class describes provenance and contact, not the measure of God’s favor.'
   authentication:
     title: 'Authentication Process'
     description: 'The authentication of a relic in our database follows a rigorous process to ensure its authenticity and historical significance.'

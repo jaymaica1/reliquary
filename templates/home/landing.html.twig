@@ -27,32 +27,58 @@
         <div class="scroll-indicator"></div>
     </section>
 
-    <!-- Relic Classes Section -->
-    <section class="relic-classes">
-        <h2 class="section-title">{{ 'classes.title'|trans({}, 'landing') }}</h2>
-        <p class="section-subtitle">{{ 'classes.subtitle'|trans({}, 'landing') }}</p>
-        <div class="classes-grid">
-            <a href="{{ path('app_relic_index', {'filter': 'first-class'}) }}" class="relic-card">
-                <span class="relic-icon">⊕</span>
-                <h3 class="relic-title">{{ 'classes.first.title'|trans({}, 'landing') }}</h3>
-                <p class="relic-description">
-                    {{ 'classes.first.description'|trans({}, 'landing') }}
-                </p>
-            </a>
-            <a href="{{ path('app_relic_index', {'filter': 'second-class'}) }}" class="relic-card">
-                <span class="relic-icon">✠</span>
-                <h3 class="relic-title">{{ 'classes.second.title'|trans({}, 'landing') }}</h3>
-                <p class="relic-description">
-                    {{ 'classes.second.description'|trans({}, 'landing') }}
-                </p>
-            </a>
-            <a href="{{ path('app_relic_index', {'filter': 'third-class'}) }}" class="relic-card">
-                <span class="relic-icon">✚</span>
-                <h3 class="relic-title">{{ 'classes.third.title'|trans({}, 'landing') }}</h3>
-                <p class="relic-description">
-                    {{ 'classes.third.description'|trans({}, 'landing') }}
-                </p>
-            </a>
+    <!-- Featured relics + compact class filters -->
+    <section class="landing-featured-relics">
+        <h2 class="section-title">{{ 'featured.title'|trans({}, 'landing') }}</h2>
+        <div class="landing-featured-intro">
+            <blockquote class="landing-featured-quote" cite="https://www.vatican.va/archive/bible/index.htm">
+                <p>{{ 'featured.quote'|trans({}, 'landing') }} <cite class="landing-featured-cite">{{ 'featured.quote_ref'|trans({}, 'landing') }}</cite></p>
+            </blockquote>
+            <p class="landing-featured-body">{{ 'featured.body'|trans({}, 'landing') }}</p>
+        </div>
+
+        {% if landingShowcaseRelics is not empty %}
+            <div class="landing-showcase-track" role="list">
+                {% for relic in landingShowcaseRelics %}
+                    <a href="{{ path('app_relic_show', {id: relic.id}) }}"
+                       class="landing-showcase-card"
+                       role="listitem">
+                        <div class="landing-showcase-image-wrap">
+                            {% if relic.images is defined and relic.images|length > 0 %}
+                                <img src="{{ image_url(relic.images.first.thumbnailFilename ?? relic.images.first.filename) }}"
+                                     alt="{% if relic.saint %}{{ relic.saint|format_saint_name }}{% else %}{{ 'featured.relic_image_alt'|trans({}, 'landing') }}{% endif %}"
+                                     loading="lazy" />
+                            {% endif %}
+                        </div>
+                        <div class="landing-showcase-info">
+                            <h3 class="landing-showcase-saint">{{ relic.saint ? (relic.saint|format_saint_name) : '—' }}</h3>
+                            <p class="landing-showcase-degree">{{ relic.degree.getTitleTransKey()|trans({}, 'relic') }}</p>
+                            {% if relic.location %}
+                                <p class="landing-showcase-location">{{ relic.location }}</p>
+                            {% endif %}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="landing-showcase-empty-wrap">
+                <p class="landing-showcase-empty">{{ 'featured.empty'|trans({}, 'landing') }}</p>
+                <a href="{{ path('app_relic_index') }}" class="btn btn-primary">{{ 'featured.browse_all'|trans({}, 'landing') }}</a>
+            </div>
+        {% endif %}
+
+        <div class="landing-showcase-footer">
+            <p class="landing-showcase-chips-label">{{ 'featured.filter_by_class'|trans({}, 'landing') }}</p>
+            <div class="landing-class-chips" role="navigation" aria-label="{{ 'featured.filter_by_class'|trans({}, 'landing') }}">
+                <a href="{{ path('app_relic_index', {filter: 'first-class'}) }}" class="landing-class-chip">{{ 'relic.degree.first_class'|trans({}, 'relic') }}</a>
+                <a href="{{ path('app_relic_index', {filter: 'second-class'}) }}" class="landing-class-chip">{{ 'relic.degree.second_class'|trans({}, 'relic') }}</a>
+                <a href="{{ path('app_relic_index', {filter: 'third-class'}) }}" class="landing-class-chip">{{ 'relic.degree.third_class'|trans({}, 'relic') }}</a>
+            </div>
+            <p class="landing-showcase-meta">
+                <a href="{{ path('app_about') }}#relic-classes" class="landing-showcase-meta-link">{{ 'featured.about_classes'|trans({}, 'landing') }}</a>
+                <span class="landing-showcase-meta-sep" aria-hidden="true">·</span>
+                <a href="{{ path('app_about') }}#authentication" class="landing-showcase-meta-link">{{ 'featured.about_authentication'|trans({}, 'landing') }}</a>
+            </p>
         </div>
     </section>
 
