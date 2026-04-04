@@ -43,4 +43,5 @@ final class HomeController extends AbstractController
             'stats' => $statisticsService->getLandingStatistics(),
         ]);
     }
+
 }
