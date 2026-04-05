@@ -1,3 +1,10 @@
+# [2.45.0](https://github.com/CesarScur/reliquary/compare/v2.44.0...v2.45.0) (2026-04-05)
+
+
+### Features
+
+* **saints:** complete Phase 3 and enhance saint discovery and translation workflows ([53f6def](https://github.com/CesarScur/reliquary/commit/53f6defb585f32dbede1d5c3b4ee7aeac6e41c8e))
+
 # [2.44.0](https://github.com/CesarScur/reliquary/compare/v2.43.0...v2.44.0) (2026-02-08)
 
 
