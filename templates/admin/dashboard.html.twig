@@ -5,11 +5,11 @@
 {% block body %}
     <div class="dashboard-widgets">
         <div class="widget-card">
-            <div class="widget-number">7</div>
+            <div class="widget-number">{{ pendingRelicsCount }}</div>
             <div class="widget-label">Pending Relic Approvals</div>
             <div class="widget-trend">
-                <i class="fas fa-arrow-up me-1"></i>
-                2 new this week
+                <i class="fas fa-gem me-1"></i>
+                Requires review
             </div>
         </div>
 
@@ -23,11 +23,11 @@
         </div>
 
         <div class="widget-card success-accent">
-            <div class="widget-number">23</div>
-            <div class="widget-label">Saints Added This Month</div>
+            <div class="widget-number">{{ incompleteSaintsCount }}</div>
+            <div class="widget-label">Incomplete Saints</div>
             <div class="widget-trend">
-                <i class="fas fa-chart-line me-1"></i>
-                On track
+                <i class="fas fa-cross me-1"></i>
+                Discovery Queue
             </div>
         </div>
 
@@ -91,18 +91,26 @@
         </div>
     </div>
 
+    {% if pendingRelicsCount > 0 or incompleteSaintsCount > 0 %}
     <!-- Urgent Items Alert -->
     <div class="alert alert-custom" role="alert">
         <div class="d-flex align-items-center">
             <i class="fas fa-exclamation-circle me-3 fs-4"></i>
             <div>
-                <strong>Action Required:</strong> 7 relic submissions are awaiting approval.
-                <button class="btn btn-sm btn-outline-warning ms-2" data-content="relics">
-                    Review Now
-                </button>
+                <strong>Action Required:</strong>
+                {% if pendingRelicsCount > 0 %}
+                    {{ pendingRelicsCount }} relic submissions are awaiting approval.
+                {% endif %}
+                {% if incompleteSaintsCount > 0 %}
+                    {{ incompleteSaintsCount }} discovered saints need vetting.
+                {% endif %}
+                <a href="{{ path('app_admin_saints_incomplete') }}" class="btn btn-sm btn-outline-warning ms-2">
+                    Review Saints
+                </a>
             </div>
         </div>
     </div>
+    {% endif %}
     </div>
 
     <!-- Relics Approval Content -->

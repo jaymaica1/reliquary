@@ -27,7 +27,13 @@
                         {% for saint in pagination %}
                             <tr>
                                 <td>{{ saint.id }}</td>
-                                <td>{{ saint.name }}</td>
+                                <td>
+                                    {% if '(Update)' in saint.name %}
+                                        <span class="text-primary"><i class="fas fa-sync"></i> {{ saint.name }}</span>
+                                    {% else %}
+                                        {{ saint.name }}
+                                    {% endif %}
+                                </td>
                                 <td>
                                     {% if saint.canonicalStatus %}
                                         {{ saint.canonicalStatus.value }}

@@ -24,7 +24,7 @@ final class HomeController extends AbstractController
 {
     private const DEFAULT_RADIUS_KM = 45;
     #[Route('/', name: 'app_home')]
-    public function landing(SaintRepository $saintRepository, StatisticsService $statisticsService): Response
+    public function landing(SaintRepository $saintRepository): Response
     {
         $featuredSaints = $saintRepository->findFeatured();
 
@@ -37,7 +37,6 @@ final class HomeController extends AbstractController
             'featuredSaints' => $featuredSaints,
             'saintOfDay' => $saintOfDay,
             'otherSaints' => $otherSaints,
-            'stats' => $statisticsService->getLandingStatistics(),
         ]);
     }
 

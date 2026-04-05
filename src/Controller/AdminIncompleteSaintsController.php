@@ -49,7 +49,42 @@ class AdminIncompleteSaintsController extends AbstractController
         Saint $saint,
         EntityManagerInterface $entityManager
     ): Response {
+        // Check if this is an update to an existing saint
+        if ($saint->getUrl()) {
+            $existingSaints = $entityManager->getRepository(Saint::class)->findBy(['url' => $saint->getUrl()]);
+            foreach ($existingSaints as $existing) {
+                if ($existing->getId() !== $saint->getId() && !$existing->isIncomplete()) {
+                    // Update the existing complete saint with the new data
+                    $existing->setName(str_replace(' (Update)', '', $saint->getName()));
+                    $existing->setCanonicalStatus($saint->getCanonicalStatus());
+                    $existing->setFeastDate($saint->getFeastDate());
+                    $existing->setCanonizationDate($saint->getCanonizationDate());
+                    $existing->setCanonizingPope($saint->getCanonizingPope());
+
+                    // Merge translations (especially the saint phrase)
+                    foreach ($saint->getTranslations() as $newTranslation) {
+                        $existingTranslation = $existing->getTranslation($newTranslation->getLocale());
+                        if (!$existingTranslation) {
+                            $existingTranslation = new \App\Entity\SaintTranslation();
+                            $existingTranslation->setLocale($newTranslation->getLocale());
+                            $existing->addTranslation($existingTranslation);
+                        }
+                        $existingTranslation->setSaintPhrase($newTranslation->getSaintPhrase());
+                        // We could merge other fields if needed, but for discovery it's mostly the phrase
+                    }
+                    
+                    // Remove the draft saint
+                    $entityManager->remove($saint);
+                    $entityManager->flush();
+                    
+                    $this->addFlash('success', sprintf('Saint "%s" updated with new information.', $existing->getName()));
+                    return $this->redirectToRoute('app_admin_saints_incomplete');
+                }
+            }
+        }
+
         $saint->setIsIncomplete(false);
+        $saint->setName(str_replace(' (Update)', '', $saint->getName()));
         $entityManager->flush();
         
         $this->addFlash('success', 'Saint marked as complete.');

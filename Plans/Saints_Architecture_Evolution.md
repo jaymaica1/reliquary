@@ -53,17 +53,17 @@ Goal: Provide a full-featured interface for managing saints without needing manu
 
 ---
 
-## Phase 3: Automated Vatican Discovery Service
+## Phase 3: Automated Vatican Discovery Service [COMPLETED]
 **Goal:** Seamlessly integrate new saints from the Vatican site into the system.
 
 1.  **Discovery Command:**
-    *   [ ] Refactor `ScrapeVaticanCommand` to `app:discover-vatican`.
+    *   [x] Refactor `ScrapeVaticanCommand` to `app:discover-vatican`.
     *   Instead of writing to a file, it should:
-        1. [ ] Crawl the Vatican's index of celebrations/canonizations.
-        2. [ ] Check for existence in the database (by URL or Name).
-        3. [ ] Insert new entries as `is_incomplete = true`.
+        1. [x] Crawl the Vatican's index of celebrations/canonizations.
+        2. [x] Check for existence in the database (by URL or Name).
+        3. [x] Insert new entries as `is_incomplete = true`.
 2.  **Admin Notifications:**
-    *   [ ] Show a badge or notification in the Admin Dashboard when new saints are discovered and awaiting vetting.
+    *   [x] Show a badge or notification in the Admin Dashboard when new saints are discovered and awaiting vetting.
 
 **Deployment Outcome:** The system automatically stays up-to-date with Vatican releases, requiring only human verification.
 
