@@ -4,14 +4,9 @@ namespace App\Controller;
 
 use App\Repository\RelicRepository;
 use App\Repository\SaintRepository;
-use App\Service\LocationResolverService;
-use App\Service\StatisticsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\SecurityBundle\Security;
-use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Controller for the home page that displays relics
@@ -24,7 +19,7 @@ final class HomeController extends AbstractController
 {
     private const DEFAULT_RADIUS_KM = 45;
     #[Route('/', name: 'app_home')]
-    public function landing(SaintRepository $saintRepository, RelicRepository $relicRepository, StatisticsService $statisticsService): Response
+    public function landing(SaintRepository $saintRepository, RelicRepository $relicRepository): Response
     {
         $featuredSaints = $saintRepository->findFeatured();
 
@@ -40,7 +35,6 @@ final class HomeController extends AbstractController
             'saintOfDay' => $saintOfDay,
             'otherSaints' => $otherSaints,
             'landingShowcaseRelics' => $landingShowcaseRelics,
-            'stats' => $statisticsService->getLandingStatistics(),
         ]);
     }
 
