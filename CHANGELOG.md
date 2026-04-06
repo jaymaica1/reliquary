@@ -1,3 +1,12 @@
+# [2.46.0](https://github.com/CesarScur/reliquary/compare/v2.45.0...v2.46.0) (2026-04-06)
+
+
+### Features
+
+* **landing:** redesign relic section with dynamic showcase and class filters ([96f5aa0](https://github.com/CesarScur/reliquary/commit/96f5aa0717cf912b61e44a45bd81b2be26e0318b))
+* **migrations:** move biography and abstract to SaintTranslation, clean up Saint fields ([9eb5319](https://github.com/CesarScur/reliquary/commit/9eb531928a4fd877324b40ac9db711b465f4557d))
+* **migrations:** move biography and abstract to SaintTranslation, clean up Saint fields ([4f3273f](https://github.com/CesarScur/reliquary/commit/4f3273f64e9d1cd59bda8cd5db3b79c48106d58f))
+
 # [2.45.0](https://github.com/CesarScur/reliquary/compare/v2.44.0...v2.45.0) (2026-04-05)
 
 
