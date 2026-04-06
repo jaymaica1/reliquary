@@ -88,7 +88,7 @@
             </div>
 
             <!-- Saint Phrase Quote -->
-            {% if saint.saintPhrase %}
+            {% if saint.getTranslatedPhrase(app.request.locale) %}
                 <div class="saint-quote">
                     <p class="quote-text">
                         "{{ saint.getTranslatedPhrase(app.request.locale) }}"
