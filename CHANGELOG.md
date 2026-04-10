@@ -1,3 +1,11 @@
+# [2.47.0](https://github.com/CesarScur/reliquary/compare/v2.46.0...v2.47.0) (2026-04-10)
+
+
+### Features
+
+* **logging:** add log rotation for MongoDB containers in docker-compose configs ([d074f46](https://github.com/CesarScur/reliquary/commit/d074f46d6c12f45a0e87224bc6aa89b84c026bec))
+* **saints:** enhance saint filters, search UX, and empty state handling ([24f036a](https://github.com/CesarScur/reliquary/commit/24f036a214fbb9b2455ab5cb83a7eef3c5a35777))
+
 # [2.46.0](https://github.com/CesarScur/reliquary/compare/v2.45.0...v2.46.0) (2026-04-06)
 
 
