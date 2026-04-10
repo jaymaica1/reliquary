@@ -65,6 +65,11 @@ services:
       - mongodb_data:/data/db:rw
       - ./docker/mongodb/init:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "2"
 
 
 volumes:
