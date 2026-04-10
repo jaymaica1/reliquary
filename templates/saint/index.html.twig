@@ -25,49 +25,46 @@
                 </div>
             </div>
 
-            <div class="filter-bar d-none" data-filter-toggle-target="filter">
-                <form method="get" class="filter-form" style="width: 100%; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                    <div class="search-box" style="position: relative; flex: 1; min-width: 200px;">
-                        <input type="text" 
-                               name="q"
-                               value="{{ app.request.query.get('q') }}"
-                               placeholder="{{ 'saint.filter.placeholder'|trans({'default': 'Search saints...'}, 'saint') }}" 
-                               id="saintSearch"
-                               style="padding-right: {{ app.request.query.get('q') ? '2.5rem' : '1rem' }};" />
-                        {% if app.request.query.get('q') %}
-                            <a href="{{ app.request.get('_route') == 'app_my_saints' ? path('app_my_saints') : path('app_saint_index') }}" 
-                               class="search-clear-btn"
-                               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(254, 254, 254, 0.6); cursor: pointer; padding: 0.25rem 0.5rem; transition: color 0.3s ease; text-decoration: none; font-size: 1.2rem;"
-                               onmouseover="this.style.color='var(--accent-gold)'"
-                               onmouseout="this.style.color='rgba(254, 254, 254, 0.6)'">
+                <div class="filter-bar {% if filter or app.request.query.get('q') or include_incomplete %}d-block{% else %}d-none{% endif %}" data-filter-toggle-target="filter" data-controller="autosubmit">
+                    <form method="get" class="filter-form" style="width: 100%; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;" data-action="change->autosubmit#submit">
+                        <div class="search-box position-relative" style="flex: 1; min-width: 200px;">
+                            <input type="text" 
+                                   name="q"
+                                   value="{{ app.request.query.get('q') }}"
+                                   placeholder="{{ 'saint.filter.placeholder'|trans({'default': 'Search saints...'}, 'saint') }}" 
+                                   id="saintSearch"
+                                   style="padding-right: 3rem;" 
+                                   onkeydown="if(event.key === 'Enter'){this.form.submit()}"/>
+                            <button type="submit" class="search-clear-btn" style="border: none; background: none; outline: none;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <select class="filter-select" id="filter" name="filter">
+                            <option value="">{{ 'saint.filter.allsaints'|trans({}, 'saint') }}</option>
+                            {% for status in canonical_statuses %}
+                                <option value="{{ status.value }}" {% if filter == status.value %}selected{% endif %}>
+                                    {{ status.getTitleTransKey()|trans({}, 'saint') }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="form-check form-switch ms-2">
+                                <input class="form-check-input" type="checkbox" name="include_incomplete" id="include_incomplete" value="1" {% if include_incomplete %}checked{% endif %}>
+                                <label class="form-check-label text-white" for="include_incomplete">
+                                    {{ 'saint.filter.include_incomplete'|trans({}, 'saint') }}
+                                </label>
+                            </div>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') or app.request.query.get('q') or filter or include_incomplete %}
+                            <a href="{{ path('app_saint_index') }}" class="btn btn-outline-secondary">
                                 <i class="fas fa-circle-xmark"></i>
+                                {{ 'relic.actions.clear'|trans({}, 'relic') }}
                             </a>
                         {% endif %}
-                    </div>
-                    <select class="filter-select" id="filter" name="filter">
-                        <option value="">{{ 'saint.filter.allsaints'|trans({}, 'saint') }}</option>
-                        {% for status in canonical_statuses %}
-                            <option value="{{ status.value }}" {% if filter == status.value %}selected{% endif %}>
-                                {{ status.getTitleTransKey()|trans({}, 'saint') }}
-                            </option>
-                        {% endfor %}
-                    </select>
-
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <div class="form-check form-switch ms-2">
-                            <input class="form-check-input" type="checkbox" name="include_incomplete" id="include_incomplete" value="1" {% if include_incomplete %}checked{% endif %} onchange="this.form.submit()">
-                            <label class="form-check-label text-white" for="include_incomplete">
-                                {{ 'saint.filter.include_incomplete'|trans({}, 'saint') }}
-                            </label>
-                        </div>
-                    {% endif %}
-
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                        {{ 'saint.filter.search'|trans({'default': 'Search'}, 'saint') }}
-                    </button>
-                </form>
-            </div>
+                    </form>
+                </div>
         </div>
 
         {% if pagination.items|length > 0 %}
@@ -123,23 +120,30 @@
 
             <div class="pagination-wrapper">
                 <div class="pagination-info">
-                    {{ ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1) }}-{{ min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount) }} of {{ pagination.getTotalItemCount }} items
+                    {{ 'common.pagination.info'|trans({
+                        '%start%': (pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1,
+                        '%end%': min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount),
+                        '%total%': pagination.getTotalItemCount
+                    }, 'common') }}
                 </div>
                 <div class="navigation">
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         {% else %}
-            <div class="saint-card">
-                <div class="saint-image">
-                    <img src="{{ asset('/images/relic.png') }}" 
-                         alt="{{ 'saint.no_saints'|trans({'default': 'No saints found'}, 'saint') }}" 
-                         class="opacity-25" 
-                         style="filter: grayscale(100%);" />
-                </div>
-                <div class="saint-info">
-                    <h3 class="saint-name">{{ 'saint.no_saints'|trans({'default': 'No saints found'}, 'saint') }}</h3>
-                    <p class="saint-bio">{{ 'saint.no_saints_description'|trans({'default': 'No saints match your current search or filter criteria.'}, 'saint') }}</p>
+            <div class="no-relics-container fade-in">
+                <div class="no-relics-content">
+                    <div class="no-relics-icon">
+                        <img src="{{ asset('/images/relic.png') }}" alt="{{ 'saint.no_saints'|trans({}, 'saint') }}" />
+                    </div>
+                    <h3 class="no-relics-title">{{ 'saint.no_saints'|trans({}, 'saint') }}</h3>
+                    <p class="no-relics-text">{{ 'saint.no_saints_description'|trans({}, 'saint') }}</p>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_saint_new') }}" class="btn btn-primary no-relics-btn">
+                            <i class="fas fa-plus-circle me-2"></i>
+                            {{ 'saint.add_new'|trans({}, 'saint') }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
