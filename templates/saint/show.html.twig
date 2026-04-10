@@ -114,16 +114,7 @@
             {% if saint.relics is defined and saint.relics|length > 0 %}
                 <div class="relics-section">
                     <h2 class="section-heading">{{ 'saint.table.relics'|trans({}, 'saint') }}</h2>
-                    <turbo-frame id="relics-list"
-                                data-controller="responsive-frame"
-                                data-responsive-frame-desktop-src-value="{{ path('app_saint_relics_desktop', {'saint': saint.id}) }}"
-                                data-responsive-frame-mobile-src-value="{{ path('app_saint_relics_mobile', {'saint': saint.id}) }}">
-                        <div class="loading-container">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">{{ 'common.ui.loading'|trans({}, 'common') }}</span>
-                            </div>
-                        </div>
-                    </turbo-frame>
+                    {{ include('relic/_relic_grid.html.twig') }}
                 </div>
             {% endif %}
 

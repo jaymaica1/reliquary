@@ -67,61 +67,11 @@
             </div>
         {% endif %}
 
-        {% if pagination.items|length > 0 %}
-            <div class="relics-grid">
-                {% for relic in pagination %}
-                    <div class="saint-card" style="cursor: pointer;" data-controller="link" data-link-url-value="{{ path('app_relic_show', {'id': relic.id}) }}" data-action="click->link#click">
-                        <div class="saint-image">
-                            {% if relic.images|length > 0 %}
-                                <div data-controller="image-loader">
-                                    <div data-image-loader-target="skeleton" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-                                        <img src="{{ asset('/images/relic.png') }}" class="w-100 h-100 skeleton-animation" style="object-fit: contain; filter: grayscale(100%);" />
-                                    </div>
-                                    <img data-image-loader-target="image" data-action="load->image-loader#imageLoaded" src="{{ image_url(relic.images.first.thumbnailFilename ?? relic.images.first.filename) }}" alt="{{ relic.saint|format_saint_name }}" />
-                                </div>
-                            {% else %}
-                                <img src="{{ asset('/images/relic.png') }}" alt="{{ 'relic.no_image'|trans({}, 'relic') }}" class="opacity-25" style="filter: grayscale(100%);" />
-                            {% endif %}
-                        </div>
-                        <div class="saint-info">
-                            <h3 class="saint-name">{{ relic.saint|format_saint_name }}</h3>
-                            <p class="saint-dates">{{ relic.degree.titleTransKey|trans({}, 'relic') }}</p>
-                            <div class="relic-details">
-                                {% if relic.address %}
-                                    <p class="relic-address">{{ relic.address }}</p>
-                                {% endif %}
-                                {% if relic.location %}
-                                    <p class="relic-location">{{ relic.location }}</p>
-                                {% endif %}
-                                {% if relic.description %}
-                                    <p class="saint-bio">{{ relic.description|slice(0, 150) }}{% if relic.description|length > 150 %}...{% endif %}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            
-            <div class="pagination-wrapper">
-                <div class="pagination-info">
-                    {{ 'common.pagination.info'|trans({
-                        '%start%': (pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage() + 1,
-                        '%end%': min(pagination.getCurrentPageNumber() * pagination.getItemNumberPerPage(), pagination.getTotalItemCount),
-                        '%total%': pagination.getTotalItemCount
-                    }, 'common') }}
-                </div>
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
-            </div>
-        {% else %}
+        {{ include('relic/_relic_grid.html.twig') }}
+
+        {% if pagination.items|length == 0 %}
             <div class="no-relics-container fade-in">
                 <div class="no-relics-content">
-                    <div class="no-relics-icon">
-                        <img src="{{ asset('/images/relic.png') }}" alt="{{ 'relic.no_relics'|trans({}, 'relic') }}" />
-                    </div>
-                    <h3 class="no-relics-title">{{ 'relic.no_relics'|trans({}, 'relic') }}</h3>
-                    <p class="no-relics-text">{{ 'relic.no_relics_description'|trans({}, 'relic') }}</p>
                     {% if app.user %}
                         <a href="{{ path('app_relic_new') }}" class="btn btn-primary no-relics-btn">
                             <i class="fas fa-plus-circle me-2"></i>

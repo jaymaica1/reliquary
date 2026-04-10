@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Saint;
 use App\Form\SaintType;
+use App\Repository\RelicRepository;
 use App\Repository\SaintRepository;
 use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -104,14 +105,20 @@ final class SaintController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_saint_show', methods: ['GET'])]
-    public function show(Saint $saint): Response
+    public function show(Request $request, Saint $saint, RelicRepository $relicRepository, PaginatorInterface $paginator): Response
     {
         if ($saint->isIncomplete()) {
             throw $this->createNotFoundException('Saint not found');
         }
 
+        $pagination = $paginator->paginate(
+            $relicRepository->findBySaintWithVisibility($saint->getId(), $this->getUser()),
+            $request->query->getInt('page', 1),
+        );
+
         return $this->render('saint/show.html.twig', [
             'saint' => $saint,
+            'pagination' => $pagination,
         ]);
     }
 
