@@ -55,7 +55,7 @@ class RegistrationController extends AbstractController
                 $this->translator->trans('registration.messages.check_email', [], 'registration')
             );
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -74,15 +74,13 @@ class RegistrationController extends AbstractController
             $user = $this->getUser();
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('danger', $exception->getReason());
+            $this->addFlash(
+                'danger',
+                $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle')
+            );
 
             return $this->redirectToRoute('app_register');
         }
-
-        $this->addFlash(
-            'success',
-            $this->translator->trans('registration.messages.email_confirmed', [], 'registration')
-        );
 
         return $this->redirectToRoute('app_home');
     }

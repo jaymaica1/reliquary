@@ -6,17 +6,18 @@
 <section class="contact-section">
     <div class="contact-container">
         <h2 class="section-title">{{ 'registration.title'|trans({}, 'registration') }}</h2>
-        
+
+        {% include '_flash_messages.html.twig' %}
+
         <div class="contact-content contact-content-single">
             <div class="contact-form-section">
-                <form class="contact-form" method="post">
                     {% if registrationForm.vars.errors|length > 0 %}
                         <div class="form-error-message">
                             {{ form_errors(registrationForm) }}
                         </div>
                     {% endif %}
 
-                    {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate', 'class': 'contact-form'}}) }}
 
                     <div class="form-group">
                         <label for="{{ registrationForm.username.vars.id }}">{{ 'registration.form.username'|trans({}, 'registration') }}</label>
@@ -61,7 +62,6 @@
                     </div>
 
                     {{ form_end(registrationForm) }}
-                </form>
             </div>
         </div>
     </div>
