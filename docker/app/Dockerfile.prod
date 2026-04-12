@@ -53,8 +53,14 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     libmagickwand-dev \
+    postgresql-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# MongoDB database tools (same major as compose mongodb service)
+COPY --from=mongo:7.0 /usr/bin/mongodump /usr/bin/mongodump
+COPY --from=mongo:7.0 /usr/bin/mongorestore /usr/bin/mongorestore
+RUN mongodump --version && mongorestore --version
 
 # Install PHP extensions
 RUN docker-php-ext-install \

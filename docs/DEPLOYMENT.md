@@ -128,6 +128,25 @@ Create a `.env` file with the following variables:
 | `MONGO_APP_USERNAME` | MongoDB application user username | `reliquary_user` | Yes | `reliquary_user` |
 | `MONGO_APP_PASSWORD` | MongoDB application user password | - | Yes | `AppUserPass456!` |
 
+#### AWS S3 (images and backups)
+
+Production image storage uses S3 via Flysystem. The backup commands reuse the same credentials and region unless you add separate keys later.
+
+| Variable | Description | Default | Required | Example |
+|----------|-------------|---------|----------|---------|
+| `AWS_ACCESS_KEY_ID` | IAM access key for S3 API calls | - | Yes (prod with S3) | `AKIA...` |
+| `AWS_SECRET_ACCESS_KEY` | IAM secret key | - | Yes (prod with S3) | `...` |
+| `AWS_REGION` | AWS region for S3 | - | Yes (prod with S3) | `us-east-1` |
+| `AWS_S3_BUCKET` | Bucket for relic images | - | Yes (prod with S3) | `my-reliquary-assets` |
+| `AWS_S3_PREFIX` | Optional key prefix inside the assets bucket | empty | No | `prod` |
+| `AWS_ENDPOINT` | Custom endpoint (S3-compatible, LocalStack, etc.) | empty | No | `https://minio.example.com` |
+| `AWS_CLOUDFRONT_DOMAIN` | Optional CloudFront hostname for public URLs | empty | No | `d123.cloudfront.net` |
+| `AWS_BACKUP_BUCKET` | **Private** bucket for `app:backup:s3` / `app:restore:s3` artifacts | empty | Yes to use backup commands | `my-reliquary-backups` |
+| `AWS_BACKUP_PREFIX` | S3 key prefix for backup folders | `reliquary-backups` | No | `reliquary-backups` |
+| `AWS_BACKUP_KMS_KEY_ID` | Optional KMS key id for SSE-KMS on backup objects | empty | No | `arn:aws:kms:...` |
+
+Use a **dedicated backup bucket** (or at least a dedicated prefix with no public access) so database dumps are never mixed with public asset configuration.
+
 #### Mail Configuration
 
 | Variable | Description | Default | Required | Example |
@@ -209,6 +228,17 @@ APACHE_SSL_PORT=443
 
 # Auto-update (optional)
 WATCHTOWER_HTTP_API_TOKEN=your-secure-watchtower-token
+
+# AWS S3 (production images — required when using cloud image storage)
+AWS_ACCESS_KEY_ID=your-access-key
+AWS_SECRET_ACCESS_KEY=your-secret-key
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=your-assets-bucket
+
+# AWS S3 backups (private bucket for database dumps — optional until you use backup commands)
+AWS_BACKUP_BUCKET=your-private-backups-bucket
+# AWS_BACKUP_PREFIX=reliquary-backups
+# AWS_BACKUP_KMS_KEY_ID=arn:aws:kms:us-east-1:123456789012:key/...
 ```
 
 #### Security Recommendations
@@ -226,13 +256,110 @@ For production, consider:
 
    Instead of running PostgreSQL in a container, consider using a managed database service like AWS RDS, Google Cloud SQL, or DigitalOcean Managed Databases.
 
-2. **Regular Backups**
+2. **Backups to a private S3 bucket (recommended)**
 
-   Set up regular database backups:
+   Configure a **private** S3 bucket and IAM credentials (see below), set `AWS_BACKUP_BUCKET` (and optional `AWS_BACKUP_PREFIX` / `AWS_BACKUP_KMS_KEY_ID`) on the `app` service together with the existing `AWS_*` variables used for image storage.
+
+   **AWS checklist**
+
+   1. Create an S3 bucket (for example `reliquary-prod-backups-<account-id>`) in your chosen region.
+   2. Turn on **Block Public Access** for the bucket (all four settings).
+   3. Enable **default encryption** (SSE-S3 or SSE-KMS).
+   4. Attach a least-privilege IAM policy to the key or role used by the app, for example:
+      - `s3:PutObject`, `s3:GetObject`, `s3:ListBucket` on `arn:aws:s3:::YOUR_BACKUP_BUCKET` and `arn:aws:s3:::YOUR_BACKUP_BUCKET/*`
+      - Optionally `s3:DeleteObject` if you automate retention pruning.
+   5. Optionally add a lifecycle rule (transition to Glacier, expire after N days).
+   6. Optionally use a separate IAM user for backups than for public asset uploads.
+
+   The production Docker image includes `pg_dump`, `pg_restore`, `mongodump`, and `mongorestore` so backups run inside the `app` container.
+
+   **Console commands**
 
    ```bash
-   # Example backup script
-   docker compose exec database pg_dump -U app reliquary > backup_$(date +%Y%m%d).sql
+   # Preview dump commands and S3 keys (does not require AWS_BACKUP_BUCKET)
+   docker compose exec app php bin/console app:backup:s3 --dry-run
+
+   # Create PostgreSQL + MongoDB dumps and upload to S3 (requires AWS_BACKUP_BUCKET)
+   docker compose exec app php bin/console app:backup:s3
+
+   # Same, plus tar of public/uploads/images (can be large)
+   docker compose exec app php bin/console app:backup:s3 --with-local-uploads
+   ```
+
+   **Restore (destructive)**
+
+   Restore targets the databases in the current `DATABASE_URL` and `MONGODB_*` environment. Stop the app or put it in maintenance if you need a consistent cutover. **`--force` is required.**
+
+   ```bash
+   # Restore the latest backup under AWS_BACKUP_PREFIX
+   docker compose exec app php bin/console app:restore:s3 --latest --force
+
+   # Restore a specific backup folder id (timestamp folder under the prefix)
+   docker compose exec app php bin/console app:restore:s3 --backup-id=2026-04-12T15-30-45Z --force
+
+   # Optional: drop Mongo collections before restore; optional: pg_restore --clean --if-exists
+   docker compose exec app php bin/console app:restore:s3 --latest --force --drop-mongo --clean-postgres
+
+   # If the backup included uploads.tar.gz, extract into public/uploads/images
+   docker compose exec app php bin/console app:restore:s3 --latest --force --with-local-uploads
+   ```
+
+   **Restore checklist**
+
+   - Confirm you are pointed at the correct environment (`.env` / compose).
+   - Prefer stopping web traffic or the `app` container during restore.
+   - Restore order used by the command: PostgreSQL, then MongoDB.
+   - After restore, verify data; run migrations if your process requires it (`bin/console doctrine:migrations:migrate`).
+
+   **Scheduled backup (cron on the host)**
+
+   ```bash
+   0 3 * * * cd /path/to/compose && /usr/bin/docker compose exec -T app php bin/console app:backup:s3 >> /var/log/reliquary-backup.log 2>&1
+   ```
+
+   Ensure the cron environment provides the same `AWS_*` and `AWS_BACKUP_*` variables as production (or use a `.env` file that Compose loads).
+
+3. **Manual backup and restore (without PHP)**
+
+   Use these if you cannot run Symfony console but have the AWS CLI configured on the host (`aws configure` or instance role). Replace `BUCKET`, `PREFIX`, and credentials as appropriate.
+
+   **PostgreSQL (custom format, gzip)**
+
+   ```bash
+   docker compose exec -T database pg_dump -U "${POSTGRES_USER}" -Fc "${POSTGRES_DB}" \
+     | gzip -9 \
+     | aws s3 cp - "s3://BUCKET/PREFIX/manual-$(date -u +%Y%m%dT%H%M%SZ)/postgres.dump.gz"
+   ```
+
+   **Download and restore PostgreSQL**
+
+   Pipe the custom-format dump into `pg_restore` (reads from stdin when the archive argument is `-`):
+
+   ```bash
+   aws s3 cp "s3://BUCKET/PREFIX/manual-.../postgres.dump.gz" - \
+     | gunzip -c \
+     | docker compose exec -T database pg_restore -U "${POSTGRES_USER}" --no-owner --no-acl -d "${POSTGRES_DB}" -
+   ```
+
+   **MongoDB (archive, gzip)**
+
+   ```bash
+   docker compose exec -T mongodb mongodump \
+     --uri="${MONGODB_URL}" \
+     --db="${MONGODB_DATABASE}" \
+     --archive --gzip \
+     | aws s3 cp - "s3://BUCKET/PREFIX/manual-$(date -u +%Y%m%dT%H%M%SZ)/mongo.archive.gz"
+   ```
+
+   **Download and restore MongoDB**
+
+   ```bash
+   aws s3 cp "s3://BUCKET/PREFIX/manual-.../mongo.archive.gz" /tmp/mongo.archive.gz
+   docker compose cp /tmp/mongo.archive.gz mongodb:/tmp/mongo.archive.gz
+   docker compose exec mongodb mongorestore \
+     --uri="${MONGODB_URL}" \
+     --gzip --archive=/tmp/mongo.archive.gz \
+     --nsInclude="${MONGODB_DATABASE}.*"
    ```
 
 ## MongoDB Configuration and Security
