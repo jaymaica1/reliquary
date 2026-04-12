@@ -1,3 +1,13 @@
+# [2.48.0](https://github.com/CesarScur/reliquary/compare/v2.47.0...v2.48.0) (2026-04-12)
+
+
+### Features
+
+* **backup:** add S3 backup and restore commands for PostgreSQL and MongoDB ([1b6eccf](https://github.com/CesarScur/reliquary/commit/1b6eccf27c09c50e0b6d35f5ab87943edab38c6d))
+* **registration:** add i18n support for email confirmation and flash messages ([c13f2fb](https://github.com/CesarScur/reliquary/commit/c13f2fb4af49f415311aabf6c0975070525a9185))
+* **registration:** add i18n support for email confirmation and flash messages ([670999a](https://github.com/CesarScur/reliquary/commit/670999a5b94c6b4c36b7becb28cd0dc4f47b5a65))
+* **saints:** add group and sex properties for saints with PT-BR title support and LLM backfill ([b9a914a](https://github.com/CesarScur/reliquary/commit/b9a914ad6048ea708f69dcf0f7b4a2ff4f099f7b))
+
 # [2.47.0](https://github.com/CesarScur/reliquary/compare/v2.46.0...v2.47.0) (2026-04-10)
 
 
