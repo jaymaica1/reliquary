@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Service\Ai\AiTextService;
 use App\Service\ConfigurationService;
+use App\Exception\Ai\AiResponseTruncatedException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -145,6 +146,9 @@ class TranslateSaintsAiCommand extends Command
 
             file_put_contents($file, $results);
             $io->note(sprintf('Updated %d saints in %s', count($parsedResults['saints']), basename($file)));
+        } catch (AiResponseTruncatedException $e) {
+            $io->error(sprintf('AI response was truncated for %s: %s', basename($file), $e->getMessage()));
+            $io->note('The file was not updated. Try reducing the batch size or increasing max_tokens.');
         } catch (\Exception $e) {
             $io->error(sprintf('Error in AI call for batch in %s: %s', basename($file), $e->getMessage()));
         }

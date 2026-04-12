@@ -2,6 +2,8 @@
 
 namespace App\Service\Ai;
 
+use App\Exception\Ai\AiResponseTruncatedException;
+
 interface AiChatProviderInterface
 {
     public function getName(): string;

@@ -3,20 +3,17 @@
 namespace App\Twig;
 
 use App\Entity\Saint;
+use App\Service\SaintDisplayTitleResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class SaintExtension extends AbstractExtension
 {
-    private TranslatorInterface $translator;
-    private RequestStack $requestStack;
-    
-    public function __construct(TranslatorInterface $translator, RequestStack $requestStack)
-    {
-        $this->translator = $translator;
-        $this->requestStack = $requestStack;
+    public function __construct(
+        private readonly SaintDisplayTitleResolver $titleResolver,
+        private readonly RequestStack $requestStack,
+    ) {
     }
     
     public function getFilters(): array
@@ -39,10 +36,9 @@ class SaintExtension extends AbstractExtension
         if ($canonicalStatus === null) {
             return $name ?? '';
         }
-        
-        $titleKey = $canonicalStatus->getTitleTransKey();
-        $title = $this->translator->trans($titleKey, [], 'saint', $locale);
-        
+
+        $title = $this->titleResolver->resolveTitlePrefix($saint, $locale);
+
         return sprintf('%s %s', $title, $name);
     }
 }

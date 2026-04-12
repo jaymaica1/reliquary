@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\CanonicalStatus;
+use App\Enum\SaintSex;
 use App\Repository\SaintRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -44,6 +45,12 @@ class Saint implements ImageOwnerInterface
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $featured = false;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isGroup = false;
+
+    #[ORM\Column(type: 'string', enumType: SaintSex::class, length: 16, options: ['default' => 'unknown'])]
+    private SaintSex $sex = SaintSex::UNKNOWN;
 
     /**
      * @var Collection<int, Relic>
@@ -270,6 +277,30 @@ class Saint implements ImageOwnerInterface
     public function setFeatured(bool $featured): static
     {
         $this->featured = $featured;
+
+        return $this;
+    }
+
+    public function isGroup(): bool
+    {
+        return $this->isGroup;
+    }
+
+    public function setIsGroup(bool $isGroup): static
+    {
+        $this->isGroup = $isGroup;
+
+        return $this;
+    }
+
+    public function getSex(): SaintSex
+    {
+        return $this->sex;
+    }
+
+    public function setSex(SaintSex $sex): static
+    {
+        $this->sex = $sex;
 
         return $this;
     }

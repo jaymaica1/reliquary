@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Saint;
 use App\Enum\CanonicalStatus;
+use App\Enum\SaintSex;
 use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -186,6 +187,35 @@ class SaintType extends AbstractType
                 ],
                 'help' => 'saint.form.is_featured_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
+            ])
+            ->add('isGroup', CheckboxType::class, [
+                'label' => 'saint.form.is_group',
+                'translation_domain' => 'saint',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+                'label_attr' => [
+                    'class' => 'form-check-label',
+                ],
+                'help' => 'saint.form.is_group_help',
+                'help_attr' => ['class' => 'form-text text-muted'],
+            ])
+            ->add('sex', EnumType::class, [
+                'label' => 'saint.form.sex',
+                'translation_domain' => 'saint',
+                'class' => SaintSex::class,
+                'choice_label' => fn (SaintSex $s) => match ($s) {
+                    SaintSex::MALE => 'saint.form.sex_male',
+                    SaintSex::FEMALE => 'saint.form.sex_female',
+                    SaintSex::UNKNOWN => 'saint.form.sex_unknown',
+                },
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'help' => 'saint.form.sex_help',
+                'help_attr' => ['class' => 'form-text text-muted'],
+                'label_attr' => ['class' => 'form-label'],
             ])
         ;
     }

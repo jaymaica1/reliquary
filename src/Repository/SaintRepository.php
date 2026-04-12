@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Saint;
+use App\Enum\SaintSex;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -181,5 +182,25 @@ class SaintRepository extends ServiceEntityRepository
             ->setParameter('incomplete', true)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Saints still on default sex (unknown), for LLM demographics backfill.
+     *
+     * @return list<Saint>
+     */
+    public function findForDemographicsInference(int $limit, ?int $idGreaterThan = null): array
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->where('s.sex = :unknown')
+            ->setParameter('unknown', SaintSex::UNKNOWN)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults($limit);
+
+        if ($idGreaterThan !== null && $idGreaterThan > 0) {
+            $qb->andWhere('s.id > :minId')->setParameter('minId', $idGreaterThan);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

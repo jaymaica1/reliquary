@@ -5,20 +5,23 @@ namespace App\Service\Ai;
 use App\Exception\Ai\AiResponseTruncatedException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class OpenAiChatProvider implements AiChatProviderInterface
+/**
+ * OpenAI-compatible chat API as exposed by LM Studio (default http://127.0.0.1:1234/v1).
+ */
+class LmStudioChatProvider implements AiChatProviderInterface
 {
     public function __construct(
         private HttpClientInterface $httpClient,
-        private string $apiKey,
-        private string $baseUrl = 'https://api.openai.com/v1',
-        private string $defaultModel = 'gpt-4o-mini'
+        private string $baseUrl = 'http://127.0.0.1:1234/v1',
+        private string $apiKey = '',
+        private string $defaultModel = '',
     ) {
         $this->baseUrl = rtrim($baseUrl, '/');
     }
 
     public function getName(): string
     {
-        return 'openai';
+        return 'lmstudio';
     }
 
     public function supports(string $providerName): bool
@@ -29,30 +32,40 @@ class OpenAiChatProvider implements AiChatProviderInterface
     public function chat(array $messages, array $options = []): string
     {
         $model = $options['model'] ?? $this->defaultModel;
-        
+
         $json = [
-            'model' => $model,
             'messages' => $messages,
             'temperature' => $options['temperature'] ?? 0.7,
         ];
 
-        if (isset($options['response_format'])) {
+        if ($model !== '') {
+            $json['model'] = $model;
+        }
+
+        if (!empty($options['response_format'])) {
             $json['response_format'] = $options['response_format'];
+        }
+
+        $headers = [
+            'Content-Type' => 'application/json',
+        ];
+        if ($this->apiKey !== '') {
+            $headers['Authorization'] = 'Bearer '.$this->apiKey;
         }
 
         try {
             $response = $this->httpClient->request('POST', $this->baseUrl . '/chat/completions', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                    'Content-Type' => 'application/json',
-                ],
+                'headers' => $headers,
                 'json' => $json,
+                'timeout' => 300,
             ]);
-
             if ($response->getStatusCode() !== 200) {
                 $errorData = $response->toArray(false);
-                $errorMessage = $errorData['error']['message'] ?? 'Unknown OpenAI error';
-                throw new \RuntimeException('OpenAI error: ' . $errorMessage);
+                $errorMessage = $errorData['error']['message'] ?? $errorData['error'] ?? 'Unknown LM Studio error';
+                if (is_array($errorMessage)) {
+                    $errorMessage = json_encode($errorMessage);
+                }
+                throw new \RuntimeException('LM Studio error: '.$errorMessage);
             }
 
             $data = $response->toArray();
@@ -60,18 +73,18 @@ class OpenAiChatProvider implements AiChatProviderInterface
             $content = $choice['message']['content'] ?? null;
 
             if ($content === null) {
-                throw new \RuntimeException('OpenAI response did not contain content');
+                throw new \RuntimeException('LM Studio response did not contain content');
             }
 
             if (($choice['finish_reason'] ?? '') === 'length') {
-                throw new AiResponseTruncatedException('OpenAI response was truncated (finish_reason: length)');
+                throw new AiResponseTruncatedException('LM Studio response was truncated (finish_reason: length)');
             }
 
             return $content;
-        } catch (AiResponseTruncatedException $e) {
+        } catch (AiResponseTruncatedException|\RuntimeException $e) {
             throw $e;
         } catch (\Exception $e) {
-            throw new \RuntimeException('OpenAI request failed: ' . $e->getMessage(), 0, $e);
+            throw new \RuntimeException('LM Studio request failed: '.$e->getMessage(), 0, $e);
         }
     }
 }

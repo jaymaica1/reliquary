@@ -8,6 +8,8 @@
                         <tr>
                             <th style="width: 150px;"></th>
                             <th>{{ knp_pagination_sortable(pagination, 'saint.table.name'|trans({}, 'saint'), 's.name') }}</th>
+                            <th style="width: 100px">{{ 'saint.table.group'|trans({}, 'saint') }}</th>
+                            <th style="width: 100px">{{ 'saint.table.sex'|trans({}, 'saint') }}</th>
                             <th style="width: 180px">{{ knp_pagination_sortable(pagination, 'saint.table.feast_date'|trans({}, 'saint'), 's.feast_date') }}</th>
                             <th style="width: 250px">{{ knp_pagination_sortable(pagination, 'saint.table.canonization_date'|trans({}, 'saint'), 's.canonization_date') }}</th>
                         </tr>
@@ -47,6 +49,8 @@
                                     </div>
                                 </td>
                                 <td class="text-center fw-bold">{{ saint|format_saint_name }}</td>
+                                <td class="text-center small">{{ saint.group ? 'common.yes'|trans({}, 'common') : 'common.no'|trans({}, 'common') }}</td>
+                                <td class="text-center small">{{ ('saint.form.sex_' ~ saint.sex.value)|trans({}, 'saint') }}</td>
                                 <td class="text-center">{{ saint.feastDate
                                     ? saint.feastDate|format_date('medium', pattern=('common.date_formats.feast_date'|trans({}, 'common')))
                                     : 'common.not_available'|trans({}, 'common') }}</td>
@@ -71,7 +75,7 @@
                 <table class="table">
                     <tbody>
                     <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">
+                        <td colspan="7" class="text-center py-4 text-muted">
                             <i class="fas fa-circle-exclamation fa-2x mb-2"></i>
                             <p>{{ 'saint.no_saints'|trans({}, 'saint') }}</p>
                         </td>
