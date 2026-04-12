@@ -13,12 +13,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier)
-    {
+    public function __construct(
+        private EmailVerifier $emailVerifier,
+        private TranslatorInterface $translator,
+    ) {
     }
 
     #[Route('/register', name: 'app_register')]
@@ -43,11 +46,14 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@santasreliquias.com.br', 'Reliquary'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject($this->translator->trans('registration.email.subject', [], 'registration'))
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            // do anything else you need here, like send an email
+            $this->addFlash(
+                'success',
+                $this->translator->trans('registration.messages.check_email', [], 'registration')
+            );
 
             return $this->redirectToRoute('app_home');
         }
@@ -73,7 +79,10 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash(
+            'success',
+            $this->translator->trans('registration.messages.email_confirmed', [], 'registration')
+        );
 
         return $this->redirectToRoute('app_home');
     }
