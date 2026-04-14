@@ -1,3 +1,10 @@
+## [2.48.1](https://github.com/CesarScur/reliquary/compare/v2.48.0...v2.48.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **config:** unify access control and enforce HTTPS globally for public routes ([1c6bfdc](https://github.com/CesarScur/reliquary/commit/1c6bfdcac069b55e1048626e48b7f5f9eabaed4d))
+
 # [2.48.0](https://github.com/CesarScur/reliquary/compare/v2.47.0...v2.48.0) (2026-04-12)
 
 
