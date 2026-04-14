@@ -58,9 +58,11 @@
     {% endblock %}
 
     {% block hreflang %}
-        <link rel="alternate" hreflang="en" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'_locale': 'en'}))) }}">
-        <link rel="alternate" hreflang="pt-BR" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'_locale': 'pt_BR'}))) }}">
-        <link rel="alternate" hreflang="x-default" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({'_locale': 'en'}))) }}">
+        {% if app.request.attributes.get('_route') %}
+            <link rel="alternate" hreflang="en" href="{{ absolute_url(path(app.request.attributes.get('_route'), (app.request.attributes.get('_route_params') ?: [])|merge(app.request.query.all)|merge({'_locale': 'en'}))) }}">
+            <link rel="alternate" hreflang="pt-BR" href="{{ absolute_url(path(app.request.attributes.get('_route'), (app.request.attributes.get('_route_params') ?: [])|merge(app.request.query.all)|merge({'_locale': 'pt_BR'}))) }}">
+            <link rel="alternate" hreflang="x-default" href="{{ absolute_url(path(app.request.attributes.get('_route'), (app.request.attributes.get('_route_params') ?: [])|merge(app.request.query.all)|merge({'_locale': 'en'}))) }}">
+        {% endif %}
     {% endblock %}
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-touch-icon.png') }}">
