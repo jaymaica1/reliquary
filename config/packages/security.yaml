@@ -39,8 +39,11 @@ security:
         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@prod:
+    # Enforce HTTPS in production
+    # Note: access_control cannot be partially overridden, so we define it all here
     security:
         access_control:
+            - { path: ^/admin, roles: ROLE_ADMIN, requires_channel: https }
             - { path: ^/, roles: PUBLIC_ACCESS, requires_channel: https }
 when@test:
     security:
