@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\TestCase\ExtendedWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RelicControllerTest extends ExtendedWebTestCase
+class RelicControllerTest extends WebTestCase
 {
     public function testIndex(): void
     {
@@ -12,6 +12,6 @@ class RelicControllerTest extends ExtendedWebTestCase
         $client->request('GET', '/relic');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Relics');
+        $this->assertSelectorTextContains('h1', 'Relíquias');
     }
 }

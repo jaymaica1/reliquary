@@ -4,11 +4,10 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Tests\TestCase\ExtendedWebTestCase;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class GeolocationControllerTest extends ExtendedWebTestCase
+class GeolocationControllerTest extends WebTestCase
 {
     public function testStoreGeolocationForAnonymousUser(): void
     {
@@ -84,6 +83,13 @@ class GeolocationControllerTest extends ExtendedWebTestCase
         // Create a test user
         $entityManager = $container->get('doctrine.orm.entity_manager');
         $userRepository = $container->get(UserRepository::class);
+
+        // Check if test user already exists and remove it
+        $existingUser = $userRepository->findOneBy(['username' => 'testuser']);
+        if ($existingUser) {
+            $entityManager->remove($existingUser);
+            $entityManager->flush();
+        }
 
         $testUser = new User();
         $testUser->setUsername('testuser');
