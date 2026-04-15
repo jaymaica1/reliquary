@@ -11,7 +11,9 @@ class GeolocationControllerTest extends WebTestCase
 {
     public function testStoreGeolocationForAnonymousUser(): void
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'HTTPS' => true,
+        ]);
 
         // Test with valid data
         $client->request(
@@ -77,7 +79,9 @@ class GeolocationControllerTest extends WebTestCase
 
     public function testStoreGeolocationForAuthenticatedUser(): void
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'HTTPS' => true,
+        ]);
         $container = $client->getContainer();
 
         // Create a test user
