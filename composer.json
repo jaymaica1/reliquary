@@ -35,6 +35,7 @@
         "symfony/mailer": "7.2.*",
         "symfony/mailtrap-mailer": "7.2.*",
         "symfony/monolog-bundle": "^3.10",
+        "symfony/process": "7.2.*",
         "symfony/runtime": "^7.2.0",
         "symfony/security-bundle": "7.2.*",
         "symfony/serializer": "7.2.*",
