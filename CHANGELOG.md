@@ -1,3 +1,10 @@
+# [2.49.0](https://github.com/CesarScur/reliquary/compare/v2.48.1...v2.49.0) (2026-04-17)
+
+
+### Features
+
+* **backup:** add MongoDB authentication normalization and optional `--postgres-only` mode ([ec62aa8](https://github.com/CesarScur/reliquary/commit/ec62aa8aee80717e96ccd0f5fbeee0172d5d493d))
+
 ## [2.48.1](https://github.com/CesarScur/reliquary/compare/v2.48.0...v2.48.1) (2026-04-14)
 
 
