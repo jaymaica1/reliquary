@@ -9,7 +9,6 @@ parameters:
     env(APP_VERSION_FILE): '%kernel.project_dir%/VERSION'
     env(AWS_BACKUP_BUCKET): ''
     env(AWS_BACKUP_PREFIX): 'reliquary-backups'
-    env(AWS_BACKUP_KMS_KEY_ID): ''
     image_upload_directory: '%kernel.project_dir%/public/uploads/images'
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
@@ -133,7 +132,6 @@ services:
             $s3Client: '@aws.s3_client'
             $backupBucket: '%env(AWS_BACKUP_BUCKET)%'
             $backupPrefix: '%env(AWS_BACKUP_PREFIX)%'
-            $backupKmsKeyId: '%env(AWS_BACKUP_KMS_KEY_ID)%'
 
     App\Monolog\LogPIIProcessor:
         tags:

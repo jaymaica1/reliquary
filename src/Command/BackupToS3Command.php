@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Service\Backup\MongoBackupUriHelper;
 use App\Service\Backup\S3DatabaseBackupService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +17,7 @@ use Symfony\Component\Process\Process;
 
 #[AsCommand(
     name: 'app:backup:s3',
-    description: 'Dump PostgreSQL and MongoDB, then upload artifacts to a private S3 bucket',
+    description: 'Dump PostgreSQL (and optionally MongoDB), then upload artifacts to a private S3 bucket',
 )]
 final class BackupToS3Command extends Command
 {
@@ -24,7 +25,7 @@ final class BackupToS3Command extends Command
         private readonly S3DatabaseBackupService $backupService,
         #[Autowire(env: 'DATABASE_URL')]
         private readonly string $databaseUrl,
-        #[Autowire(env: 'MONGODB_URL')]
+        #[Autowire(env: 'resolve:MONGODB_URL')]
         private readonly string $mongoUrl,
         #[Autowire(env: 'MONGODB_DATABASE')]
         private readonly string $mongoDatabase,
@@ -40,12 +41,13 @@ final class BackupToS3Command extends Command
     {
         $this
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Print actions without dumping or uploading')
+            ->addOption('postgres-only', null, InputOption::VALUE_NONE, 'Only dump and upload PostgreSQL (skip MongoDB)')
             ->addOption('with-local-uploads', null, InputOption::VALUE_NONE, 'Include public/uploads/images as uploads.tar.gz (can be large)')
             ->setHelp(
                 <<<'HELP'
 Creates a timestamped folder under AWS_BACKUP_PREFIX containing:
   - postgres.dump.gz (custom-format pg_dump)
-  - mongo.archive.gz (mongodump --archive --gzip)
+  - mongo.archive.gz (mongodump --archive --gzip), unless --postgres-only
   - manifest.json (metadata)
 
 Requires AWS_BACKUP_BUCKET and standard AWS credentials (see docs/DEPLOYMENT.md).
@@ -59,6 +61,7 @@ HELP
         $io = new SymfonyStyle($input, $output);
 
         $dryRun = (bool) $input->getOption('dry-run');
+        $postgresOnly = (bool) $input->getOption('postgres-only');
         $withUploads = (bool) $input->getOption('with-local-uploads');
 
         if (!$dryRun && !$this->backupService->isBucketConfigured()) {
@@ -88,9 +91,10 @@ HELP
             $pg['dbname'],
         ];
 
+        $mongoUriForTools = MongoBackupUriHelper::forMongoTools($this->mongoUrl);
         $mongoCmd = [
             'mongodump',
-            '--uri=' . $this->mongoUrl,
+            '--uri=' . $mongoUriForTools,
             '--db=' . $this->mongoDatabase,
             '--archive=' . $mongoArchivePath,
             '--gzip',
@@ -98,9 +102,11 @@ HELP
 
         $keys = [
             'postgres' => $folderPrefix . 'postgres.dump.gz',
-            'mongo' => $folderPrefix . 'mongo.archive.gz',
             'manifest' => $folderPrefix . 'manifest.json',
         ];
+        if (!$postgresOnly) {
+            $keys['mongo'] = $folderPrefix . 'mongo.archive.gz';
+        }
 
         if ($withUploads) {
             $keys['uploads'] = $folderPrefix . 'uploads.tar.gz';
@@ -115,8 +121,13 @@ HELP
             $io->writeln($folderPrefix);
             $io->section('PostgreSQL');
             $io->writeln($this->escapeArgv($pgDumpCmd));
-            $io->section('MongoDB');
-            $io->writeln($this->escapeArgv($mongoCmd));
+            if ($postgresOnly) {
+                $io->section('MongoDB');
+                $io->writeln('(skipped: --postgres-only)');
+            } else {
+                $io->section('MongoDB');
+                $io->writeln($this->escapeArgv($mongoCmd));
+            }
             if ($withUploads) {
                 $uploadsDir = $this->projectDir . '/public/uploads/images';
                 $io->section('Local uploads archive');
@@ -161,19 +172,21 @@ HELP
             }
             $io->success(sprintf('PostgreSQL dump: %s bytes', number_format((float) $pgGzBytes)));
 
-            $io->title('Backing up MongoDB');
-            $mongoProcess = new Process($mongoCmd);
-            $mongoProcess->setTimeout(3600.0);
-            $mongoProcess->mustRun();
-            if (!is_file($mongoArchivePath) || filesize($mongoArchivePath) === 0) {
-                throw new \RuntimeException('mongodump did not produce a non-empty archive.');
-            }
+            if (!$postgresOnly) {
+                $io->title('Backing up MongoDB');
+                $mongoProcess = new Process($mongoCmd);
+                $mongoProcess->setTimeout(3600.0);
+                $mongoProcess->mustRun();
+                if (!is_file($mongoArchivePath) || filesize($mongoArchivePath) === 0) {
+                    throw new \RuntimeException('mongodump did not produce a non-empty archive.');
+                }
 
-            $mongoBytes = filesize($mongoArchivePath);
-            if ($mongoBytes === false) {
-                throw new \RuntimeException('Could not read mongo.archive.gz size.');
+                $mongoBytes = filesize($mongoArchivePath);
+                if ($mongoBytes === false) {
+                    throw new \RuntimeException('Could not read mongo.archive.gz size.');
+                }
+                $io->success(sprintf('MongoDB archive: %s bytes', number_format((float) $mongoBytes)));
             }
-            $io->success(sprintf('MongoDB archive: %s bytes', number_format((float) $mongoBytes)));
 
             $uploadsKey = null;
             if ($withUploads) {
@@ -196,8 +209,10 @@ HELP
             $io->title('Uploading to S3');
             $this->backupService->uploadLocalFile($pgGzPath, $keys['postgres']);
             $io->writeln('  Uploaded postgres.dump.gz');
-            $this->backupService->uploadLocalFile($mongoArchivePath, $keys['mongo']);
-            $io->writeln('  Uploaded mongo.archive.gz');
+            if (!$postgresOnly && isset($keys['mongo'])) {
+                $this->backupService->uploadLocalFile($mongoArchivePath, $keys['mongo']);
+                $io->writeln('  Uploaded mongo.archive.gz');
+            }
 
             if ($withUploads && isset($keys['uploads'])) {
                 $this->backupService->uploadLocalFile($uploadsTarPath, $keys['uploads']);
@@ -209,9 +224,14 @@ HELP
                 'created_at' => gmdate('c'),
                 'app_version' => $this->appVersion,
                 'postgres_key' => $keys['postgres'],
-                'mongo_key' => $keys['mongo'],
+                'postgres_only' => $postgresOnly,
                 'includes_local_uploads' => $withUploads,
             ];
+            if ($postgresOnly) {
+                $manifest['mongo_key'] = null;
+            } else {
+                $manifest['mongo_key'] = $keys['mongo'];
+            }
             if ($withUploads) {
                 $manifest['uploads_key'] = $keys['uploads'];
             }

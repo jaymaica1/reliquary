@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Service\Backup\MongoBackupUriHelper;
 use App\Service\Backup\S3DatabaseBackupService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -24,7 +25,7 @@ final class RestoreFromS3Command extends Command
         private readonly S3DatabaseBackupService $backupService,
         #[Autowire(env: 'DATABASE_URL')]
         private readonly string $databaseUrl,
-        #[Autowire(env: 'MONGODB_URL')]
+        #[Autowire(env: 'resolve:MONGODB_URL')]
         private readonly string $mongoUrl,
         #[Autowire(env: 'MONGODB_DATABASE')]
         private readonly string $mongoDatabase,
@@ -49,7 +50,7 @@ Destructive: overwrites data in the databases pointed to by DATABASE_URL and MON
 
 Requires --force. Use --latest or --backup-id to choose an artifact set.
 
-Restore order: PostgreSQL, then MongoDB. Run when the app is stopped or in maintenance if you need consistency.
+Restore order: PostgreSQL, then MongoDB (unless the backup was made with app:backup:s3 --postgres-only).
 
 Optional: --with-local-uploads restores the tar archive of public/uploads/images when present.
 HELP
@@ -113,12 +114,24 @@ HELP
 
             $pgGz = $tmpBase . '/postgres.dump.gz';
             $mongoGz = $tmpBase . '/mongo.archive.gz';
+            $manifestPath = $tmpBase . '/manifest.json';
+            $postgresOnly = false;
+            if (is_file($manifestPath)) {
+                try {
+                    $decoded = json_decode((string) file_get_contents($manifestPath), true, 512, JSON_THROW_ON_ERROR);
+                    if (\is_array($decoded)) {
+                        $postgresOnly = (bool) ($decoded['postgres_only'] ?? false);
+                    }
+                } catch (\JsonException) {
+                    // Malformed manifest: require mongo artifact like legacy backups.
+                }
+            }
             if (!is_file($pgGz)) {
                 $io->error('postgres.dump.gz missing in backup folder.');
 
                 return Command::FAILURE;
             }
-            if (!is_file($mongoGz)) {
+            if (!is_file($mongoGz) && !$postgresOnly) {
                 $io->error('mongo.archive.gz missing in backup folder.');
 
                 return Command::FAILURE;
@@ -165,22 +178,28 @@ HELP
                 $io->success('PostgreSQL restore finished.');
             }
 
-            $io->title('Restoring MongoDB');
-            $mongoArgs = [
-                'mongorestore',
-                '--uri=' . $this->mongoUrl,
-                '--gzip',
-                '--archive=' . $mongoGz,
-                '--nsInclude=' . $this->mongoDatabase . '.*',
-            ];
-            if ($dropMongo) {
-                $mongoArgs[] = '--drop';
-            }
+            if ($postgresOnly) {
+                $io->title('Restoring MongoDB');
+                $io->note('Skipped: this backup was created with --postgres-only (manifest.json).');
+            } else {
+                $io->title('Restoring MongoDB');
+                $mongoUriForTools = MongoBackupUriHelper::forMongoTools($this->mongoUrl);
+                $mongoArgs = [
+                    'mongorestore',
+                    '--uri=' . $mongoUriForTools,
+                    '--gzip',
+                    '--archive=' . $mongoGz,
+                    '--nsInclude=' . $this->mongoDatabase . '.*',
+                ];
+                if ($dropMongo) {
+                    $mongoArgs[] = '--drop';
+                }
 
-            $mongoProcess = new Process($mongoArgs);
-            $mongoProcess->setTimeout(3600.0);
-            $mongoProcess->mustRun();
-            $io->success('MongoDB restore finished.');
+                $mongoProcess = new Process($mongoArgs);
+                $mongoProcess->setTimeout(3600.0);
+                $mongoProcess->mustRun();
+                $io->success('MongoDB restore finished.');
+            }
 
             if ($withUploads) {
                 $uploadsTar = $tmpBase . '/uploads.tar.gz';

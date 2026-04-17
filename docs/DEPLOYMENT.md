@@ -130,22 +130,21 @@ Create a `.env` file with the following variables:
 
 #### AWS S3 (images and backups)
 
-Production image storage uses S3 via Flysystem. The backup commands reuse the same credentials and region unless you add separate keys later.
+Production image storage uses S3 via Flysystem. The backup commands reuse the same credentials and region unless you add separate keys later. Backup uploads use **SSE-S3** (`AES256` on `PutObject`)—the same no-extra-charge server-side encryption family as typical object storage, not SSE-KMS.
 
 | Variable | Description | Default | Required | Example |
 |----------|-------------|---------|----------|---------|
 | `AWS_ACCESS_KEY_ID` | IAM access key for S3 API calls | - | Yes (prod with S3) | `AKIA...` |
 | `AWS_SECRET_ACCESS_KEY` | IAM secret key | - | Yes (prod with S3) | `...` |
 | `AWS_REGION` | AWS region for S3 | - | Yes (prod with S3) | `us-east-1` |
-| `AWS_S3_BUCKET` | Bucket for relic images | - | Yes (prod with S3) | `my-reliquary-assets` |
+| `AWS_S3_BUCKET` | Bucket for relic images (often fronted by CloudFront) | - | Yes (prod with S3) | `my-reliquary-assets` |
 | `AWS_S3_PREFIX` | Optional key prefix inside the assets bucket | empty | No | `prod` |
 | `AWS_ENDPOINT` | Custom endpoint (S3-compatible, LocalStack, etc.) | empty | No | `https://minio.example.com` |
 | `AWS_CLOUDFRONT_DOMAIN` | Optional CloudFront hostname for public URLs | empty | No | `d123.cloudfront.net` |
-| `AWS_BACKUP_BUCKET` | **Private** bucket for `app:backup:s3` / `app:restore:s3` artifacts | empty | Yes to use backup commands | `my-reliquary-backups` |
-| `AWS_BACKUP_PREFIX` | S3 key prefix for backup folders | `reliquary-backups` | No | `reliquary-backups` |
-| `AWS_BACKUP_KMS_KEY_ID` | Optional KMS key id for SSE-KMS on backup objects | empty | No | `arn:aws:kms:...` |
+| `AWS_BACKUP_BUCKET` | **Private** bucket for `app:backup:s3` / `app:restore:s3` artifacts | empty | Yes to use backup commands | `santasreliquias-backup` |
+| `AWS_BACKUP_PREFIX` | S3 key prefix for backup folders (no leading slash) | `reliquary-backups` | No | `backup` |
 
-Use a **dedicated backup bucket** (or at least a dedicated prefix with no public access) so database dumps are never mixed with public asset configuration.
+Use a **dedicated backup bucket** that is **not** wired into your image CloudFront distribution, so backup objects stay private and you do not risk changing origin or behavior for public assets.
 
 #### Mail Configuration
 
@@ -235,10 +234,9 @@ AWS_SECRET_ACCESS_KEY=your-secret-key
 AWS_REGION=us-east-1
 AWS_S3_BUCKET=your-assets-bucket
 
-# AWS S3 backups (private bucket for database dumps — optional until you use backup commands)
-AWS_BACKUP_BUCKET=your-private-backups-bucket
-# AWS_BACKUP_PREFIX=reliquary-backups
-# AWS_BACKUP_KMS_KEY_ID=arn:aws:kms:us-east-1:123456789012:key/...
+# AWS S3 backups (private bucket — optional until you use backup commands; keep separate from the image/CloudFront bucket)
+AWS_BACKUP_BUCKET=santasreliquias-backup
+AWS_BACKUP_PREFIX=backup
 ```
 
 #### Security Recommendations
@@ -258,18 +256,22 @@ For production, consider:
 
 2. **Backups to a private S3 bucket (recommended)**
 
-   Configure a **private** S3 bucket and IAM credentials (see below), set `AWS_BACKUP_BUCKET` (and optional `AWS_BACKUP_PREFIX` / `AWS_BACKUP_KMS_KEY_ID`) on the `app` service together with the existing `AWS_*` variables used for image storage.
+   Configure a **private** S3 bucket and IAM credentials, set `AWS_BACKUP_BUCKET` and optional `AWS_BACKUP_PREFIX` on the `app` service together with the existing `AWS_*` variables used for image storage.
 
-   **AWS checklist**
+   **Step-by-step: bucket `santasreliquias-backup`, prefix `backup/`**
 
-   1. Create an S3 bucket (for example `reliquary-prod-backups-<account-id>`) in your chosen region.
-   2. Turn on **Block Public Access** for the bucket (all four settings).
-   3. Enable **default encryption** (SSE-S3 or SSE-KMS).
-   4. Attach a least-privilege IAM policy to the key or role used by the app, for example:
-      - `s3:PutObject`, `s3:GetObject`, `s3:ListBucket` on `arn:aws:s3:::YOUR_BACKUP_BUCKET` and `arn:aws:s3:::YOUR_BACKUP_BUCKET/*`
+   1. In the AWS console, open **S3** and choose **Create bucket**.
+   2. **Bucket name:** `santasreliquias-backup` (globally unique; adjust if taken).
+   3. **Region:** same as `AWS_REGION` for your app (so the existing `S3Client` and credentials stay valid).
+   4. **Block Public Access:** leave all four options **on** (bucket must not be public).
+   5. **Versioning:** optional; enable if you want extra protection against accidental overwrites.
+   6. **Default encryption:** choose **Amazon S3 managed keys (SSE-S3)**. The app also sends `ServerSideEncryption: AES256` on upload; both align with SSE-S3 and avoid KMS charges.
+   7. **Do not** add this bucket as a CloudFront origin. Keep CloudFront pointed only at your **images/assets** bucket so distribution config and cache behaviors stay unchanged.
+   8. **IAM:** attach a least-privilege policy to the same user or role the app already uses for S3 (or a dedicated backup user). Example actions:
+      - `s3:PutObject`, `s3:GetObject`, `s3:ListBucket` on `arn:aws:s3:::santasreliquias-backup` and `arn:aws:s3:::santasreliquias-backup/*`
       - Optionally `s3:DeleteObject` if you automate retention pruning.
-   5. Optionally add a lifecycle rule (transition to Glacier, expire after N days).
-   6. Optionally use a separate IAM user for backups than for public asset uploads.
+   9. **Application env:** set `AWS_BACKUP_BUCKET=santasreliquias-backup` and `AWS_BACKUP_PREFIX=backup`. Backups are stored under keys like `backup/2026-04-12T15-30-45Z/…` (the app normalizes the prefix with a trailing slash).
+   10. Optionally add a **lifecycle** rule (transition to Glacier, expire after N days).
 
    The production Docker image includes `pg_dump`, `pg_restore`, `mongodump`, and `mongorestore` so backups run inside the `app` container.
 

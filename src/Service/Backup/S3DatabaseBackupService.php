@@ -10,15 +10,11 @@ use Doctrine\DBAL\Tools\DsnParser;
 
 final class S3DatabaseBackupService
 {
-    private readonly ?string $kmsKeyId;
-
     public function __construct(
         private readonly S3Client $s3Client,
         private readonly string $backupBucket,
         private readonly string $backupPrefix,
-        string $backupKmsKeyId,
     ) {
-        $this->kmsKeyId = $backupKmsKeyId === '' ? null : $backupKmsKeyId;
     }
 
     public function isBucketConfigured(): bool
@@ -81,15 +77,8 @@ final class S3DatabaseBackupService
     /**
      * @return array<string, mixed>
      */
-    public function serverSideEncryptionParams(): array
+    private function serverSideEncryptionParams(): array
     {
-        if ($this->kmsKeyId !== null) {
-            return [
-                'ServerSideEncryption' => 'aws:kms',
-                'SSEKMSKeyId' => $this->kmsKeyId,
-            ];
-        }
-
         return ['ServerSideEncryption' => 'AES256'];
     }
 
