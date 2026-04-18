@@ -1,3 +1,10 @@
+# [2.51.0](https://github.com/CesarScur/reliquary/compare/v2.50.0...v2.51.0) (2026-04-18)
+
+
+### Features
+
+* **translations:** add "São" and "Santo" distinction for male saint titles in pt_BR ([af956f9](https://github.com/CesarScur/reliquary/commit/af956f92f42e8785084140311ec9fc86479c5f3c))
+
 # [2.50.0](https://github.com/CesarScur/reliquary/compare/v2.49.0...v2.50.0) (2026-04-18)
 
 
