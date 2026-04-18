@@ -30,7 +30,7 @@
         <div class="form-group">
             <label for="{{ form.degree.vars.id }}">{{ 'relic.form.degree'|trans({}, 'relic') }}</label>
             <p class="form-help-text">{{ 'relic.form.degree_help'|trans({}, 'relic') }}</p>
-            {{ form_widget(form.degree, {'attr': {'class': 'form-select ' ~ (not form.degree.vars.valid ? 'is-invalid' : '')}}) }}
+            {{ form_widget(form.degree, {'attr': {'class': (not form.degree.vars.valid ? 'is-invalid' : '')}}) }}
             <div class="invalid-feedback">
                 {{ form_errors(form.degree) }}
             </div>

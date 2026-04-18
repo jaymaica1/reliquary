@@ -87,7 +87,11 @@ class RelicType extends AbstractType
                 'help' => 'relic.form.degree_help',
                 'help_attr' => ['class' => 'form-text text-muted'],
                 'label_attr' => ['class' => 'form-label'],
-                'attr' => ['class' => 'form-select'],
+                'autocomplete' => true,
+                'tom_select_options' => [
+                    'create' => false,
+                    'maxItems' => 1,
+                ],
             ])
             ->add('imageFile', FileType::class, [
                 'label' => 'relic.form.image',
