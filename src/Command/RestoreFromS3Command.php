@@ -168,12 +168,36 @@ HELP
             $restoreProcess->setEnv(['PGPASSWORD' => $pg['password']]);
             $restoreProcess->run();
 
-            if (!$restoreProcess->isSuccessful()) {
-                $io->warning('pg_restore exited non-zero (this can happen if objects already exist without --clean-postgres).');
-                $io->writeln($restoreProcess->getErrorOutput());
-                if ($restoreProcess->getOutput() !== '') {
-                    $io->writeln($restoreProcess->getOutput());
+            $exitCode = $restoreProcess->getExitCode();
+            $errorOutput = $restoreProcess->getErrorOutput();
+            $benignPg17DumpOnOlderServer = self::isOnlyIgnoredTransactionTimeoutRestoreError($errorOutput, $exitCode);
+
+            if ($benignPg17DumpOnOlderServer) {
+                $io->success('PostgreSQL restore finished.');
+                $io->note(
+                    'pg_dump from PostgreSQL 17+ embeds SET transaction_timeout; older servers reject that GUC, '
+                    . 'so pg_restore reported one ignored error. The rest of the restore completed. '
+                    . 'Use PostgreSQL 17+ on the restore target to avoid this, or verify data if unsure.'
+                );
+            } elseif (!$restoreProcess->isSuccessful()) {
+                $io->warning('pg_restore exited with code: ' . (string) $exitCode);
+                $io->writeln('');
+
+                if ($errorOutput !== '') {
+                    $io->section('STDERR Output:');
+                    $io->writeln($errorOutput);
+                } else {
+                    $io->warning('No error output captured on stderr.');
                 }
+
+                $stdout = $restoreProcess->getOutput();
+                if ($stdout !== '') {
+                    $io->section('STDOUT Output:');
+                    $io->writeln($stdout);
+                }
+
+                $io->note('Tip: This can happen if objects already exist without --clean-postgres flag.');
+                $io->note('Database: ' . $pg['dbname'] . ' | Host: ' . $pg['host'] . ':' . $pg['port']);
             } else {
                 $io->success('PostgreSQL restore finished.');
             }
@@ -228,6 +252,31 @@ HELP
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * PostgreSQL 17+ pg_dump emits SET transaction_timeout in the archive; restoring into an older major version
+     * fails that statement while pg_restore continues and exits 1 with exactly one ignored error.
+     */
+    private static function isOnlyIgnoredTransactionTimeoutRestoreError(string $stderr, ?int $exitCode): bool
+    {
+        if ($stderr === '' || $exitCode !== 1) {
+            return false;
+        }
+
+        if (!str_contains($stderr, 'transaction_timeout')) {
+            return false;
+        }
+
+        if (!preg_match('/errors ignored on restore:\s*(\d+)/', $stderr, $m)) {
+            return false;
+        }
+
+        if ((int) $m[1] !== 1) {
+            return false;
+        }
+
+        return 1 === preg_match_all('/^pg_restore: error:/m', $stderr);
     }
 
     private function removeTree(string $path): void
