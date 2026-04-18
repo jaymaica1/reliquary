@@ -1,3 +1,15 @@
+# [2.50.0](https://github.com/CesarScur/reliquary/compare/v2.49.0...v2.50.0) (2026-04-18)
+
+
+### Bug Fixes
+
+* **restore:** handle PostgreSQL 17+ dump errors on older servers gracefully ([0ef3378](https://github.com/CesarScur/reliquary/commit/0ef3378a3276843220416ad478c3d19d8a9b9929))
+
+
+### Features
+
+* **saint:** refine Portuguese title resolution with new naming rules ([801d6ed](https://github.com/CesarScur/reliquary/commit/801d6edeae36170100c65d80f71c8f83f7700fc0))
+
 # [2.49.0](https://github.com/CesarScur/reliquary/compare/v2.48.1...v2.49.0) (2026-04-17)
 
 
