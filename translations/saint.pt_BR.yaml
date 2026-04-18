@@ -24,6 +24,8 @@ saint:
   title_prefix:
     canonization:
       singular_male: 'Santo'
+      singular_male_sao: 'São'
+      singular_male_santo: 'Santo'
       singular_female: 'Santa'
       singular_unknown: 'Santo(a)'
       plural_male: 'Santos'
