@@ -1,3 +1,10 @@
+## [2.52.2](https://github.com/CesarScur/reliquary/compare/v2.52.1...v2.52.2) (2026-04-23)
+
+
+### Bug Fixes
+
+* **form:** add maxSizeMessage to saint image upload validation ([fc70356](https://github.com/CesarScur/reliquary/commit/fc70356d9eb2668c982e0e3abb811c975918935d))
+
 ## [2.52.1](https://github.com/CesarScur/reliquary/compare/v2.52.0...v2.52.1) (2026-04-23)
 
 
