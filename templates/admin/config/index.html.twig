@@ -4,6 +4,7 @@
 {% block pageTitle %}System Configuration{% endblock %}
 
 {% block body %}
+    {% set admin_config_tom_select_options = {'create': false, 'maxItems': 1}|json_encode|e('html_attr') %}
     <div class="row" data-controller="admin-config" 
          data-admin-config-models-by-provider-value="{{ providers_json|e('html_attr') }}"
          data-admin-config-current-model-value="{{ currentModel }}">
@@ -16,7 +17,11 @@
                     <form action="{{ path('app_admin_config_save_ai') }}" method="post">
                         <div class="mb-3">
                             <label for="ai_provider" class="form-label">Default Provider</label>
-                            <select name="ai_provider" id="ai_provider" class="form-select" data-admin-config-target="provider" data-action="change->admin-config#updateModels">
+                            <select name="ai_provider" id="ai_provider"
+                                    data-controller="symfony--ux-autocomplete--autocomplete"
+                                    data-symfony--ux-autocomplete--autocomplete-tom-select-options-value="{{ admin_config_tom_select_options }}"
+                                    data-admin-config-target="provider"
+                                    data-action="change->admin-config#updateModels">
                                 {% for provider in providers %}
                                     <option value="{{ provider.name }}" {% if provider.name == currentProvider %}selected{% endif %}>
                                         {{ provider.name|capitalize }}
@@ -27,7 +32,11 @@
 
                         <div class="mb-3">
                             <label for="ai_model" class="form-label">Default Model</label>
-                            <select name="ai_model" id="ai_model" class="form-select" data-admin-config-target="model" data-action="change->admin-config#updatePricing">
+                            <select name="ai_model" id="ai_model"
+                                    data-controller="symfony--ux-autocomplete--autocomplete"
+                                    data-symfony--ux-autocomplete--autocomplete-tom-select-options-value="{{ admin_config_tom_select_options }}"
+                                    data-admin-config-target="model"
+                                    data-action="change->admin-config#updatePricing">
                                 {# Models will be populated by JavaScript #}
                             </select>
                         </div>
