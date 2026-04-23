@@ -94,7 +94,7 @@ saint:
     image_link_placeholder: 'Digite a URL da imagem'
     image_link_help: 'Link para uma imagem externa'
     image: 'Carregar Imagem'
-    image_help: 'Carregue um novo arquivo de imagem (JPEG, PNG, WebP, máx 2MB)'
+    image_help: 'Carregue um novo arquivo de imagem (JPEG, PNG, WebP, máx 3MB)'
     image_error: 'Por favor, carregue um arquivo de imagem válido'
     is_incomplete: 'Incompleto'
     is_incomplete_help: 'Marcar como incompleto se mais informações forem necessárias'

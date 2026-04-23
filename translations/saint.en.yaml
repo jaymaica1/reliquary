@@ -65,7 +65,7 @@ saint:
     image_link_placeholder: 'Enter the image URL'
     image_link_help: 'Link to an external image'
     image: 'Upload Image'
-    image_help: 'Upload a new image file (JPEG, PNG, WebP, max 2MB)'
+    image_help: 'Upload a new image file (JPEG, PNG, WebP, max 3MB)'
     image_error: 'Please upload a valid image file'
     is_incomplete: 'Incomplete'
     is_incomplete_help: 'Mark as incomplete if more information is needed'
