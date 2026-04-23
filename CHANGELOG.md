@@ -1,3 +1,10 @@
+# [2.53.0](https://github.com/CesarScur/reliquary/compare/v2.52.2...v2.53.0) (2026-04-23)
+
+
+### Features
+
+* **docker:** adjust PHP configuration for memory and upload limits in production image ([7c6ac60](https://github.com/CesarScur/reliquary/commit/7c6ac602f53d0a54d4c4e9cf14e4328a17c232aa))
+
 ## [2.52.2](https://github.com/CesarScur/reliquary/compare/v2.52.1...v2.52.2) (2026-04-23)
 
 

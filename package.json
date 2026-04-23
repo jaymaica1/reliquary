@@ -1,6 +1,6 @@
 {
   "name": "reliquary",
-  "version": "2.52.2",
+  "version": "2.53.0",
   "description": "A Symfony application for cataloging relics",
   "private": true,
   "scripts": {
