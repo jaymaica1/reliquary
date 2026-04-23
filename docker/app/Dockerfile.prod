@@ -85,7 +85,10 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
     && echo "opcache.max_accelerated_files=20000" >> "$PHP_INI_DIR/php.ini" \
     && echo "opcache.validate_timestamps=0" >> "$PHP_INI_DIR/php.ini" \
     && echo "realpath_cache_size=4096K" >> "$PHP_INI_DIR/php.ini" \
-    && echo "realpath_cache_ttl=600" >> "$PHP_INI_DIR/php.ini"
+    && echo "realpath_cache_ttl=600" >> "$PHP_INI_DIR/php.ini" \
+    && echo "memory_limit=128M" >> "$PHP_INI_DIR/php.ini" \
+    && echo "post_max_size=8M" >> "$PHP_INI_DIR/php.ini" \
+    && echo "upload_max_filesize=6M" >> "$PHP_INI_DIR/php.ini"
 
 # Create directory for SSL certificates
 RUN mkdir -p /etc/apache2/ssl
