@@ -146,7 +146,8 @@ class SaintType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '3M',
+                        'maxSize' => 3 * 1024 * 1024,
+                        'maxSizeMessage' => 'saint.image_file.max_size',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
