@@ -1,3 +1,10 @@
+## [2.52.1](https://github.com/CesarScur/reliquary/compare/v2.52.0...v2.52.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* **translations:** update image upload size limit in saint forms ([26bd04e](https://github.com/CesarScur/reliquary/commit/26bd04e48a449f05333685d4da5aa02885f62acb))
+
 # [2.52.0](https://github.com/CesarScur/reliquary/compare/v2.51.0...v2.52.0) (2026-04-23)
 
 
