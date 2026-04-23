@@ -1,3 +1,11 @@
+# [2.52.0](https://github.com/CesarScur/reliquary/compare/v2.51.0...v2.52.0) (2026-04-23)
+
+
+### Features
+
+* **config:** add autocomplete and Tom Select options to admin config form ([8ef4560](https://github.com/CesarScur/reliquary/commit/8ef45605e9d678a4864cb39b278ef044e3154dbb))
+* **form:** enhance relic degree field with autocomplete and Tom Select options ([7f89b77](https://github.com/CesarScur/reliquary/commit/7f89b77fb1a7e960a5da0048e364a1886f46155d))
+
 # [2.51.0](https://github.com/CesarScur/reliquary/compare/v2.50.0...v2.51.0) (2026-04-18)
 
 
