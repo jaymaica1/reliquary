@@ -1675,6 +1675,11 @@ footer {
     font-size: 0.95rem;
 }
 
+.filter-select option { 
+    background: var(--primary-blue);
+    color: var(--sacred-white);
+}
+
 @media (max-width: 768px) {
     .filter-bar {
         flex-direction: column;
